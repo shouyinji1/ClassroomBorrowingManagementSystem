@@ -2,6 +2,7 @@ package controller;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,5 +27,19 @@ public class UserController {
 		mav.addObject("listUser",listUser);
 		// 最后把ModelAndView对象返回出去
 		return mav;
+	}
+	
+	@RequestMapping("/getUserById")
+	public ModelAndView getUserById(@Param("id")String id) {
+		ModelAndView mav=new ModelAndView("toUpd");
+		List<User> list=userService.getUserById(id);
+		mav.addObject("list",list);
+		return mav;
+	}
+	
+	@RequestMapping("/updUser")
+	public String toUpd(User user) {
+		userService.updUser(user);
+		return "forward:getAllUser";
 	}
 }

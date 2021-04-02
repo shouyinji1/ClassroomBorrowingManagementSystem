@@ -5,4 +5,10 @@
 	<select id="getAllUser" resultType="user">
 		select * from User;
 	</select>
+	<select id="getUserById" resultType="user" parameterType="String">
+		select * from User where id=#{id}
+	</select>
+	<update id="updUser" parameterType="String">
+		update User set name=#{name} where id=#{id};
+	</update>
 </mapper>

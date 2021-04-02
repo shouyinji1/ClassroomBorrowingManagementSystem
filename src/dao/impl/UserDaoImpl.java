@@ -20,12 +20,14 @@ public class UserDaoImpl extends BaseDaoImpl<UserDao> implements UserDao{
 		return this.getMapper().getAllUser();
 	}
 	// 根据用户ID查询用户信息
+	@Override
 	public List<User> getUserById(String id){
-		return null;
+		return this.getMapper().getUserById(id);
 	}
 	// 修改用户信息
+	@Override
 	public void updUser(User user) {
-		
+		this.getMapper().updUser(user);
 	}
 	// 删除用户
 	public void delUser(int uId) {
