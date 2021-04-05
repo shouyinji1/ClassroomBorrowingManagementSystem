@@ -33,5 +33,9 @@ public class UserDaoImpl extends BaseDaoImpl<UserDao> implements UserDao{
 	public void delUser(int uId) {
 		
 	}
+	
+	@Override
+	public User getUserByIdAndPassword(String id, String password){
+		return this.getMapper().getUserByIdAndPassword(id, password);
+	}
 }
-

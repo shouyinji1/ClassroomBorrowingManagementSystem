@@ -5,7 +5,12 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import entity.User;
@@ -13,6 +18,7 @@ import service.UserService;
 
 @Controller
 @RequestMapping("userController")
+@SessionAttributes("user")
 public class UserController {
 	@Autowired
 	UserService userService;
@@ -41,5 +47,20 @@ public class UserController {
 	public String toUpd(User user) {
 		userService.updUser(user);
 		return "forward:getAllUser";
+	}
+	
+	/** 登录验证 */
+	@RequestMapping(value="/login", method = RequestMethod.POST)
+	//public @ResponseBody User login(@RequestBody User user) {
+	public @ResponseBody String login(@Param("id")String id,
+			@Param("password")String password,
+			ModelMap modelMap) {
+		User user=userService.login(id, password);
+		if(user != null) {
+			modelMap.addAttribute("user",user);
+			return "yes";
+		}else {
+			return "no";
+		}
 	}
 }

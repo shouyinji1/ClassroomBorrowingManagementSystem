@@ -8,6 +8,9 @@
 	<select id="getUserById" resultType="user" parameterType="String">
 		select * from User where id=#{id}
 	</select>
+	<select id="getUserByIdAndPassword" resultType="user" parameterType="String">
+		select * from User where id=#{id} and password=#{password};
+	</select>
 	<update id="updUser" parameterType="String">
 		update User set name=#{name} where id=#{id};
 	</update>

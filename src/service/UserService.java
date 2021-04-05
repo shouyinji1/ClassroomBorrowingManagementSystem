@@ -8,4 +8,5 @@ public interface UserService {
 	/** 根据用户ID查询该用户所有信息 */
 	public List<User> getUserById(String id);
 	public void updUser(User user);
+	public User login(String id,String password);
 }

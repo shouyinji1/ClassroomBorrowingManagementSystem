@@ -28,4 +28,9 @@ public class UserServiceImpl implements UserService{
 	public void updUser(User user) {
 		userDao.updUser(user);
 	}
+	
+	@Override
+	public User login(String id,String password) {
+		return userDao.getUserByIdAndPassword(id, password);
+	}
 }

@@ -2,6 +2,8 @@ package dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import entity.User;
 
 public interface UserDao {
@@ -10,4 +12,6 @@ public interface UserDao {
 	/** 根据用户ID查询该用户所有信息 */
 	public List<User> getUserById(String id);
 	public void updUser(User user);
+	/** 根据用户名和密码查询用户信息 */
+	public User getUserByIdAndPassword(@Param("id")String id, @Param("password")String password);
 }

@@ -3,8 +3,14 @@ package entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.apache.ibatis.type.Alias;
+import org.springframework.stereotype.Component;
+
 /** 教室申请表 */
+@Alias("applicationForm")
+@Component
 public class ApplicationForm implements Serializable{
+	private static final long serialVersionUID = 1L;
 	/** 教室申请表ID */
 	private String id;
 	/** 申请者ID */

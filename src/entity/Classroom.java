@@ -2,8 +2,14 @@ package entity;
 
 import java.io.Serializable;
 
+import org.apache.ibatis.type.Alias;
+import org.springframework.stereotype.Component;
+
 /** 教室信息 */
+@Alias("classroom")
+@Component
 public class Classroom implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private String id;
 	private String name;
 	private String type;
