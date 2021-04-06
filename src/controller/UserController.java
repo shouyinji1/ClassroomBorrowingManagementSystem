@@ -2,6 +2,10 @@ package controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,9 +20,9 @@ import org.springframework.web.servlet.ModelAndView;
 import entity.User;
 import service.UserService;
 
-@Controller
-@RequestMapping("userController")
 @SessionAttributes("user")
+@RequestMapping(value="userController")
+@Controller("userController")
 public class UserController {
 	@Autowired
 	UserService userService;
@@ -62,5 +66,19 @@ public class UserController {
 		}else {
 			return "no";
 		}
+	}
+	
+	/** 首页跳转 */
+	@RequestMapping("toIndex")
+	public ModelAndView toIndex(HttpServletRequest request,HttpServletResponse response) {
+		User user=(User)request.getSession().getAttribute("user");
+		ModelAndView mav;
+		if(user.getLevel()=="Admin")
+			mav=new ModelAndView("admin/index");
+		else 
+			mav=new ModelAndView("normalUser/index");
+		// 最后把ModelAndView对象返回出去
+		return mav;
+		//return "forward:normalUser/index";
 	}
 }

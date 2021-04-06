@@ -35,6 +35,7 @@
 			<param-value>/WEB-INF/SpringMVC.xml</param-value>
 		</init-param>
 	</servlet>
+	
 	<!-- 控制器映射 -->
 	<servlet-mapping>
 		<servlet-name>SpringMVC</servlet-name>
