@@ -21,7 +21,7 @@
 
 </head>
 
-<body id="page-top">
+<body id="page-top" onload="turnPage('../normalUser/borrowRecord')">
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -268,9 +268,7 @@
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
-					<iframe class="embed-responsive-item" id="page-content" src="../normalUser/borrowRecord" onload="this.height=this.contentWindow.document.body.scrollHeight" onresize="this.height=this.contentWindow.document.body.scrollHeight" width="100%" scrolling="no" frameborder="0"></iframe>
-                </div>
+                <div class="container-fluid" id="page-content" ></div>
                 <!-- /.container-fluid -->
 
             </div>
@@ -280,7 +278,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                        <span>淮阴工学院</span>
                     </div>
                 </div>
             </footer>
@@ -327,36 +325,33 @@
     <!-- Custom scripts for all pages-->
     <script src="../js/sb-admin-2.min.js"></script>
 
-    <!-- Page level plugins -->
-    <script src="../vendor/chart.js/Chart.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="../js/demo/chart-area-demo.js"></script>
-    <script src="../js/demo/chart-pie-demo.js"></script>
 
 	<script type="text/javascript">
-		// 左侧菜单栏点击变色效果
+		// 左侧菜单栏点击变色效果，同时加载页面
 		$(function(){
 			$("#nav-item1").click(function() {
-				$("a").removeClass('active');  // 删除其他a元素的样式
+				$("li").removeClass('active');  // 删除其他a元素的样式
 				$(this).addClass('active');	// 添加当前元素的样式
+				turnPage("../normalUser/borrowRecord");
 			});
-			$("#nav-item").click(function() {
-				$("a").removeClass('active');  // 删除其他a元素的样式
+			$("#nav-item2").click(function() {
+				$("li").removeClass('active');  // 删除其他a元素的样式
 				$(this).addClass('active');	// 添加当前元素的样式
+				//turnPage("#");
 			});
 		});
 	</script>
 	<script type="text/javascript">
-		$(function(){	//iframe跳转
-			//匿名函数   没有名字的方法
-			$("#nav-item1").click(function(){
-				document.getElementsById("page-content")[0].src="../normalUser/borrowRecord";
-			});
-			$("#nav-item2").click(function(){
-				document.getElementsById("page-content")[0].src="${dashboardInfo.link2}";
-			});
-		}) 
+		// iframe
+		function turnPage(url){
+			$.ajax({
+				type:"post",
+				url:url,
+				success:function(html){
+					$("#page-content").html(html);
+				}
+			})
+		}
 	</script>
 </body>
 </html>
