@@ -73,7 +73,7 @@ public class UserController {
 	public ModelAndView toIndex(HttpServletRequest request,HttpServletResponse response) {
 		User user=(User)request.getSession().getAttribute("user");
 		ModelAndView mav;
-		if(user.getLevel()=="Admin")
+		if(user.getLevel().equals("Admin"))
 			mav=new ModelAndView("admin/index");
 		else 
 			mav=new ModelAndView("normalUser/index");
