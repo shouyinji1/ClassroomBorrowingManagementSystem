@@ -2,9 +2,7 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -19,9 +17,11 @@
     <!-- Custom styles for this template-->
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
 
+    <!-- Custom styles for this page -->
+    <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 </head>
 
-<body id="page-top" onload="turnPage('../normalUser/borrowRecord')">
+<body id="page-top">
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -83,7 +83,7 @@
                     <form
                         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                            <input type="text" class="form-control bg-light border-0 small" placeholder="搜索..."
                                 aria-label="Search" aria-describedby="basic-addon2">
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="button">
@@ -268,7 +268,7 @@
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid" id="page-content" ></div>
+                <div class="container-fluid" id="page-content"></div>
                 <!-- /.container-fluid -->
 
             </div>
@@ -325,23 +325,28 @@
     <!-- Custom scripts for all pages-->
     <script src="../js/sb-admin-2.min.js"></script>
 
-
+    <!-- Page level plugins -->
+    <script src="../vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    
 	<script type="text/javascript">
 		// 左侧菜单栏点击变色效果，同时加载页面
 		$(function(){
 			$("#nav-item1").click(function() {
 				$("li").removeClass('active');  // 删除其他a元素的样式
 				$(this).addClass('active');	// 添加当前元素的样式
-				turnPage("../normalUser/borrowRecord");
+				$( "#page-content" ).load( "../normalUser/myApplications" );
+				//turnPage("../normalUser/myApplications");
 			});
 			$("#nav-item2").click(function() {
 				$("li").removeClass('active');  // 删除其他a元素的样式
 				$(this).addClass('active');	// 添加当前元素的样式
-				//turnPage("#");
+				//turnPage("../normalUser/apply");
+				$( "#page-content" ).load( "../normalUser/apply" );
 			});
 		});
 	</script>
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		// iframe
 		function turnPage(url){
 			$.ajax({
@@ -352,6 +357,6 @@
 				}
 			})
 		}
-	</script>
+	</script> -->
 </body>
 </html>

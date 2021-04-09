@@ -7,14 +7,20 @@ import org.apache.ibatis.type.Alias;
 import org.springframework.stereotype.Component;
 
 /** 学期信息 */
-@Alias("semester")
-@Component
+@Component("semester")
 public class Semester implements Serializable{
 	private static final long serialVersionUID = 1L;
-
+	
+	private int id;
 	private Date sDate;
 	private int tWeeks;
 
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public Date getsDate() {
 		return sDate;
 	}

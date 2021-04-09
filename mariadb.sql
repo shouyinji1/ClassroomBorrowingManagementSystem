@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS Classroom(
 	Type VARCHAR(20) COMMENT '教室类型',
 	XiaoQu NVARCHAR(20) COMMENT '校区',
 	JiaoXueLou NVARCHAR(20) NOT NULL COMMENT '教学楼',
+	Floor TINYINT NOT NULL COMMENT '楼层',
 	Capacity SMALLINT UNSIGNED COMMENT '容量'
 ) CHARSET=utf8 COMMENT '教室信息表';
 CREATE TABLE IF NOT EXISTS User(
@@ -25,7 +26,7 @@ CREATE TABLE IF NOT EXISTS User(
 	Email CHAR(50) COMMENT '电子邮箱',
 	Department NVARCHAR(30) COMMENT '部门'
 ) CHARSET=utf8 COMMENT '用户信息表';
-CREATE TABLE IF NOT EXISTS ApplicationForm(
+CREATE TABLE IF NOT EXISTS Application(
 	ID INT UNSIGNED AUTO_INCREMENT PRIMARY KEY COMMENT '教室申请表ID',
 	UserID VARCHAR(20) NOT NULL COMMENT '申请者ID',
 	RoomID VARCHAR(20) NOT NULL COMMENT '教室ID',
@@ -43,6 +44,7 @@ CREATE TABLE IF NOT EXISTS ApplicationForm(
 	FOREIGN KEY(RoomID) REFERENCES Classroom(ID) ON DELETE CASCADE
 ) CHARSET=utf8 COMMENT '教室申请表';
 CREATE TABLE IF NOT EXISTS RoomStatus(
+	ID INT AUTO_INCREMENT PRIMARY KEY COMMENT '教室状态ID',
 	RoomID VARCHAR(20) NOT NULL COMMENT '教室ID',
 	UserID VARCHAR(20) NOT NULL COMMENT '使用者ID',
 	ZhouCi TINYINT NOT NULL COMMENT '周次',
@@ -51,19 +53,44 @@ CREATE TABLE IF NOT EXISTS RoomStatus(
 	EJieCi TINYINT NOT NULL COMMENT '结束节次',
 	Type TEXT NOT NULL COMMENT '使用类型',
 	Purpose TEXT COMMENT '用途',
-	PRIMARY KEY(RoomID, UserID, ZhouCi, XinQi, SJieCi, EJieCi),
+	UNIQUE(RoomID, UserID, ZhouCi, XinQi, SJieCi, EJieCi),
 	FOREIGN KEY(RoomID) REFERENCES Classroom(ID) ON DELETE CASCADE,
 	FOREIGN KEY(UserID) REFERENCES User(ID) ON DELETE CASCADE
 ) CHARSET=utf8 COMMENT '教室状态表';
 CREATE TABLE IF NOT EXISTS Semester(
+	ID TINYINT PRIMARY KEY AUTO_INCREMENT COMMENT '学期ID',
 	SDate DATE COMMENT '起始日期',
 	TWeeks TINYINT UNSIGNED COMMENT '学期总周数'
 ) CHARSET=utf8 COMMENT '学期信息表';
 
 -- INSERT
-INSERT INTO Classroom VALUES('C00001','xxxxx','sdlfj','jwioe','ld','60');
-INSERT INTO User VALUES('U00001','dlsf','123456','Admin','12345678901','abc@abc.com','abc');
-INSERT INTO User VALUES('U00002','klsd','654321','NormalUser','12345678902','abc1@abc.com','abc');
+INSERT INTO Semester VALUES(1,'2021-03-01',20);
+INSERT INTO User VALUES('A00001','dlsf','123456','Admin','12345678901','abc@abc.com','abc');
+INSERT INTO User VALUES('A00002','蓝叠','123456','Admin','12345678911','abd@abc.com','计算机学院');
+INSERT INTO User VALUES('U00001','klsd','654321','NormalUser','12345678900','aba@abc.com','abc');
+INSERT INTO User VALUES('U00002','klsd','654321','NormalUser','12345678902','abc1@abc.com','马克思主义学院');
+INSERT INTO User VALUES('U00003','张三','654321','NormalUser','12345678903','abc3@abc.com','计算机学院');
+INSERT INTO User VALUES('U00004','李四','654321','NormalUser','12345678904','abc4@abc.com','应用技术学院');
+INSERT INTO User VALUES('U00005','王二麻','654321','NormalUser','12345678904','abc4@abc.com','机械学院');
+INSERT INTO Classroom VALUES('C00001','xxxxx','sdlfj','jwioe','ld',1,60);
+INSERT INTO Classroom VALUES('1#201','sdf','普通教室','北京路校区','1',2,100);
+INSERT INTO Classroom VALUES('1#202','sdf','多媒体教室','北京路校区','1',2,50);
+INSERT INTO Classroom VALUES('1#203','sdf','计算机教室','北京路校区','1',2,50);
+INSERT INTO Classroom VALUES('2#101','sdf','会议室','北京路校区','2',1,60);
+INSERT INTO Classroom VALUES('11#101','sdf','多媒体教室','枚乘路校区','11',1,50);
+INSERT INTO Classroom VALUES('11#102','sdf','计算机教室','枚乘路校区','11',1,50);
+INSERT INTO Classroom VALUES('12#101','sdf','普通教室','枚乘路校区','12',1,100);
+INSERT INTO Classroom VALUES('22#201','sdf','会议室','枚乘路校区','22',2,60);
+INSERT INTO Classroom VALUES('111#301','sdf','多媒体教室','萧湖校区','111',3,50);
+INSERT INTO Classroom VALUES('111#302','sdf','计算机教室','萧湖校区','111',3,50);
+INSERT INTO Classroom VALUES('123#301','sdf','普通教室','萧湖校区','123',3,100);
+INSERT INTO Classroom VALUES('222#301','sdf','会议室','萧湖校区','222',3,60);
+INSERT INTO Classroom VALUES('YFJ0101','sdf','阶梯教室','枚乘路校区','逸夫楼',1,300);
+INSERT INTO Classroom VALUES('YFJ0202','sdf','阶梯教室','北京路校区','逸夫楼',2,300);
+INSERT INTO Classroom VALUES('YFJ0303','sdf','阶梯教室','萧湖校区','逸夫楼',3,300);
+INSERT INTO Application(UserID,RoomID,ZhouCi,XinQi,SJieCi,EJieCi,Type,Purpose) VALUES('U00001','C00001',10,1,1,2,'日常教学','给学生上课');
+INSERT INTO Application(UserID,RoomID,ZhouCi,XinQi,SJieCi,EJieCi,Type,Purpose) VALUES('U00001','22#201',10,1,3,3,'开会','开班会');
+INSERT INTO RoomStatus(RoomID,UserID,ZhouCi,XinQi,SJieCi,EJieCi,Type) VALUES('11#102','U00001',7,1,1,2,'日常教学');
 
 
 DROP DATABASE ClassroomBorrowingManagementSystem;

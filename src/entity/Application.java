@@ -1,15 +1,15 @@
 package entity;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.apache.ibatis.type.Alias;
 import org.springframework.stereotype.Component;
 
 /** 教室申请表 */
-@Alias("applicationForm")
-@Component
-public class ApplicationForm implements Serializable{
+@Component("application")
+public class Application implements Serializable{
 	private static final long serialVersionUID = 1L;
 	/** 教室申请表ID */
 	private String id;
@@ -25,7 +25,7 @@ public class ApplicationForm implements Serializable{
 	private String purpose;
 	private String reviewer;
 	private Date reviewerTime;
-	private boolean approval;
+	private Boolean approval;
 
 	public String getId() {
 		return id;
@@ -48,13 +48,19 @@ public class ApplicationForm implements Serializable{
 	public Date getSubmitTime() {
 		return submitTime;
 	}
+	/** 获取格式化的申请提交时间 */
+	public String getFormatSubmitTime() {
+        SimpleDateFormat sdf = new SimpleDateFormat();// 格式化时间 
+        sdf.applyPattern("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(submitTime);	//获取当前时间
+	}
 	public void setSubmitTime(Date submitTime) {
 		this.submitTime = submitTime;
 	}
-	public int getZhouCi() {
+	public int getzhouCi() {
 		return zhouCi;
 	}
-	public void setZhouCi(int zhouCi) {
+	public void setzhouCi(int zhouCi) {
 		this.zhouCi = zhouCi;
 	}
 	public int getXinQi() {
@@ -99,10 +105,10 @@ public class ApplicationForm implements Serializable{
 	public void setReviewerTime(Date reviewerTime) {
 		this.reviewerTime = reviewerTime;
 	}
-	public boolean isApproval() {
+	public Boolean getApproval() {
 		return approval;
 	}
-	public void setApproval(boolean approval) {
+	public void setApproval(Boolean approval) {
 		this.approval = approval;
 	}
 }

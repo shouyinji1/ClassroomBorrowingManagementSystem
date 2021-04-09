@@ -6,10 +6,10 @@ import org.apache.ibatis.type.Alias;
 import org.springframework.stereotype.Component;
 
 /** 教室使用状态 */
-@Alias("roomStatus")
-@Component
+@Component("roomStatus")
 public class RoomStatus implements Serializable{
 	private static final long serialVersionUID = 1L;
+	private int id;
 	private String roomID;
 	private String userID;
 	private int zhouCi;
@@ -19,6 +19,12 @@ public class RoomStatus implements Serializable{
 	private String type;
 	private String purpose;
 
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getRoomID() {
 		return roomID;
 	}

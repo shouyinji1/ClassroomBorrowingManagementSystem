@@ -1,13 +1,10 @@
 package entity;
 
 import java.io.Serializable;
-
-import org.apache.ibatis.type.Alias;
 import org.springframework.stereotype.Component;
 
 /** 教室信息 */
-@Alias("classroom")
-@Component
+@Component("classroom")
 public class Classroom implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private String id;
@@ -15,6 +12,7 @@ public class Classroom implements Serializable{
 	private String type;
 	private String xiaoQu;
 	private String jiaoXueLou;
+	private int floor;
 	private int capacity;
 	
 	public String getId() {
@@ -46,6 +44,12 @@ public class Classroom implements Serializable{
 	}
 	public void setJiaoXueLou(String jiaoXueLou) {
 		this.jiaoXueLou = jiaoXueLou;
+	}
+	public int getFloor() {
+		return floor;
+	}
+	public void setFloor(int floor) {
+		this.floor = floor;
 	}
 	public int getCapacity() {
 		return capacity;

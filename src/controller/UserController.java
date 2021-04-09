@@ -53,12 +53,12 @@ public class UserController {
 		return "forward:getAllUser";
 	}
 	
-	/** 登录验证 */
+	/** 登录验证
+	 * 此处提前讲session传入，避免在response之后再创建session的BUG */
 	@RequestMapping(value="/login", method = RequestMethod.POST)
 	//public @ResponseBody User login(@RequestBody User user) {
-	public @ResponseBody String login(@Param("id")String id,
-			@Param("password")String password,
-			ModelMap modelMap) {
+	public @ResponseBody String login(@Param("id")String id, @Param("password")String password,
+			ModelMap modelMap, HttpSession session) {
 		User user=userService.login(id, password);
 		if(user != null) {
 			modelMap.addAttribute("user",user);
@@ -73,7 +73,9 @@ public class UserController {
 	public ModelAndView toIndex(HttpServletRequest request,HttpServletResponse response) {
 		User user=(User)request.getSession().getAttribute("user");
 		ModelAndView mav;
-		if(user.getLevel().equals("Admin"))
+		if(user == null)
+			mav=new ModelAndView("redirect:/login.html");
+		else if(user.getLevel().equals("Admin"))
 			mav=new ModelAndView("admin/index");
 		else 
 			mav=new ModelAndView("normalUser/index");
