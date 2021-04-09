@@ -17,8 +17,14 @@ public class NormalUserDaoImpl extends BaseDaoImpl<NormalUserDao> implements Nor
 	}
 
 	@Override
-	public List<Application> getApplicationsById(String userID) {
+	public List<Application> getApplicationsByUserId(String userID) {
 		// TODO Auto-generated method stub
-		return this.getMapper().getApplicationsById(userID);
+		return this.getMapper().getApplicationsByUserId(userID);
+	}
+
+	@Override
+	public Application getApplicationById(int id) {
+		// TODO Auto-generated method stub
+		return this.getMapper().getApplicationById(id);
 	}
 }

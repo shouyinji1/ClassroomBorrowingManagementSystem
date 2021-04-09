@@ -39,7 +39,7 @@
 					</tfoot>
 					<tbody>
 						<c:forEach items="${applications}" var="application" varStatus="status">
-							<tr onclick="$('#page-content').load('../normalUser/apply')">
+							<tr onclick="toApplicationUpdate(${application.id})">
 								<td>${application.roomID}</td>
 								<td>${application.formatSubmitTime}</td>
 								<td>${application.zhouCi}</td>
@@ -72,6 +72,22 @@
 				}
 			} );
 		} );
+    </script>
+    <script type="text/javascript">
+		function toApplicationUpdate(id){
+			$.ajax({
+				type: "get",//方法类型
+				url: "../normalUser/applicationUpdate" ,
+				async:true,
+				data: {'id':id},
+				success:function(data){
+					$("#page-content").html(data);
+				},
+				error : function() {
+					alert("异常请求！"+data.msg);
+				}
+			});
+		}	
     </script>
 </body>
 </html>

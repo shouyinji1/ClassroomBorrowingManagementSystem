@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public class Application implements Serializable{
 	private static final long serialVersionUID = 1L;
 	/** 教室申请表ID */
-	private String id;
+	private int id;
 	/** 申请者ID */
 	private String userID;
 	private String roomID;
@@ -26,11 +26,14 @@ public class Application implements Serializable{
 	private String reviewer;
 	private Date reviewerTime;
 	private Boolean approval;
+	
+	private User user;
+	private Classroom classroom;
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public String getUserID() {
@@ -57,10 +60,10 @@ public class Application implements Serializable{
 	public void setSubmitTime(Date submitTime) {
 		this.submitTime = submitTime;
 	}
-	public int getzhouCi() {
+	public int getZhouCi() {
 		return zhouCi;
 	}
-	public void setzhouCi(int zhouCi) {
+	public void setZhouCi(int zhouCi) {
 		this.zhouCi = zhouCi;
 	}
 	public int getXinQi() {
@@ -110,5 +113,17 @@ public class Application implements Serializable{
 	}
 	public void setApproval(Boolean approval) {
 		this.approval = approval;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+	public Classroom getClassroom() {
+		return classroom;
+	}
+	public void setClassroom(Classroom classroom) {
+		this.classroom = classroom;
 	}
 }

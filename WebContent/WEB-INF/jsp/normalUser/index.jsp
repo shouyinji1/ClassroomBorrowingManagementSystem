@@ -358,5 +358,10 @@
 			})
 		}
 	</script> -->
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$( "#page-content" ).load( "../normalUser/myApplications" );
+		});
+	</script>
 </body>
 </html>

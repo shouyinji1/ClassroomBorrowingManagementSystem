@@ -16,8 +16,15 @@ public class NormalUserServiceImpl implements NormalUserService {
 
 	@Override
 	/** 查询某一用户的所有申请记录 */
-	public List<Application> getApplicationsById(String userID) {
+	public List<Application> getApplicationsByUserId(String userID) {
 		// TODO Auto-generated method stub
-		return normalUserDao.getApplicationsById(userID);
+		return normalUserDao.getApplicationsByUserId(userID);
+	}
+	
+	@Override
+	/** 查询指定申请记录的所有信息 */
+	public Application getApplicationById(int id) {
+		// TODO Auto-generated method stub
+		return normalUserDao.getApplicationById(id);
 	}
 }

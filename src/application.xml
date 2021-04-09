@@ -16,7 +16,7 @@
 		<property name="password" value="${c3p0.password}"/>
 		<property name="jdbcUrl" value="${c3p0.url}"/>
 		
-		<!-- 如下诸多配置主要为了解决数据库频繁查询后不响应的BUG-->
+		<!-- 如下诸多配置主要为了缓解数据库频繁查询后不响应的BUG-->
 		<!--当连接池中的连接耗尽的时候c3p0一次同时获取的连接数。Default: 3 -->
 		<property name="acquireIncrement" value="${c3p0.acquireIncrement}"/>       
 		<!--初始化时获取三个连接，取值应在minPoolSize与maxPoolSize之间。Default: 3 -->

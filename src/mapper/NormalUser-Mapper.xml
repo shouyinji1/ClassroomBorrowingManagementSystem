@@ -2,7 +2,44 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="dao.NormalUserDao">
-	<select id="getApplicationsById" resultType="application" parameterType="String">
+	<select id="getApplicationsByUserId" resultType="application" parameterType="String">
 		select * from Application where UserID=#{userID}
 	</select>
+	<select id="getApplicationById" resultMap="applicationResultMap" parameterType="int">
+		select Application.ID as ApplicationID, UserID, RoomID, SubmitTime, ZhouCi, XinQi, SJieCi, EJieCi,Application.Type as ApplicationType, Purpose, ReviewerID, ReviewTime, Approval,
+			User.Name as UserName, Phone, Email, Department,
+			Classroom.Name as ClassroomName, Classroom.Type as RoomType, XiaoQu, JiaoXueLou, Floor, Capacity 
+				from Application,User,Classroom 
+					where Application.ID=#{id} and Application.UserID=User.ID and Application.RoomID=Classroom.ID;
+	</select>
+	<resultMap id="applicationResultMap" type="application">
+		<id column="ApplicationID" property="id"></id>
+		<id column="UserID" property="userID"></id>
+		<id column="RoomID" property="roomID"></id>
+		<id column="SubmitTime" property="roomID"></id>
+		<id column="ZhouCi" property="zhouCi"></id>
+		<id column="XinQi" property="xinQi"></id>
+		<id column="SJieCi" property="sJieCi"></id>
+		<id column="EJieCi" property="eJieCi"></id>
+		<id column="Type" property="applicationType"></id>
+		<id column="Purpose" property="purpose"></id>
+		<id column="ReviewerID" property="reviewer"></id>
+		<id column="ReviewerTime" property="reviewerTime"></id>
+		<id column="Approval" property="approval"></id>
+		
+		<association property="user" javaType="user">
+			<id column="UserName" property="name"></id>
+			<id column="Phone" property="phone"></id>
+			<id column="Email" property="email"></id>
+			<id column="Department" property="department"></id>
+		</association>
+		<association property="classroom" javaType="classroom">
+			<id column="ClassroomName" property="name"></id>
+			<id column="RoomType" property="type"></id>
+			<id column="XiaoQu" property="xiaoQu"></id>
+			<id column="JiaoXueLou" property="jiaoXueLou"></id>
+			<id column="Floor" property="floor"></id>
+			<id column="Capacity" property="capacity"></id>
+		</association>
+	</resultMap>
 </mapper>
