@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import dao.NormalUserDao;
 import entity.Application;
+import entity.RoomStatus;
 import service.NormalUserService;
 
 @Service("normalUserService")
@@ -26,5 +27,53 @@ public class NormalUserServiceImpl implements NormalUserService {
 	public Application getApplicationById(int id) {
 		// TODO Auto-generated method stub
 		return normalUserDao.getApplicationById(id);
+	}
+
+	@Override
+	/** 更新申请信息
+	 * @return 0:更新成功，1:与已有教室安排冲突，2:与已有申请记录冲突
+	 *  */
+	public int updateApplication(Application application) {
+		// TODO Auto-generated method stub
+		// 判断教室借用时段是否与已存在教室安排冲突
+		List<RoomStatus> roomsStatus=normalUserDao.getRoomsStatusByApplication(application);
+		for(RoomStatus roomStatus:roomsStatus) {	
+			if(roomStatus.getsJieCi()>=application.getsJieCi() && roomStatus.getsJieCi()<=application.geteJieCi()) {
+				return 1;
+			}else if(application.getsJieCi()>=roomStatus.getsJieCi() && application.getsJieCi()<=roomStatus.geteJieCi()) {
+				return 1;
+			}
+		}
+		// 判断教室借用时段是否和已存在申请记录冲突
+		List<Application> similarApplications=normalUserDao.getApplicationsByApplication(application);
+		System.out.println("s application:"+similarApplications.get(0).getId());
+		System.out.println("application:"+application.getId());
+		System.out.println();
+		for(Application similarApplication:similarApplications) {
+			System.out.println("s application:"+similarApplication.getId());
+			System.out.println("application:"+application.getId());
+			System.out.println();
+			if(similarApplication.getId() != application.getId()) {
+				System.out.println("s application:"+similarApplication.getId());
+				System.out.println("application:"+application.getId());
+				System.out.println();
+				if(similarApplication.getsJieCi()>=application.getsJieCi()
+						&& similarApplication.getsJieCi()<=application.geteJieCi()) {
+					System.out.println("s sJieCi:"+similarApplication.getsJieCi());
+					System.out.println("app sJieCi:"+application.getsJieCi());
+					System.out.println("app eJieCi1:"+application.geteJieCi());
+					System.out.println("similar");
+					return 2;
+				}else if(application.getsJieCi()>=similarApplication.getsJieCi()
+						&& application.getsJieCi()<=similarApplication.geteJieCi()) {
+					System.out.println("s application:"+similarApplication.getId());
+					System.out.println("application:"+application.getId());
+					System.out.println("application");
+					return 2;
+				}
+			}
+		}
+		normalUserDao.updateApplication(application);
+		return 0;
 	}
 }

@@ -3,6 +3,7 @@ package entity;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.ibatis.type.Alias;
 import org.springframework.stereotype.Component;
@@ -23,12 +24,17 @@ public class Application implements Serializable{
 	private int eJieCi;
 	private String type;
 	private String purpose;
-	private String reviewer;
-	private Date reviewerTime;
+	private String reviewerID;
+	private Date reviewTime;
 	private Boolean approval;
+	private String reviewContent;
 	
 	private User user;
 	private Classroom classroom;
+	private User reviewer;
+	
+	/** 所有的类型 */
+	private String[] types= {"教学活动","会议","文娱活动","社团活动"};
 
 	public int getId() {
 		return id;
@@ -96,17 +102,22 @@ public class Application implements Serializable{
 	public void setPurpose(String purpose) {
 		this.purpose = purpose;
 	}
-	public String getReviewer() {
-		return reviewer;
+	public String getReviewerID() {
+		return reviewerID;
 	}
-	public void setReviewer(String reviewer) {
-		this.reviewer = reviewer;
+	public void setReviewerID(String reviewerID) {
+		this.reviewerID = reviewerID;
 	}
-	public Date getReviewerTime() {
-		return reviewerTime;
+	public Date getReviewTime() {
+		return reviewTime;
 	}
-	public void setReviewerTime(Date reviewerTime) {
-		this.reviewerTime = reviewerTime;
+	public String getFormatReviewTime() {
+        SimpleDateFormat sdf = new SimpleDateFormat();// 格式化时间 
+        sdf.applyPattern("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(reviewTime);	//获取当前时间
+	}
+	public void setReviewTime(Date reviewTime) {
+		this.reviewTime = reviewTime;
 	}
 	public Boolean getApproval() {
 		return approval;
@@ -125,5 +136,23 @@ public class Application implements Serializable{
 	}
 	public void setClassroom(Classroom classroom) {
 		this.classroom = classroom;
+	}
+	public String getReviewContent() {
+		return reviewContent;
+	}
+	public void setReviewContent(String reviewContent) {
+		this.reviewContent = reviewContent;
+	}
+	public User getReviewer() {
+		return reviewer;
+	}
+	public void setReviewer(User reviewer) {
+		this.reviewer = reviewer;
+	}
+	public String[] getTypes() {
+		return types;
+	}
+	public void setTypes(String[] types) {
+		this.types = types;
 	}
 }

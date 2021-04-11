@@ -6,7 +6,7 @@
 		select * from Application where UserID=#{userID}
 	</select>
 	<select id="getApplicationById" resultMap="applicationResultMap" parameterType="int">
-		select Application.ID as ApplicationID, UserID, RoomID, SubmitTime, ZhouCi, XinQi, SJieCi, EJieCi,Application.Type as ApplicationType, Purpose, ReviewerID, ReviewTime, Approval,
+		select Application.ID as ApplicationID, UserID, RoomID, SubmitTime, ZhouCi, XinQi, SJieCi, EJieCi,Application.Type as ApplicationType, Purpose, ReviewerID, ReviewTime, Approval,ReviewContent,
 			User.Name as UserName, Phone, Email, Department,
 			Classroom.Name as ClassroomName, Classroom.Type as RoomType, XiaoQu, JiaoXueLou, Floor, Capacity 
 				from Application,User,Classroom 
@@ -16,16 +16,17 @@
 		<id column="ApplicationID" property="id"></id>
 		<id column="UserID" property="userID"></id>
 		<id column="RoomID" property="roomID"></id>
-		<id column="SubmitTime" property="roomID"></id>
+		<id column="SubmitTime" property="submitTime"></id>
 		<id column="ZhouCi" property="zhouCi"></id>
 		<id column="XinQi" property="xinQi"></id>
 		<id column="SJieCi" property="sJieCi"></id>
 		<id column="EJieCi" property="eJieCi"></id>
-		<id column="Type" property="applicationType"></id>
+		<id column="ApplicationType" property="type"></id>
 		<id column="Purpose" property="purpose"></id>
-		<id column="ReviewerID" property="reviewer"></id>
-		<id column="ReviewerTime" property="reviewerTime"></id>
+		<id column="ReviewerID" property="reviewerID"></id>
+		<id column="ReviewTime" property="reviewTime"></id>
 		<id column="Approval" property="approval"></id>
+		<id column="ReviewContent" property="reviewContent"></id>
 		
 		<association property="user" javaType="user">
 			<id column="UserName" property="name"></id>
@@ -41,5 +42,20 @@
 			<id column="Floor" property="floor"></id>
 			<id column="Capacity" property="capacity"></id>
 		</association>
+		<association property="reviewer" javaType="user">
+			<id column="UserName" property="name"></id>
+			<id column="Phone" property="phone"></id>
+			<id column="Email" property="email"></id>
+			<id column="Department" property="department"></id>
+		</association>
 	</resultMap>
+	<select id="getRoomsStatusByApplication" resultType="roomStatus" parameterType="Application">
+		select * from RoomStatus where RoomID=#{roomID} and ZhouCi=#{zhouCi} and XinQi=#{xinQi};
+	</select>
+	<select id="getApplicationsByApplication" resultType="application" parameterType="Application">
+		select * from Application where RoomID=#{roomID} and ZhouCi=#{zhouCi} and XinQi=#{xinQi} and (Approval != 0 or Approval is null);
+	</select>
+	<update id="updateApplication" parameterType="Application">
+		update Application set ZhouCi=${zhouCi}, XinQi=#{xinQi}, SJieCi=#{sJieCi}, EJieCi=#{eJieCi}, Type=#{type}, Purpose=#{purpose} where ID=${id} ;
+	</update>
 </mapper>

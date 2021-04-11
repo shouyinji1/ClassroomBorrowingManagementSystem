@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import dao.NormalUserDao;
 import entity.Application;
+import entity.RoomStatus;
 
 @Repository
 public class NormalUserDaoImpl extends BaseDaoImpl<NormalUserDao> implements NormalUserDao {
@@ -26,5 +27,23 @@ public class NormalUserDaoImpl extends BaseDaoImpl<NormalUserDao> implements Nor
 	public Application getApplicationById(int id) {
 		// TODO Auto-generated method stub
 		return this.getMapper().getApplicationById(id);
+	}
+
+	@Override
+	public void updateApplication(Application application) {
+		// TODO Auto-generated method stub
+		this.getMapper().updateApplication(application);
+	}
+
+	@Override
+	public List<RoomStatus> getRoomsStatusByApplication(Application application) {
+		// TODO Auto-generated method stub
+		return this.getMapper().getRoomsStatusByApplication(application);
+	}
+
+	@Override
+	public List<Application> getApplicationsByApplication(Application application) {
+		// TODO Auto-generated method stub
+		return this.getMapper().getApplicationsByApplication(application);
 	}
 }

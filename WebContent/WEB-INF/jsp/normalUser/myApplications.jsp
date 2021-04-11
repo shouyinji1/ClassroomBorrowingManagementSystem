@@ -17,8 +17,8 @@
 				<table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
 					<thead>
 						<tr>
-							<th>教室</th>
 							<th>申请时间</th>
+							<th>教室</th>
 							<th>周次</th>
 							<th>星期</th>
 							<th>开始节次</th>
@@ -28,8 +28,8 @@
 					</thead>
 					<tfoot>
 						<tr>
-							<th>教室</th>
 							<th>申请时间</th>
+							<th>教室</th>
 							<th>周次</th>
 							<th>星期</th>
 							<th>开始节次</th>
@@ -40,8 +40,8 @@
 					<tbody>
 						<c:forEach items="${applications}" var="application" varStatus="status">
 							<tr onclick="toApplicationUpdate(${application.id})">
-								<td>${application.roomID}</td>
 								<td>${application.formatSubmitTime}</td>
+								<td>${application.roomID}</td>
 								<td>${application.zhouCi}</td>
 								<td>${application.xinQi}</td>
 								<td>${application.sJieCi}</td>
@@ -69,7 +69,8 @@
 				language: {
 					// https://github.com/DataTables/Plugins/tree/master/i18n/zh.json
 					url: '../vendor/datatables/zh.json'
-				}
+				},
+				"order": [[ 0, "desc" ]]	// 设置默认根据第1列降序
 			} );
 		} );
     </script>
