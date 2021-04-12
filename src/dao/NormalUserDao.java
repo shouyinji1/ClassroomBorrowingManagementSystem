@@ -2,6 +2,8 @@ package dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import entity.Application;
 import entity.RoomStatus;
 
@@ -20,4 +22,13 @@ public interface NormalUserDao {
 	
 	/** 更新申请表记录 */
 	public void updateApplication(Application application);
+	
+	/** 查询所有校区 */
+	public List<String> getAllXiaoQu();
+	
+	/** 根据校区查询所有教学楼 */
+	public List<String> getAllJiaoXueLouByXiaoQu(String xiaoQu);
+	
+	/** 根据校区、教学楼查询所有类型 */
+	public List<String> getAllTypeByXiaoquJiaoxuelou(@Param("xiaoQu")String xiaoQu,@Param("jiaoXueLou")String jiaoXueLou);
 }

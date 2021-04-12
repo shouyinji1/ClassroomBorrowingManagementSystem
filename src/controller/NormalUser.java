@@ -51,8 +51,33 @@ public class NormalUser {
 	}
 	
 	@RequestMapping("apply")
-	public ModelAndView applyRoom(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView apply(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav=new ModelAndView("normalUser/apply");
+		mav.addObject("allXiaoQu", normalUserService.getAllXiaoQu());
 		return mav;
+	}
+	
+	/** 申请查询选项动态变化 */
+	@RequestMapping("selectOption")
+	public ModelAndView selectOption(String select,String xiaoQu,String jiaoXueLou,String floor) {
+		switch (select) {
+			case "XiaoQu": {
+				ModelAndView mav=new ModelAndView("normalUser/selectOptions/jiaoXueLou");
+				mav.addObject("allJiaoXueLou", normalUserService.getAllJiaoXueLouByXiaoQu(xiaoQu));
+				return mav;
+			}
+			case "JiaoXueLou": {
+				ModelAndView mav=new ModelAndView("normalUser/selectOptions/type");
+				mav.addObject("allType", normalUserService.getAllTypeByXiaoquJiaoxuelou(xiaoQu, jiaoXueLou));
+				return mav;
+			}
+			case "type": {
+				ModelAndView mav=new ModelAndView("normalUser/selectOptions/floor");
+				//mav.addObject("allFloor", normalUserService.getAllFloorByXJT(xiaoQu, jiaoXueLou));
+				return mav;
+			}
+			default:
+				throw new IllegalArgumentException("Unexpected value: " + select);
+		}
 	}
 }

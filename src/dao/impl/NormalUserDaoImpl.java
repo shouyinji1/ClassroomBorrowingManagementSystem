@@ -46,4 +46,22 @@ public class NormalUserDaoImpl extends BaseDaoImpl<NormalUserDao> implements Nor
 		// TODO Auto-generated method stub
 		return this.getMapper().getApplicationsByApplication(application);
 	}
+
+	@Override
+	public List<String> getAllXiaoQu() {
+		// TODO Auto-generated method stub
+		return this.getMapper().getAllXiaoQu();
+	}
+
+	@Override
+	public List<String> getAllJiaoXueLouByXiaoQu(String xiaoQu) {
+		// TODO Auto-generated method stub
+		return this.getMapper().getAllJiaoXueLouByXiaoQu(xiaoQu);
+	}
+
+	@Override
+	public List<String> getAllTypeByXiaoquJiaoxuelou(String xiaoQu, String jiaoXueLou) {
+		// TODO Auto-generated method stub
+		return this.getMapper().getAllTypeByXiaoquJiaoxuelou(xiaoQu, jiaoXueLou);
+	}
 }

@@ -14,4 +14,13 @@ public interface NormalUserService {
 	
 	/** 更新申请表 */
 	public int updateApplication(Application application);
+	
+	/** 查询所有校区 */
+	public List<String> getAllXiaoQu();
+	
+	/** 根据校区查询所有的教学楼 */
+	public List<String> getAllJiaoXueLouByXiaoQu(String xiaoQu);
+	
+	/** 根据校区、教学楼查询所有的楼层 */
+	public List<String> getAllTypeByXiaoquJiaoxuelou(String xiaoQu,String jiaoXueLou);
 }

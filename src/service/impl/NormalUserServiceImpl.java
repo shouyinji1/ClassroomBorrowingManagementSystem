@@ -60,4 +60,22 @@ public class NormalUserServiceImpl implements NormalUserService {
 		normalUserDao.updateApplication(application);
 		return 0;
 	}
+
+	@Override
+	public List<String> getAllXiaoQu() {
+		// TODO Auto-generated method stub
+		return normalUserDao.getAllXiaoQu();
+	}
+
+	@Override
+	public List<String> getAllJiaoXueLouByXiaoQu(String xiaoQu) {
+		// TODO Auto-generated method stub
+		return normalUserDao.getAllJiaoXueLouByXiaoQu(xiaoQu);
+	}
+
+	@Override
+	public List<String> getAllTypeByXiaoquJiaoxuelou(String xiaoQu, String jiaoXueLou) {
+		// TODO Auto-generated method stub
+		return normalUserDao.getAllTypeByXiaoquJiaoxuelou(xiaoQu, jiaoXueLou);
+	}
 }

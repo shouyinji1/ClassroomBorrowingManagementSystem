@@ -58,4 +58,17 @@
 	<update id="updateApplication" parameterType="Application">
 		update Application set ZhouCi=${zhouCi}, XinQi=#{xinQi}, SJieCi=#{sJieCi}, EJieCi=#{eJieCi}, Type=#{type}, Purpose=#{purpose} where ID=${id} ;
 	</update>
+	
+	<select id="getAllXiaoQu" resultType="String">
+		select distinct XiaoQu from Classroom;
+	</select>
+	<select id="getAllJiaoXueLouByXiaoQu" resultType="String" parameterType="String">
+		select distinct JiaoXueLou from Classroom where XiaoQu=#{xiaoQu};
+	</select>
+	<select id="getAllTypeByXiaoquJiaoxuelou" resultType="String">
+		select distinct Type from Classroom where XiaoQu=#{xiaoQu} and JiaoXueLou=#{jiaoXueLou};
+	</select>
+	<select id="getAllTypeByXiao" resultType="String">
+		select distinct Floor from Classroom where XiaoQu=#{xiaoQu} and JiaoXueLou=#{jiaoXueLou};
+	</select>
 </mapper>
