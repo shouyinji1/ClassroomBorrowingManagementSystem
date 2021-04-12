@@ -46,29 +46,13 @@ public class NormalUserServiceImpl implements NormalUserService {
 		}
 		// 判断教室借用时段是否和已存在申请记录冲突
 		List<Application> similarApplications=normalUserDao.getApplicationsByApplication(application);
-		System.out.println("s application:"+similarApplications.get(0).getId());
-		System.out.println("application:"+application.getId());
-		System.out.println();
 		for(Application similarApplication:similarApplications) {
-			System.out.println("s application:"+similarApplication.getId());
-			System.out.println("application:"+application.getId());
-			System.out.println();
 			if(similarApplication.getId() != application.getId()) {
-				System.out.println("s application:"+similarApplication.getId());
-				System.out.println("application:"+application.getId());
-				System.out.println();
 				if(similarApplication.getsJieCi()>=application.getsJieCi()
 						&& similarApplication.getsJieCi()<=application.geteJieCi()) {
-					System.out.println("s sJieCi:"+similarApplication.getsJieCi());
-					System.out.println("app sJieCi:"+application.getsJieCi());
-					System.out.println("app eJieCi1:"+application.geteJieCi());
-					System.out.println("similar");
 					return 2;
 				}else if(application.getsJieCi()>=similarApplication.getsJieCi()
 						&& application.getsJieCi()<=similarApplication.geteJieCi()) {
-					System.out.println("s application:"+similarApplication.getId());
-					System.out.println("application:"+application.getId());
-					System.out.println("application");
 					return 2;
 				}
 			}

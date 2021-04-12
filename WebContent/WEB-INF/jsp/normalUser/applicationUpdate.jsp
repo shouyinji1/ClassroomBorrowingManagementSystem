@@ -77,6 +77,7 @@
 	<h4 class="mb-3">申请使用时间</h4>
 	<form>
 		<input type="hidden" name="id" value="${application.id}">
+		<input type="hidden" name="roomID" value="${application.roomID}">
 		<c:if test="${application.approval != null}"><fieldset disabled></c:if>
 			<div class="row">
 				<div class="col-sm-3 mb-3">

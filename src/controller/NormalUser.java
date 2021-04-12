@@ -46,6 +46,7 @@ public class NormalUser {
 	@RequestMapping("updateApplication")
 	@ResponseBody
 	public String updateApplication(Application application, HttpSession session) {
+		System.out.println(application.getRoomID());
 		return String.valueOf(normalUserService.updateApplication(application));
 	}
 	
