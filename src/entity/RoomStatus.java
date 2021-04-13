@@ -13,7 +13,7 @@ public class RoomStatus implements Serializable{
 	private String roomID;
 	private String userID;
 	private int zhouCi;
-	private int xinQi;
+	private int xingQi;
 	private int sJieCi;
 	private int eJieCi;
 	private String type;
@@ -43,11 +43,11 @@ public class RoomStatus implements Serializable{
 	public void setZhouCi(int zhouCi) {
 		this.zhouCi = zhouCi;
 	}
-	public int getXinQi() {
-		return xinQi;
+	public int getXingQi() {
+		return xingQi;
 	}
-	public void setXinQi(int xinQi) {
-		this.xinQi = xinQi;
+	public void setXingQi(int xingQi) {
+		this.xingQi = xingQi;
 	}
 	public int getsJieCi() {
 		return sJieCi;

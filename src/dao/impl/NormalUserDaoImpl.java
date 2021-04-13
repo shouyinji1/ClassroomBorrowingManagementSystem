@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import dao.NormalUserDao;
 import entity.Application;
 import entity.RoomStatus;
+import entity.Semester;
 
 @Repository
 public class NormalUserDaoImpl extends BaseDaoImpl<NormalUserDao> implements NormalUserDao {
@@ -63,5 +64,23 @@ public class NormalUserDaoImpl extends BaseDaoImpl<NormalUserDao> implements Nor
 	public List<String> getAllTypeByXiaoquJiaoxuelou(String xiaoQu, String jiaoXueLou) {
 		// TODO Auto-generated method stub
 		return this.getMapper().getAllTypeByXiaoquJiaoxuelou(xiaoQu, jiaoXueLou);
+	}
+
+	@Override
+	public List<String> getAllTypeByXJT(String xiaoQu, String jiaoXueLou, String type) {
+		// TODO Auto-generated method stub
+		return this.getMapper().getAllTypeByXJT(xiaoQu, jiaoXueLou, type);
+	}
+
+	@Override
+	public List<String> getAllTypeByXJTF(String xiaoQu, String jiaoXueLou, String type, String floor) {
+		// TODO Auto-generated method stub
+		return this.getMapper().getAllTypeByXJTF(xiaoQu, jiaoXueLou, type, floor);
+	}
+
+	@Override
+	public List<Semester> getSemesters() {
+		// TODO Auto-generated method stub
+		return this.getMapper().getSemesters();
 	}
 }

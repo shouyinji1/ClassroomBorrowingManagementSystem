@@ -19,7 +19,7 @@ public class Application implements Serializable{
 	private String roomID;
 	private Date submitTime;
 	private int zhouCi;
-	private int xinQi;
+	private int xingQi;
 	private int sJieCi;
 	private int eJieCi;
 	private String type;
@@ -72,11 +72,11 @@ public class Application implements Serializable{
 	public void setZhouCi(int zhouCi) {
 		this.zhouCi = zhouCi;
 	}
-	public int getXinQi() {
-		return xinQi;
+	public int getXingQi() {
+		return xingQi;
 	}
-	public void setXinQi(int xinQi) {
-		this.xinQi = xinQi;
+	public void setXingQi(int xingQi) {
+		this.xingQi = xingQi;
 	}
 	public int getsJieCi() {
 		return sJieCi;

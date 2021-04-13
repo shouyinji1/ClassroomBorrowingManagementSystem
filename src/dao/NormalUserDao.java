@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import entity.Application;
 import entity.RoomStatus;
+import entity.Semester;
 
 public interface NormalUserDao {
 	/** 查询某用户的所有申请表 */
@@ -31,4 +32,18 @@ public interface NormalUserDao {
 	
 	/** 根据校区、教学楼查询所有类型 */
 	public List<String> getAllTypeByXiaoquJiaoxuelou(@Param("xiaoQu")String xiaoQu,@Param("jiaoXueLou")String jiaoXueLou);
+	
+	/** 根据校区、教学楼、类型查询所有楼层 */
+	public List<String> getAllTypeByXJT(@Param("xiaoQu")String xiaoQu,
+			@Param("jiaoXueLou")String jiaoXueLou,
+			@Param("type")String type);
+
+	/** 根据校区、教学楼、类型、楼层查询所有教室 */
+	public List<String> getAllTypeByXJTF(@Param("xiaoQu")String xiaoQu,
+			@Param("jiaoXueLou")String jiaoXueLou,
+			@Param("type")String type,
+			@Param("floor")String floor);
+	
+	/** 查询学期信息 */
+	public List<Semester> getSemesters();
 }

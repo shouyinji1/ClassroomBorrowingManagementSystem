@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS Application(
 	RoomID VARCHAR(20) NOT NULL COMMENT '教室ID',
 	SubmitTime TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '申请表提交时间',
 	ZhouCi TINYINT NOT NULL COMMENT '周次',
-	XinQi TINYINT NOT NULL COMMENT '星期',
+	XingQi TINYINT NOT NULL COMMENT '星期',
 	SJieCi TINYINT NOT NULL COMMENT '开始节次',
 	EJieCi TINYINT NOT NULL COMMENT '结束节次',
 	Type TEXT NOT NULL COMMENT '使用类型',
@@ -44,24 +44,24 @@ CREATE TABLE IF NOT EXISTS Application(
 	FOREIGN KEY(UserID) REFERENCES User(ID) ON DELETE CASCADE,
 	FOREIGN KEY(RoomID) REFERENCES Classroom(ID) ON DELETE CASCADE,
 	FOREIGN KEY(ReviewerID) REFERENCES User(ID)
-) CHARSET=utf8 COMMENT '教室申请表';
+) CHARSET=utf8 COMMENT '教室申请记录表';
 CREATE TABLE IF NOT EXISTS RoomStatus(
 	ID INT AUTO_INCREMENT PRIMARY KEY COMMENT '教室状态ID',
 	RoomID VARCHAR(20) NOT NULL COMMENT '教室ID',
 	UserID VARCHAR(20) NOT NULL COMMENT '使用者ID',
 	ZhouCi TINYINT NOT NULL COMMENT '周次',
-	XinQi TINYINT NOT NULL COMMENT '星期',
+	XingQi TINYINT NOT NULL COMMENT '星期',
 	SJieCi TINYINT NOT NULL COMMENT '开始节次',
 	EJieCi TINYINT NOT NULL COMMENT '结束节次',
 	Type TEXT NOT NULL COMMENT '使用类型',
 	Purpose TEXT COMMENT '用途',
-	UNIQUE(RoomID, UserID, ZhouCi, XinQi, SJieCi, EJieCi),
+	UNIQUE(RoomID, UserID, ZhouCi, XingQi, SJieCi, EJieCi),
 	FOREIGN KEY(RoomID) REFERENCES Classroom(ID) ON DELETE CASCADE,
 	FOREIGN KEY(UserID) REFERENCES User(ID) ON DELETE CASCADE
 ) CHARSET=utf8 COMMENT '教室状态表';
 CREATE TABLE IF NOT EXISTS Semester(
 	ID TINYINT PRIMARY KEY AUTO_INCREMENT COMMENT '学期ID',
-	SDate DATE COMMENT '起始日期',
+	SDate DATE COMMENT '起始日期(星期一)',
 	TWeeks TINYINT UNSIGNED COMMENT '学期总周数'
 ) CHARSET=utf8 COMMENT '学期信息表';
 
@@ -90,13 +90,13 @@ INSERT INTO Classroom VALUES('222#301','sdf','会议室','萧湖校区','222',3,
 INSERT INTO Classroom VALUES('YFJ0101','sdf','阶梯教室','枚乘路校区','逸夫楼',1,300);
 INSERT INTO Classroom VALUES('YFJ0202','sdf','阶梯教室','北京路校区','逸夫楼',2,300);
 INSERT INTO Classroom VALUES('YFJ0303','sdf','阶梯教室','萧湖校区','逸夫楼',3,300);
-INSERT INTO Application(UserID,RoomID,ZhouCi,XinQi,SJieCi,EJieCi,Type,Purpose) VALUES('U00001','C00001',10,1,1,2,'教学活动','给学生上课');
-INSERT INTO Application(UserID,RoomID,ZhouCi,XinQi,SJieCi,EJieCi,Type,Purpose) VALUES('U00001','C00001',10,1,5,7,'教学活动','给学生上课');
-INSERT INTO Application(UserID,RoomID,ZhouCi,XinQi,SJieCi,EJieCi,Type,Purpose) VALUES('U00001','123#301',10,2,1,2,'文娱活动','班级活动庆祝会');
-INSERT INTO Application(UserID,RoomID,ZhouCi,XinQi,SJieCi,EJieCi,Type,Purpose) VALUES('U00001','22#201',10,1,3,3,'会议','开班会');
-INSERT INTO Application(UserID,RoomID,ZhouCi,XinQi,SJieCi,EJieCi,Type,Purpose,ReviewerID,ReviewTime,Approval,ReviewContent) VALUES('U00001','11#102',7,1,1,2,'教学活动','给学生上课','A00001',CURRENT_TIMESTAMP,1,'通过，可以');
-INSERT INTO RoomStatus(RoomID,UserID,ZhouCi,XinQi,SJieCi,EJieCi,Type) VALUES('11#102','U00001',7,1,1,2,'教学活动');
-INSERT INTO RoomStatus(RoomID,UserID,ZhouCi,XinQi,SJieCi,EJieCi,Type) VALUES('11#101','U00001',7,1,3,4,'课表课程');
+INSERT INTO Application(UserID,RoomID,ZhouCi,XingQi,SJieCi,EJieCi,Type,Purpose) VALUES('U00001','C00001',10,1,1,2,'教学活动','给学生上课');
+INSERT INTO Application(UserID,RoomID,ZhouCi,XingQi,SJieCi,EJieCi,Type,Purpose) VALUES('U00001','C00001',10,1,5,7,'教学活动','给学生上课');
+INSERT INTO Application(UserID,RoomID,ZhouCi,XingQi,SJieCi,EJieCi,Type,Purpose) VALUES('U00001','123#301',10,2,1,2,'文娱活动','班级活动庆祝会');
+INSERT INTO Application(UserID,RoomID,ZhouCi,XingQi,SJieCi,EJieCi,Type,Purpose) VALUES('U00001','22#201',10,1,3,3,'会议','开班会');
+INSERT INTO Application(UserID,RoomID,ZhouCi,XingQi,SJieCi,EJieCi,Type,Purpose,ReviewerID,ReviewTime,Approval,ReviewContent) VALUES('U00001','11#102',7,1,1,2,'教学活动','给学生上课','A00001',CURRENT_TIMESTAMP,1,'通过，可以');
+INSERT INTO RoomStatus(RoomID,UserID,ZhouCi,XingQi,SJieCi,EJieCi,Type) VALUES('11#102','U00001',7,1,1,2,'教学活动');
+INSERT INTO RoomStatus(RoomID,UserID,ZhouCi,XingQi,SJieCi,EJieCi,Type) VALUES('11#101','U00001',7,1,3,4,'课表课程');
 
 
 DROP DATABASE ClassroomBorrowingManagementSystem;

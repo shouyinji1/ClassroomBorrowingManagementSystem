@@ -43,7 +43,7 @@
 								<td>${application.formatSubmitTime}</td>
 								<td>${application.roomID}</td>
 								<td>${application.zhouCi}</td>
-								<td>${application.xinQi}</td>
+								<td>${application.xingQi}</td>
 								<td>${application.sJieCi}</td>
 								<td>${application.eJieCi}</td>
 								<td>

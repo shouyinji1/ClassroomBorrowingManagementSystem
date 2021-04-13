@@ -1,5 +1,10 @@
 package controller;
 
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.Period;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import entity.Application;
+import entity.Semester;
 import entity.User;
 import service.NormalUserService;
 
@@ -54,29 +60,45 @@ public class NormalUser {
 	public ModelAndView apply(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav=new ModelAndView("normalUser/apply");
 		mav.addObject("allXiaoQu", normalUserService.getAllXiaoQu());
+		List<Semester> semesters=normalUserService.getSemesters();
+		int daysDiff=(int)util.DateTool.periodDay(semesters.get(0).getsDate());
+		int txingQi=daysDiff%7+1+1;	// 明日星期几
+		int zhouCi=daysDiff/7+1;	// 周本周次
+		if(txingQi==8) {	// 如果明天是星期日，前端展示的周次选项将从下周开始。
+			zhouCi++;
+			txingQi=1;
+			if(zhouCi>semesters.get(0).gettWeeks()) {
+				return new ModelAndView("本学期已结束");
+			}
+		}
+		mav.addObject("txingQi",txingQi);
+		mav.addObject("zhouCi",zhouCi);
+		mav.addObject("semester",semesters.get(0));
 		return mav;
 	}
 	
 	/** 申请查询选项动态变化 */
 	@RequestMapping("selectOption")
-	public ModelAndView selectOption(String select,String xiaoQu,String jiaoXueLou,String floor) {
+	public ModelAndView selectOption(String select,String xiaoQu,String jiaoXueLou,
+			String type,String floor) {
 		switch (select) {
 			case "XiaoQu": {
 				ModelAndView mav=new ModelAndView("normalUser/selectOptions/jiaoXueLou");
 				mav.addObject("allJiaoXueLou", normalUserService.getAllJiaoXueLouByXiaoQu(xiaoQu));
 				return mav;
-			}
-			case "JiaoXueLou": {
+			}case "JiaoXueLou": {
 				ModelAndView mav=new ModelAndView("normalUser/selectOptions/type");
 				mav.addObject("allType", normalUserService.getAllTypeByXiaoquJiaoxuelou(xiaoQu, jiaoXueLou));
 				return mav;
-			}
-			case "type": {
+			}case "type": {
 				ModelAndView mav=new ModelAndView("normalUser/selectOptions/floor");
-				//mav.addObject("allFloor", normalUserService.getAllFloorByXJT(xiaoQu, jiaoXueLou));
+				mav.addObject("allFloor", normalUserService.getAllTypeByXJT(xiaoQu, jiaoXueLou,type));
 				return mav;
-			}
-			default:
+			}case "floor": {
+				ModelAndView mav=new ModelAndView("normalUser/selectOptions/room");
+				mav.addObject("allRoom", normalUserService.getAllTypeByXJTF(xiaoQu, jiaoXueLou,type,floor));
+				return mav;
+			}default:
 				throw new IllegalArgumentException("Unexpected value: " + select);
 		}
 	}

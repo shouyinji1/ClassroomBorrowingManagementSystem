@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import dao.NormalUserDao;
 import entity.Application;
 import entity.RoomStatus;
+import entity.Semester;
 import service.NormalUserService;
 
 @Service("normalUserService")
@@ -77,5 +78,23 @@ public class NormalUserServiceImpl implements NormalUserService {
 	public List<String> getAllTypeByXiaoquJiaoxuelou(String xiaoQu, String jiaoXueLou) {
 		// TODO Auto-generated method stub
 		return normalUserDao.getAllTypeByXiaoquJiaoxuelou(xiaoQu, jiaoXueLou);
+	}
+
+	@Override
+	public List<String> getAllTypeByXJT(String xiaoQu, String jiaoXueLou, String type) {
+		// TODO Auto-generated method stub
+		return normalUserDao.getAllTypeByXJT(xiaoQu, jiaoXueLou, type);
+	}
+
+	@Override
+	public List<String> getAllTypeByXJTF(String xiaoQu, String jiaoXueLou, String type, String floor) {
+		// TODO Auto-generated method stub
+		return normalUserDao.getAllTypeByXJTF(xiaoQu, jiaoXueLou, type, floor);
+	}
+
+	@Override
+	public List<Semester> getSemesters() {
+		// TODO Auto-generated method stub
+		return normalUserDao.getSemesters();
 	}
 }

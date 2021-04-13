@@ -5,8 +5,8 @@
 <html>
 <body>
 		<option selected="selected" value=''></option>
-		<c:forEach items="${allFloor}" var="floor">
-			<option value="${floor}">${floor}</option>
+		<c:forEach items="${allRoom}" var="room">
+			<option value="${room}">${room}</option>
 		</c:forEach>
 </body>
 </html>

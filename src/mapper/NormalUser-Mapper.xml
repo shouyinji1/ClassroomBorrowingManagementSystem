@@ -6,7 +6,7 @@
 		select * from Application where UserID=#{userID}
 	</select>
 	<select id="getApplicationById" resultMap="applicationResultMap" parameterType="int">
-		select Application.ID as ApplicationID, UserID, RoomID, SubmitTime, ZhouCi, XinQi, SJieCi, EJieCi,Application.Type as ApplicationType, Purpose, ReviewerID, ReviewTime, Approval,ReviewContent,
+		select Application.ID as ApplicationID, UserID, RoomID, SubmitTime, ZhouCi, XingQi, SJieCi, EJieCi,Application.Type as ApplicationType, Purpose, ReviewerID, ReviewTime, Approval,ReviewContent,
 			User.Name as UserName, Phone, Email, Department,
 			Classroom.Name as ClassroomName, Classroom.Type as RoomType, XiaoQu, JiaoXueLou, Floor, Capacity 
 				from Application,User,Classroom 
@@ -18,7 +18,7 @@
 		<id column="RoomID" property="roomID"></id>
 		<id column="SubmitTime" property="submitTime"></id>
 		<id column="ZhouCi" property="zhouCi"></id>
-		<id column="XinQi" property="xinQi"></id>
+		<id column="XingQi" property="xingQi"></id>
 		<id column="SJieCi" property="sJieCi"></id>
 		<id column="EJieCi" property="eJieCi"></id>
 		<id column="ApplicationType" property="type"></id>
@@ -50,13 +50,13 @@
 		</association>
 	</resultMap>
 	<select id="getRoomsStatusByApplication" resultType="roomStatus" parameterType="Application">
-		select * from RoomStatus where RoomID=#{roomID} and ZhouCi=#{zhouCi} and XinQi=#{xinQi};
+		select * from RoomStatus where RoomID=#{roomID} and ZhouCi=#{zhouCi} and XingQi=#{xingQi};
 	</select>
 	<select id="getApplicationsByApplication" resultType="application" parameterType="Application">
-		select * from Application where RoomID=#{roomID} and ZhouCi=#{zhouCi} and XinQi=#{xinQi} and (Approval != 0 or Approval is null);
+		select * from Application where RoomID=#{roomID} and ZhouCi=#{zhouCi} and XingQi=#{xingQi} and (Approval != 0 or Approval is null);
 	</select>
 	<update id="updateApplication" parameterType="Application">
-		update Application set ZhouCi=${zhouCi}, XinQi=#{xinQi}, SJieCi=#{sJieCi}, EJieCi=#{eJieCi}, Type=#{type}, Purpose=#{purpose} where ID=${id} ;
+		update Application set ZhouCi=${zhouCi}, XingQi=#{xingQi}, SJieCi=#{sJieCi}, EJieCi=#{eJieCi}, Type=#{type}, Purpose=#{purpose} where ID=${id} ;
 	</update>
 	
 	<select id="getAllXiaoQu" resultType="String">
@@ -68,7 +68,15 @@
 	<select id="getAllTypeByXiaoquJiaoxuelou" resultType="String">
 		select distinct Type from Classroom where XiaoQu=#{xiaoQu} and JiaoXueLou=#{jiaoXueLou};
 	</select>
-	<select id="getAllTypeByXiao" resultType="String">
-		select distinct Floor from Classroom where XiaoQu=#{xiaoQu} and JiaoXueLou=#{jiaoXueLou};
+	<select id="getAllTypeByXJT" resultType="String">
+		select distinct Floor from Classroom 
+			where XiaoQu=#{xiaoQu} and JiaoXueLou=#{jiaoXueLou} and Type=#{type};
+	</select>
+	<select id="getAllTypeByXJTF" resultType="String">
+		select distinct ID from Classroom 
+			where XiaoQu=#{xiaoQu} and JiaoXueLou=#{jiaoXueLou} and Type=#{type} and Floor=#{floor};
+	</select>
+	<select id="getSemesters" resultType="Semester">
+		select * from Semester order by ID desc; 
 	</select>
 </mapper>
