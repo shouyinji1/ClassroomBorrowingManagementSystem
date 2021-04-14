@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import dao.NormalUserDao;
 import entity.Application;
+import entity.Classroom;
 import entity.RoomStatus;
 import entity.Semester;
 import service.NormalUserService;
@@ -87,14 +88,15 @@ public class NormalUserServiceImpl implements NormalUserService {
 	}
 
 	@Override
-	public List<String> getAllFloorByXJJT(String xiaoQu, String jiaoXueQu, String jiaoXueLou, String type) {
+	public List<String> getAllFloorByXJJT(String xiaoQu, String jiaoXueQu,
+			String jiaoXueLou,String type) {
 		// TODO Auto-generated method stub
 		return normalUserDao.getAllFloorByXJJT(xiaoQu, jiaoXueQu, jiaoXueLou, type);
 	}
 
 	@Override
-	public List<String> getAllRoomIDByXJJTF(String xiaoQu, String jiaoXueQu, String jiaoXueLou, String type,
-			String floor) {
+	public List<String> getAllRoomIDByXJJTF(String xiaoQu, String jiaoXueQu, String jiaoXueLou,
+			String type,String floor) {
 		// TODO Auto-generated method stub
 		return normalUserDao.getAllRoomIDByXJJTF(xiaoQu, jiaoXueQu, jiaoXueLou, type, floor);
 	}
@@ -103,6 +105,44 @@ public class NormalUserServiceImpl implements NormalUserService {
 	public List<Semester> getSemesters() {
 		// TODO Auto-generated method stub
 		return normalUserDao.getSemesters();
+	}
+
+	@Override
+	public List<Classroom> getRoomsByApply(Application application) {
+		// TODO Auto-generated method stub
+		List<Classroom> rooms=normalUserDao.getRoomsByApply(application);
+		String floor=application.getClassroom().getFloor();
+		String roomID=application.getRoomID();
+		String capacity=application.getClassroom().getCapacity();
+		if(floor !=null && !floor.equals("")) {
+			floor=floor.trim();
+			for(int i=rooms.size()-1;i>=0;i--) {
+				if(!rooms.get(i).getFloor().equals(floor)) {
+					rooms.remove(i);
+				}
+			}
+		}
+		if(roomID !=null && !roomID.equals("")) {
+			roomID=roomID.trim();
+			for(int i=rooms.size()-1;i>=0;i--) {
+				if(!rooms.get(i).getId().trim().equals(roomID))
+					rooms.remove(i);
+			}
+		}
+		if(capacity!=null && !capacity.equals("")) {
+			int cap=Integer.parseInt(capacity);
+			for(int i=rooms.size()-1;i>=0;i--) {
+				if(Integer.parseInt(rooms.get(i).getCapacity())<cap)
+					rooms.remove(i);
+			}
+		}
+		return rooms;
+	}
+
+	@Override
+	public Classroom getClassroomById(String id) {
+		// TODO Auto-generated method stub
+		return normalUserDao.getClassroomById(id);
 	}
 
 }

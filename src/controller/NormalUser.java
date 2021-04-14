@@ -1,10 +1,5 @@
 package controller;
 
-import java.time.LocalDate;
-import java.time.Month;
-import java.time.Period;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,16 +14,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import dao.NormalUserDao;
 import entity.Application;
+import entity.Classroom;
 import entity.Semester;
 import entity.User;
 import service.NormalUserService;
+import service.UserService;
 
 @Controller
 @RequestMapping("normalUser")
 public class NormalUser {
 	@Autowired
 	NormalUserService normalUserService;
+	@Autowired
+	UserService userService;
 
 	/** 跳转我的申请表页面 */
 	@RequestMapping("myApplications")
@@ -111,10 +111,20 @@ public class NormalUser {
 	}
 	
 	@RequestMapping(value="queryRooms",method=RequestMethod.POST)
-	public ModelAndView queryRooms(String xiaoQu,String jiaoXueLou,String type,String floor,String roomID,
-			String capacity,String status,String zhouCi,String xingQi,String sJieCi,String eJieCi) {
-		System.out.println(xiaoQu);
-		System.out.println(zhouCi);
-		return null;
+	//public ModelAndView queryRooms(String xiaoQu,String jiaoXueLou,String type,String floor,String roomID,
+	//		String capacity,String status,String zhouCi,String xingQi,String sJieCi,String eJieCi) {
+	public ModelAndView queryRooms(Classroom room,Application application) {
+		application.setType(null);
+		application.setClassroom(room);
+		ModelAndView mav=new ModelAndView("normalUser/rooms");
+		mav.addObject("rooms",normalUserService.getRoomsByApply(application));
+		return mav;
+	}
+	
+	@RequestMapping("applyRoom")
+	public ModelAndView applyRoom(Application application,HttpSession session) {
+		application.setClassroom(normalUserService.getClassroomById(application.getRoomID()));
+		ModelAndView mav=new ModelAndView("normalUser/apply-Modal");
+		return mav;
 	}
 }

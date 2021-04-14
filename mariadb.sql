@@ -89,6 +89,7 @@ INSERT INTO Classroom VALUES('111#302','sdf','计算机教室','萧湖校区','a
 INSERT INTO Classroom VALUES('123#301','sdf','普通教室','萧湖校区','abc','123',3,100);
 INSERT INTO Classroom VALUES('222#301','sdf','会议室','萧湖校区','abc','222',3,60);
 INSERT INTO Classroom VALUES('YFJ0101','sdf','阶梯教室','枚乘路校区','abc','逸夫楼',1,300);
+INSERT INTO Classroom VALUES('YFJ0201','sdf','阶梯教室','枚乘路校区','abc','逸夫楼',2,300);
 INSERT INTO Classroom VALUES('YFJ0202','sdf','阶梯教室','北京路校区','abc','逸夫楼',2,300);
 INSERT INTO Classroom VALUES('YFJ0303','sdf','阶梯教室','萧湖校区','abc','逸夫楼',3,300);
 INSERT INTO Application(UserID,RoomID,ZhouCi,XingQi,SJieCi,EJieCi,Type,Purpose) VALUES('U00001','C00001',10,1,1,2,'教学活动','给学生上课');
@@ -98,6 +99,7 @@ INSERT INTO Application(UserID,RoomID,ZhouCi,XingQi,SJieCi,EJieCi,Type,Purpose) 
 INSERT INTO Application(UserID,RoomID,ZhouCi,XingQi,SJieCi,EJieCi,Type,Purpose,ReviewerID,ReviewTime,Approval,ReviewContent) VALUES('U00001','11#102',7,1,1,2,'教学活动','给学生上课','A00001',CURRENT_TIMESTAMP,1,'通过，可以');
 INSERT INTO RoomStatus(RoomID,UserID,ZhouCi,XingQi,SJieCi,EJieCi,Type) VALUES('11#102','U00001',7,1,1,2,'教学活动');
 INSERT INTO RoomStatus(RoomID,UserID,ZhouCi,XingQi,SJieCi,EJieCi,Type) VALUES('11#101','U00001',7,1,3,4,'课表课程');
+INSERT INTO RoomStatus(RoomID,UserID,ZhouCi,XingQi,SJieCi,EJieCi,Type) VALUES('11#101','U00001',10,1,3,4,'课表课程');
 
 
 DROP DATABASE ClassroomBorrowingManagementSystem;

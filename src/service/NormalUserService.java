@@ -3,6 +3,7 @@ package service;
 import java.util.List;
 
 import entity.Application;
+import entity.Classroom;
 import entity.Semester;
 
 public interface NormalUserService {
@@ -26,4 +27,11 @@ public interface NormalUserService {
 	
 	/** 查询学期信息 */
 	public List<Semester> getSemesters();
+	
+	/** 查询符合查询条件的空闲教室 */
+	public List<Classroom> getRoomsByApply(Application application);
+	
+	/** 根据教室ID查询教室信息 */
+	public Classroom getClassroomById(String id);
+	
 }

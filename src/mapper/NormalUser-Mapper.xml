@@ -6,7 +6,8 @@
 		select * from Application where UserID=#{userID}
 	</select>
 	<select id="getApplicationById" resultMap="applicationResultMap" parameterType="int">
-		select Application.ID as ApplicationID, UserID, RoomID, SubmitTime, ZhouCi, XingQi, SJieCi, EJieCi,Application.Type as ApplicationType, Purpose, ReviewerID, ReviewTime, Approval,ReviewContent,
+		select Application.ID as ApplicationID, UserID, RoomID, SubmitTime, ZhouCi, XingQi, SJieCi, EJieCi, 
+			Application.Type as ApplicationType, Purpose, ReviewerID, ReviewTime, Approval,ReviewContent,
 			User.Name as UserName, Phone, Email, Department,
 			Classroom.Name as ClassroomName, Classroom.Type as RoomType, XiaoQu,JiaoXueQu, JiaoXueLou, Floor, Capacity 
 				from Application,User,Classroom 
@@ -54,10 +55,12 @@
 		select * from RoomStatus where RoomID=#{roomID} and ZhouCi=#{zhouCi} and XingQi=#{xingQi};
 	</select>
 	<select id="getApplicationsByApplication" resultType="application" parameterType="Application">
-		select * from Application where RoomID=#{roomID} and ZhouCi=#{zhouCi} and XingQi=#{xingQi} and (Approval != 0 or Approval is null);
+		select * from Application where RoomID=#{roomID} and ZhouCi=#{zhouCi} and XingQi=#{xingQi} 
+			and (Approval != 0 or Approval is null);
 	</select>
 	<update id="updateApplication" parameterType="Application">
-		update Application set ZhouCi=${zhouCi}, XingQi=#{xingQi}, SJieCi=#{sJieCi}, EJieCi=#{eJieCi}, Type=#{type}, Purpose=#{purpose} where ID=${id} ;
+		update Application set ZhouCi=${zhouCi}, XingQi=#{xingQi}, SJieCi=#{sJieCi}, 
+			EJieCi=#{eJieCi}, Type=#{type}, Purpose=#{purpose} where ID=${id} ;
 	</update>
 	
 	<select id="getAllXiaoQu" resultType="String">
@@ -84,5 +87,29 @@
 	</select>
 	<select id="getSemesters" resultType="Semester">
 		select * from Semester order by ID desc; 
+	</select>
+	<select id="getRoomsByApply" resultType="Classroom" parameterType="Application">
+		select Floor,ID,Capacity,name from Classroom where ID not in(
+			select RoomID from Application,Classroom 
+				where Application.RoomID=Classroom.ID and XiaoQu=#{classroom.xiaoQu} 
+					and JiaoXueQu=#{classroom.jiaoXueQu}
+					and JiaoXueLou=#{classroom.jiaoXueLou} and Classroom.Type=#{classroom.type}
+					and ZhouCi=#{zhouCi} and XingQi=#{xingQi} 
+					and ((SJieCi &gt;=#{sJieCi} and SJieCi &lt;=#{eJieCi}) 
+						or (EJieCi &gt;=#{sJieCi} and EJieCi &lt;=#{eJieCi}))
+					and (Approval=1 or Approval is null) 
+			union
+			select RoomID from Classroom,RoomStatus
+				where RoomStatus.RoomID=Classroom.ID and XiaoQu=#{classroom.xiaoQu} 
+					and JiaoXueQu=#{classroom.jiaoXueQu} 
+					and JiaoXueLou=#{classroom.jiaoXueLou} and Classroom.Type=#{classroom.type} 
+					and ZhouCi=#{zhouCi} and XingQi=#{xingQi} 
+					and ((SJieCi &gt;=#{sJieCi} and SJieCi &lt;=#{eJieCi}) 
+						or (EJieCi &gt;=#{sJieCi} and EJieCi &lt;=#{eJieCi}))
+		) and XiaoQu=#{classroom.xiaoQu} and JiaoXueQu=#{classroom.jiaoXueQu} 
+			and jiaoXueLou=#{classroom.jiaoXueLou} and Type=#{classroom.type};
+	</select>
+	<select id="getClassroomById" resultType="Classroom" parameterType="String">
+		select * from Classroom where ID=#{id};
 	</select>
 </mapper>

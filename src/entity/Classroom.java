@@ -13,8 +13,8 @@ public class Classroom implements Serializable{
 	private String xiaoQu;
 	private String jiaoXueQu;
 	private String jiaoXueLou;
-	private int floor;
-	private int capacity;
+	private String floor;
+	private String capacity;
 	
 	public String getId() {
 		return id;
@@ -52,16 +52,16 @@ public class Classroom implements Serializable{
 	public void setJiaoXueLou(String jiaoXueLou) {
 		this.jiaoXueLou = jiaoXueLou;
 	}
-	public int getFloor() {
+	public String getFloor() {
 		return floor;
 	}
-	public void setFloor(int floor) {
+	public void setFloor(String floor) {
 		this.floor = floor;
 	}
-	public int getCapacity() {
+	public String getCapacity() {
 		return capacity;
 	}
-	public void setCapacity(int capacity) {
+	public void setCapacity(String capacity) {
 		this.capacity = capacity;
 	}
 }
