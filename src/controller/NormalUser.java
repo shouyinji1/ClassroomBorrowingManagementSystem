@@ -15,6 +15,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -79,27 +80,41 @@ public class NormalUser {
 	
 	/** 申请查询选项动态变化 */
 	@RequestMapping("selectOption")
-	public ModelAndView selectOption(String select,String xiaoQu,String jiaoXueLou,
+	public ModelAndView selectOption(String select,String xiaoQu,String jiaoXueQu,String jiaoXueLou,
 			String type,String floor) {
 		switch (select) {
 			case "XiaoQu": {
+				ModelAndView mav=new ModelAndView("normalUser/selectOptions/jiaoXueQu");
+				mav.addObject("allJiaoXueQu", normalUserService.getAllJiaoXueQuByXiaoQu(xiaoQu));
+				return mav;
+			}case "JiaoXueQu": {
 				ModelAndView mav=new ModelAndView("normalUser/selectOptions/jiaoXueLou");
-				mav.addObject("allJiaoXueLou", normalUserService.getAllJiaoXueLouByXiaoQu(xiaoQu));
+				mav.addObject("allJiaoXueLou", normalUserService.getAllJiaoXueLouByXJ(xiaoQu, jiaoXueQu));
 				return mav;
 			}case "JiaoXueLou": {
 				ModelAndView mav=new ModelAndView("normalUser/selectOptions/type");
-				mav.addObject("allType", normalUserService.getAllTypeByXiaoquJiaoxuelou(xiaoQu, jiaoXueLou));
+				mav.addObject("allType", normalUserService.getAllTypeByXJJ(xiaoQu, jiaoXueQu,jiaoXueLou));
 				return mav;
 			}case "type": {
 				ModelAndView mav=new ModelAndView("normalUser/selectOptions/floor");
-				mav.addObject("allFloor", normalUserService.getAllTypeByXJT(xiaoQu, jiaoXueLou,type));
+				mav.addObject("allFloor", normalUserService.getAllFloorByXJJT(xiaoQu,jiaoXueQu,
+						jiaoXueLou,type));
 				return mav;
 			}case "floor": {
 				ModelAndView mav=new ModelAndView("normalUser/selectOptions/room");
-				mav.addObject("allRoom", normalUserService.getAllTypeByXJTF(xiaoQu, jiaoXueLou,type,floor));
+				mav.addObject("allRoom", normalUserService.getAllRoomIDByXJJTF(xiaoQu,jiaoXueQu,
+						jiaoXueLou,type,floor));
 				return mav;
 			}default:
 				throw new IllegalArgumentException("Unexpected value: " + select);
 		}
+	}
+	
+	@RequestMapping(value="queryRooms",method=RequestMethod.POST)
+	public ModelAndView queryRooms(String xiaoQu,String jiaoXueLou,String type,String floor,String roomID,
+			String capacity,String status,String zhouCi,String xingQi,String sJieCi,String eJieCi) {
+		System.out.println(xiaoQu);
+		System.out.println(zhouCi);
+		return null;
 	}
 }

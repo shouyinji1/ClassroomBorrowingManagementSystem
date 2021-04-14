@@ -8,7 +8,7 @@
 	<select id="getApplicationById" resultMap="applicationResultMap" parameterType="int">
 		select Application.ID as ApplicationID, UserID, RoomID, SubmitTime, ZhouCi, XingQi, SJieCi, EJieCi,Application.Type as ApplicationType, Purpose, ReviewerID, ReviewTime, Approval,ReviewContent,
 			User.Name as UserName, Phone, Email, Department,
-			Classroom.Name as ClassroomName, Classroom.Type as RoomType, XiaoQu, JiaoXueLou, Floor, Capacity 
+			Classroom.Name as ClassroomName, Classroom.Type as RoomType, XiaoQu,JiaoXueQu, JiaoXueLou, Floor, Capacity 
 				from Application,User,Classroom 
 					where Application.ID=#{id} and Application.UserID=User.ID and Application.RoomID=Classroom.ID;
 	</select>
@@ -38,6 +38,7 @@
 			<id column="ClassroomName" property="name"></id>
 			<id column="RoomType" property="type"></id>
 			<id column="XiaoQu" property="xiaoQu"></id>
+			<id column="JiaoXueQu" property="jiaoXueQu"></id>
 			<id column="JiaoXueLou" property="jiaoXueLou"></id>
 			<id column="Floor" property="floor"></id>
 			<id column="Capacity" property="capacity"></id>
@@ -62,19 +63,24 @@
 	<select id="getAllXiaoQu" resultType="String">
 		select distinct XiaoQu from Classroom;
 	</select>
-	<select id="getAllJiaoXueLouByXiaoQu" resultType="String" parameterType="String">
-		select distinct JiaoXueLou from Classroom where XiaoQu=#{xiaoQu};
+	<select id="getAllJiaoXueQuByXiaoQu" resultType="String" parameterType="String">
+		select distinct JiaoXueQu from Classroom where XiaoQu=#{xiaoQu};
 	</select>
-	<select id="getAllTypeByXiaoquJiaoxuelou" resultType="String">
-		select distinct Type from Classroom where XiaoQu=#{xiaoQu} and JiaoXueLou=#{jiaoXueLou};
+	<select id="getAllJiaoXueLouByXJ" resultType="String" parameterType="String">
+		select distinct JiaoXueLou from Classroom where XiaoQu=#{xiaoQu} and JiaoXueQu=#{jiaoXueQu};
 	</select>
-	<select id="getAllTypeByXJT" resultType="String">
+	<select id="getAllTypeByXJJ" resultType="String">
+		select distinct Type from Classroom where XiaoQu=#{xiaoQu} and JiaoXueQu=#{jiaoXueQu} 
+			and JiaoXueLou=#{jiaoXueLou};
+	</select>
+	<select id="getAllFloorByXJJT" resultType="String">
 		select distinct Floor from Classroom 
-			where XiaoQu=#{xiaoQu} and JiaoXueLou=#{jiaoXueLou} and Type=#{type};
+			where XiaoQu=#{xiaoQu} and JiaoXueQu=#{jiaoXueQu} and JiaoXueLou=#{jiaoXueLou} and Type=#{type};
 	</select>
-	<select id="getAllTypeByXJTF" resultType="String">
+	<select id="getAllRoomIDByXJJTF" resultType="String">
 		select distinct ID from Classroom 
-			where XiaoQu=#{xiaoQu} and JiaoXueLou=#{jiaoXueLou} and Type=#{type} and Floor=#{floor};
+			where XiaoQu=#{xiaoQu} and JiaoXueQu=#{jiaoXueQu} and JiaoXueLou=#{jiaoXueLou} 
+				and Type=#{type} and Floor=#{floor};
 	</select>
 	<select id="getSemesters" resultType="Semester">
 		select * from Semester order by ID desc; 

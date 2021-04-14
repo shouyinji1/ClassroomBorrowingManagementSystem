@@ -65,6 +65,10 @@
 			<input type="text" class="form-control" value="${application.classroom.xiaoQu}" readonly>
 		</div>
 		<div class="col-sm-3 mb-3">
+			<label>教学区</label>
+			<input type="text" class="form-control" value="${application.classroom.jiaoXueQu}" readonly>
+		</div>
+		<div class="col-sm-3 mb-3">
 			<label>教学楼</label>
 			<input type="text" class="form-control" value="${application.classroom.jiaoXueLou}" readonly>
 		</div>

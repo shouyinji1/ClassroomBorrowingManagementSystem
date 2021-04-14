@@ -15,20 +15,14 @@ public interface NormalUserService {
 	/** 更新申请表 */
 	public int updateApplication(Application application);
 	
-	/** 查询所有校区 */
+	/** 根据查询条件查询教室信息 */
 	public List<String> getAllXiaoQu();
-	
-	/** 根据校区查询所有的教学楼 */
-	public List<String> getAllJiaoXueLouByXiaoQu(String xiaoQu);
-	
-	/** 根据校区、教学楼查询所有的类型 */
-	public List<String> getAllTypeByXiaoquJiaoxuelou(String xiaoQu,String jiaoXueLou);
-	
-	/** 根据校区、教学楼、类型查询所有的楼层 */
-	public List<String> getAllTypeByXJT(String xiaoQu,String jiaoXueLou,String type);
-
-	/** 根据校区、教学楼、类型、楼层查询所有的教室 */
-	public List<String> getAllTypeByXJTF(String xiaoQu,String jiaoXueLou,String type,String floor);
+	public List<String> getAllJiaoXueQuByXiaoQu(String xiaoQu);
+	public List<String> getAllJiaoXueLouByXJ(String xiaoQu, String jiaoXueQu);
+	public List<String> getAllTypeByXJJ(String xiaoQu, String jiaoXueQu, String jiaoXueLou);
+	public List<String> getAllFloorByXJJT(String xiaoQu, String jiaoXueQu, String jiaoXueLou, String type);
+	public List<String> getAllRoomIDByXJJTF(String xiaoQu, String jiaoXueQu, String jiaoXueLou, String type,
+			String floor);
 	
 	/** 查询学期信息 */
 	public List<Semester> getSemesters();

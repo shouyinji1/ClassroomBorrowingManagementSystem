@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS Classroom(
 	Name VARCHAR(20) COMMENT '教室名称',
 	Type VARCHAR(20) COMMENT '教室类型',
 	XiaoQu NVARCHAR(20) COMMENT '校区',
+	JiaoXueQu NVARCHAR(20) COMMENT '教学区',
 	JiaoXueLou NVARCHAR(20) NOT NULL COMMENT '教学楼',
 	Floor TINYINT NOT NULL COMMENT '楼层',
 	Capacity SMALLINT UNSIGNED COMMENT '容量'
@@ -58,7 +59,7 @@ CREATE TABLE IF NOT EXISTS RoomStatus(
 	UNIQUE(RoomID, UserID, ZhouCi, XingQi, SJieCi, EJieCi),
 	FOREIGN KEY(RoomID) REFERENCES Classroom(ID) ON DELETE CASCADE,
 	FOREIGN KEY(UserID) REFERENCES User(ID) ON DELETE CASCADE
-) CHARSET=utf8 COMMENT '教室状态表';
+) CHARSET=utf8 COMMENT '教室课表';
 CREATE TABLE IF NOT EXISTS Semester(
 	ID TINYINT PRIMARY KEY AUTO_INCREMENT COMMENT '学期ID',
 	SDate DATE COMMENT '起始日期(星期一)',
@@ -74,22 +75,22 @@ INSERT INTO User VALUES('U00002','klsd','654321','NormalUser','12345678902','abc
 INSERT INTO User VALUES('U00003','张三','654321','NormalUser','12345678903','abc3@abc.com','计算机学院');
 INSERT INTO User VALUES('U00004','李四','654321','NormalUser','12345678904','abc4@abc.com','应用技术学院');
 INSERT INTO User VALUES('U00005','王二麻','654321','NormalUser','12345678904','abc4@abc.com','机械学院');
-INSERT INTO Classroom VALUES('C00001','xxxxx','sdlfj','jwioe','ld',1,60);
-INSERT INTO Classroom VALUES('1#201','sdf','普通教室','北京路校区','1',2,100);
-INSERT INTO Classroom VALUES('1#202','sdf','多媒体教室','北京路校区','1',2,50);
-INSERT INTO Classroom VALUES('1#203','sdf','计算机教室','北京路校区','1',2,50);
-INSERT INTO Classroom VALUES('2#101','sdf','会议室','北京路校区','2',1,60);
-INSERT INTO Classroom VALUES('11#101','sdf','多媒体教室','枚乘路校区','11',1,50);
-INSERT INTO Classroom VALUES('11#102','sdf','计算机教室','枚乘路校区','11',1,50);
-INSERT INTO Classroom VALUES('12#101','sdf','普通教室','枚乘路校区','12',1,100);
-INSERT INTO Classroom VALUES('22#201','sdf','会议室','枚乘路校区','22',2,60);
-INSERT INTO Classroom VALUES('111#301','sdf','多媒体教室','萧湖校区','111',3,50);
-INSERT INTO Classroom VALUES('111#302','sdf','计算机教室','萧湖校区','111',3,50);
-INSERT INTO Classroom VALUES('123#301','sdf','普通教室','萧湖校区','123',3,100);
-INSERT INTO Classroom VALUES('222#301','sdf','会议室','萧湖校区','222',3,60);
-INSERT INTO Classroom VALUES('YFJ0101','sdf','阶梯教室','枚乘路校区','逸夫楼',1,300);
-INSERT INTO Classroom VALUES('YFJ0202','sdf','阶梯教室','北京路校区','逸夫楼',2,300);
-INSERT INTO Classroom VALUES('YFJ0303','sdf','阶梯教室','萧湖校区','逸夫楼',3,300);
+INSERT INTO Classroom VALUES('C00001','xxxxx','sdlfj','jwioe','计算机学院','ld',1,60);
+INSERT INTO Classroom VALUES('1#201','sdf','普通教室','北京路校区','abc','1',2,100);
+INSERT INTO Classroom VALUES('1#202','sdf','多媒体教室','北京路校区','abc','1',2,50);
+INSERT INTO Classroom VALUES('1#203','sdf','计算机教室','北京路校区','abc','1',2,50);
+INSERT INTO Classroom VALUES('2#101','sdf','会议室','北京路校区','abc','2',1,60);
+INSERT INTO Classroom VALUES('11#101','sdf','多媒体教室','枚乘路校区','计算机学院','11',1,50);
+INSERT INTO Classroom VALUES('11#102','sdf','计算机教室','枚乘路校区','计算机学院','11',1,50);
+INSERT INTO Classroom VALUES('12#101','sdf','普通教室','枚乘路校区','计算机学院','12',1,100);
+INSERT INTO Classroom VALUES('22#201','sdf','会议室','枚乘路校区','应用技术学院','22',2,60);
+INSERT INTO Classroom VALUES('111#301','sdf','多媒体教室','萧湖校区','abc','111',3,50);
+INSERT INTO Classroom VALUES('111#302','sdf','计算机教室','萧湖校区','abc','111',3,50);
+INSERT INTO Classroom VALUES('123#301','sdf','普通教室','萧湖校区','abc','123',3,100);
+INSERT INTO Classroom VALUES('222#301','sdf','会议室','萧湖校区','abc','222',3,60);
+INSERT INTO Classroom VALUES('YFJ0101','sdf','阶梯教室','枚乘路校区','abc','逸夫楼',1,300);
+INSERT INTO Classroom VALUES('YFJ0202','sdf','阶梯教室','北京路校区','abc','逸夫楼',2,300);
+INSERT INTO Classroom VALUES('YFJ0303','sdf','阶梯教室','萧湖校区','abc','逸夫楼',3,300);
 INSERT INTO Application(UserID,RoomID,ZhouCi,XingQi,SJieCi,EJieCi,Type,Purpose) VALUES('U00001','C00001',10,1,1,2,'教学活动','给学生上课');
 INSERT INTO Application(UserID,RoomID,ZhouCi,XingQi,SJieCi,EJieCi,Type,Purpose) VALUES('U00001','C00001',10,1,5,7,'教学活动','给学生上课');
 INSERT INTO Application(UserID,RoomID,ZhouCi,XingQi,SJieCi,EJieCi,Type,Purpose) VALUES('U00001','123#301',10,2,1,2,'文娱活动','班级活动庆祝会');

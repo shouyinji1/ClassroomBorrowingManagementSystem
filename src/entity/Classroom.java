@@ -11,6 +11,7 @@ public class Classroom implements Serializable{
 	private String name;
 	private String type;
 	private String xiaoQu;
+	private String jiaoXueQu;
 	private String jiaoXueLou;
 	private int floor;
 	private int capacity;
@@ -38,6 +39,12 @@ public class Classroom implements Serializable{
 	}
 	public void setXiaoQu(String xiaoQu) {
 		this.xiaoQu = xiaoQu;
+	}
+	public String getJiaoXueQu() {
+		return jiaoXueQu;
+	}
+	public void setJiaoXueQu(String jiaoXueQu) {
+		this.jiaoXueQu = jiaoXueQu;
 	}
 	public String getJiaoXueLou() {
 		return jiaoXueLou;

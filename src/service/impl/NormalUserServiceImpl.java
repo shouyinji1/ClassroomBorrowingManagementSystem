@@ -69,27 +69,34 @@ public class NormalUserServiceImpl implements NormalUserService {
 	}
 
 	@Override
-	public List<String> getAllJiaoXueLouByXiaoQu(String xiaoQu) {
+	public List<String> getAllJiaoXueQuByXiaoQu(String xiaoQu) {
 		// TODO Auto-generated method stub
-		return normalUserDao.getAllJiaoXueLouByXiaoQu(xiaoQu);
+		return normalUserDao.getAllJiaoXueQuByXiaoQu(xiaoQu);
 	}
 
 	@Override
-	public List<String> getAllTypeByXiaoquJiaoxuelou(String xiaoQu, String jiaoXueLou) {
+	public List<String> getAllJiaoXueLouByXJ(String xiaoQu, String jiaoXueQu) {
 		// TODO Auto-generated method stub
-		return normalUserDao.getAllTypeByXiaoquJiaoxuelou(xiaoQu, jiaoXueLou);
+		return normalUserDao.getAllJiaoXueLouByXJ(xiaoQu, jiaoXueQu);
 	}
 
 	@Override
-	public List<String> getAllTypeByXJT(String xiaoQu, String jiaoXueLou, String type) {
+	public List<String> getAllTypeByXJJ(String xiaoQu, String jiaoXueQu, String jiaoXueLou) {
 		// TODO Auto-generated method stub
-		return normalUserDao.getAllTypeByXJT(xiaoQu, jiaoXueLou, type);
+		return normalUserDao.getAllTypeByXJJ(xiaoQu, jiaoXueQu, jiaoXueLou);
 	}
 
 	@Override
-	public List<String> getAllTypeByXJTF(String xiaoQu, String jiaoXueLou, String type, String floor) {
+	public List<String> getAllFloorByXJJT(String xiaoQu, String jiaoXueQu, String jiaoXueLou, String type) {
 		// TODO Auto-generated method stub
-		return normalUserDao.getAllTypeByXJTF(xiaoQu, jiaoXueLou, type, floor);
+		return normalUserDao.getAllFloorByXJJT(xiaoQu, jiaoXueQu, jiaoXueLou, type);
+	}
+
+	@Override
+	public List<String> getAllRoomIDByXJJTF(String xiaoQu, String jiaoXueQu, String jiaoXueLou, String type,
+			String floor) {
+		// TODO Auto-generated method stub
+		return normalUserDao.getAllRoomIDByXJJTF(xiaoQu, jiaoXueQu, jiaoXueLou, type, floor);
 	}
 
 	@Override
@@ -97,4 +104,5 @@ public class NormalUserServiceImpl implements NormalUserService {
 		// TODO Auto-generated method stub
 		return normalUserDao.getSemesters();
 	}
+
 }
