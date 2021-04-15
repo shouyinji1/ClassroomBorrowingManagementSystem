@@ -42,6 +42,7 @@ CREATE TABLE IF NOT EXISTS Application(
 	ReviewTime DATETIME COMMENT '审批时间',
 	Approval BOOLEAN COMMENT '审批意见',
 	ReviewContent TEXT COMMENT '具体审批回复',
+	UNIQUE(RoomID, ZhouCi, XingQi, SJieCi, EJieCi),
 	FOREIGN KEY(UserID) REFERENCES User(ID) ON DELETE CASCADE,
 	FOREIGN KEY(RoomID) REFERENCES Classroom(ID) ON DELETE CASCADE,
 	FOREIGN KEY(ReviewerID) REFERENCES User(ID)
@@ -56,7 +57,7 @@ CREATE TABLE IF NOT EXISTS RoomStatus(
 	EJieCi TINYINT NOT NULL COMMENT '结束节次',
 	Type TEXT NOT NULL COMMENT '使用类型',
 	Purpose TEXT COMMENT '用途',
-	UNIQUE(RoomID, UserID, ZhouCi, XingQi, SJieCi, EJieCi),
+	UNIQUE(RoomID, ZhouCi, XingQi, SJieCi, EJieCi),
 	FOREIGN KEY(RoomID) REFERENCES Classroom(ID) ON DELETE CASCADE,
 	FOREIGN KEY(UserID) REFERENCES User(ID) ON DELETE CASCADE
 ) CHARSET=utf8 COMMENT '教室课表';
@@ -96,6 +97,7 @@ INSERT INTO Application(UserID,RoomID,ZhouCi,XingQi,SJieCi,EJieCi,Type,Purpose) 
 INSERT INTO Application(UserID,RoomID,ZhouCi,XingQi,SJieCi,EJieCi,Type,Purpose) VALUES('U00001','C00001',10,1,5,7,'教学活动','给学生上课');
 INSERT INTO Application(UserID,RoomID,ZhouCi,XingQi,SJieCi,EJieCi,Type,Purpose) VALUES('U00001','123#301',10,2,1,2,'文娱活动','班级活动庆祝会');
 INSERT INTO Application(UserID,RoomID,ZhouCi,XingQi,SJieCi,EJieCi,Type,Purpose) VALUES('U00001','22#201',10,1,3,3,'会议','开班会');
+INSERT INTO Application(UserID,RoomID,ZhouCi,XingQi,SJieCi,EJieCi,Type,Purpose) VALUES('U00001','22#201',7,1,3,3,'会议','开班会');
 INSERT INTO Application(UserID,RoomID,ZhouCi,XingQi,SJieCi,EJieCi,Type,Purpose,ReviewerID,ReviewTime,Approval,ReviewContent) VALUES('U00001','11#102',7,1,1,2,'教学活动','给学生上课','A00001',CURRENT_TIMESTAMP,1,'通过，可以');
 INSERT INTO RoomStatus(RoomID,UserID,ZhouCi,XingQi,SJieCi,EJieCi,Type) VALUES('11#102','U00001',7,1,1,2,'教学活动');
 INSERT INTO RoomStatus(RoomID,UserID,ZhouCi,XingQi,SJieCi,EJieCi,Type) VALUES('11#101','U00001',7,1,3,4,'课表课程');

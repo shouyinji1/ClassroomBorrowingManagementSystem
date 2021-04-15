@@ -3,15 +3,13 @@ package entity;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
-
-import org.apache.ibatis.type.Alias;
 import org.springframework.stereotype.Component;
 
 /** 教室申请表 */
 @Component("application")
 public class Application implements Serializable{
 	private static final long serialVersionUID = 1L;
+
 	/** 教室申请表ID */
 	private int id;
 	/** 申请者ID */
@@ -35,7 +33,9 @@ public class Application implements Serializable{
 	
 	/** 所有的类型 */
 	private String[] types= {"教学活动","会议","文娱活动","社团活动"};
-
+	/** 申请是否过期 */
+	private boolean aging;
+	
 	public int getId() {
 		return id;
 	}
@@ -154,5 +154,27 @@ public class Application implements Serializable{
 	}
 	public void setTypes(String[] types) {
 		this.types = types;
+	}
+
+	public boolean isAging() {
+		return aging;
+	}
+	public void setAging(Semester semester) {
+		int zhouCiNow=semester.getZhouCiNow();
+		int xingQiNow=semester.getXingQiNow();
+		if(approval==null) {
+			if(zhouCi>zhouCiNow) {
+				this.aging=false;
+			}else if(zhouCi==zhouCiNow) {
+				if(xingQi>xingQiNow)
+					this.aging=false;
+				else 
+					this.aging=true;
+			}else {
+				this.aging=true;
+			}
+		}else {
+			this.aging=false;
+		}
 	}
 }

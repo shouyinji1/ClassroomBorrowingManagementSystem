@@ -23,7 +23,10 @@ public interface NormalUserDao {
 	public List<Application> getApplicationsByApplication(Application application);
 	
 	/** 更新申请表记录 */
-	public void updateApplication(Application application);
+	public int updateApplication(Application application);
+	
+	/** 根据申请记录ID删除指定申请记录 */
+	public int deleteApplicationById(int id);
 	
 	/** 查询所有校区 */
 	public List<String> getAllXiaoQu();
@@ -61,4 +64,7 @@ public interface NormalUserDao {
 	
 	/** 根据教室ID查询教室信息 */
 	public Classroom getClassroomById(String id);
+	
+	/** 插入申请记录 */
+	public int insertApplication(Application application);
 }

@@ -44,7 +44,18 @@ public class NormalUser {
 	@RequestMapping("applicationUpdate")
 	public ModelAndView applicationUpdate(@Param("id")int id,HttpServletRequest request, HttpServletResponse response) {
 		Application application=normalUserService.getApplicationById(id);
-		ModelAndView mav=new ModelAndView("normalUser/applicationUpdate");
+		ModelAndView mav;
+		if(application.isAging()==true) {	// 申请已过期
+			mav=new ModelAndView("normalUser/applicationUpdate/aging");
+		}else if(application.getApproval()==null){	// 待审批
+			mav=new ModelAndView("normalUser/applicationUpdate/waitApproval");
+		}else if(application.getApproval()==true) {	// 批准
+			mav=new ModelAndView("normalUser/applicationUpdate/approve");
+		}else if(application.getApproval()==false) {	// 不批
+			mav=new ModelAndView("normalUser/applicationUpdate/oppose");
+		}else {
+			return null;
+		}
 		mav.addObject("application",application);
 		return mav;
 	}
@@ -53,14 +64,22 @@ public class NormalUser {
 	@RequestMapping("updateApplication")
 	@ResponseBody
 	public String updateApplication(Application application, HttpSession session) {
-		System.out.println(application.getRoomID());
 		return String.valueOf(normalUserService.updateApplication(application));
+	}
+	
+	/** 删除申请 */
+	@RequestMapping("deleteApplicationById")
+	@ResponseBody
+	public String deleteApplicationById(int id) {
+		return Integer.toString(normalUserService.deleteApplicationById(id));
 	}
 	
 	@RequestMapping("apply")
 	public ModelAndView apply(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav=new ModelAndView("normalUser/apply");
 		mav.addObject("allXiaoQu", normalUserService.getAllXiaoQu());
+		
+		// 计算前台可选的周次和星期
 		List<Semester> semesters=normalUserService.getSemesters();
 		int daysDiff=(int)util.DateTool.periodDay(semesters.get(0).getsDate());
 		int txingQi=daysDiff%7+1+1;	// 明日星期几
@@ -126,5 +145,11 @@ public class NormalUser {
 		application.setClassroom(normalUserService.getClassroomById(application.getRoomID()));
 		ModelAndView mav=new ModelAndView("normalUser/apply-Modal");
 		return mav;
+	}
+	
+	@RequestMapping(value="submitApplication",method = RequestMethod.POST)
+	@ResponseBody
+	public String submitApplication(Application application) {
+		return Integer.toString(normalUserService.insertApplication(application));
 	}
 }

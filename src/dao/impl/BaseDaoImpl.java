@@ -1,13 +1,9 @@
 package dao.impl;
 
-import java.util.List;
-
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import entity.User;
 
 @Repository
 public class BaseDaoImpl<T> {

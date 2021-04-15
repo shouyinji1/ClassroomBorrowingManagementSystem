@@ -16,6 +16,9 @@ public interface NormalUserService {
 	/** 更新申请表 */
 	public int updateApplication(Application application);
 	
+	/** 根据申请记录ID删除指定申请记录 */
+	public int deleteApplicationById(int id);
+
 	/** 根据查询条件查询教室信息 */
 	public List<String> getAllXiaoQu();
 	public List<String> getAllJiaoXueQuByXiaoQu(String xiaoQu);
@@ -34,4 +37,6 @@ public interface NormalUserService {
 	/** 根据教室ID查询教室信息 */
 	public Classroom getClassroomById(String id);
 	
+	/** 插入申请记录 */
+	public int insertApplication(Application application);
 }

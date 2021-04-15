@@ -82,23 +82,41 @@
 	<form>
 		<input type="hidden" name="id" value="${application.id}">
 		<input type="hidden" name="roomID" value="${application.roomID}">
-		<c:if test="${application.approval != null}"><fieldset disabled></c:if>
+		<c:if test="${application.approval != null or application.aging==true}"><fieldset disabled></c:if>
 			<div class="row">
 				<div class="col-sm-3 mb-3">
 					<label>周次</label>
-					<input type="text" class="form-control" name="zhouCi" value="${application.zhouCi}">
+					<input type="text" class="form-control" name="zhouCi" value="${application.zhouCi}" readonly>
 				</div>
 				<div class="col-sm-3 mb-3">
 					<label>星期</label>
-					<input type="text" class="form-control" name="xingQi" value="${application.xingQi}">
+					<input type="text" class="form-control" name="xingQi" value="${application.xingQi}" readonly>
 				</div>
 				<div class="col-sm-3 mb-3">
 					<label>开始节次</label>
-					<input type="text" class="form-control" name="sJieCi" value="${application.sJieCi}">
+					<select class="form-control" id="sJieCi" name="sJieCi">
+						<c:forEach begin="1" end="12" var="i">
+							<c:choose>
+								<c:when test="${application.sJieCi==i}">
+									<option value="${i}" selected="selected">${i}</option>
+								</c:when>
+								<c:otherwise><option value="${i}">${i}</option></c:otherwise>
+							</c:choose>
+						</c:forEach>
+					</select>
 				</div>
 				<div class="col-sm-3 mb-3">
 					<label>结束节次</label>
-					<input type="text" class="form-control" name="eJieCi" value="${application.eJieCi}">
+					<select class="form-control" id="eJieCi" name="eJieCi">
+						<c:forEach begin="1" end="12" var="i">
+							<c:choose>
+								<c:when test="${application.eJieCi==i}">
+									<option value="${i}" selected="selected">${i}</option>
+								</c:when>
+								<c:otherwise><option value="${i}">${i}</option></c:otherwise>
+							</c:choose>
+						</c:forEach>
+					</select>
 				</div>
 			</div>
 			<hr class="mb-4">
@@ -122,12 +140,17 @@
 					<textarea class="form-control" id="message-text" name="purpose">${application.purpose}</textarea>
 				</div>
 			</div>
-		<c:if test="${application.approval != null}"></fieldset></c:if>
+		<c:if test="${application.approval != null or application.aging==true}"></fieldset></c:if>
 	</form>
 	<hr class="mb-4">
-	<h4 class="mb-3">审批意见</h4>
+	<h4 class="mb-3">审批情况</h4>
 	<c:choose>
-		<c:when test="${application.approval==null}">
+		<c:when test="${application.aging==true}">
+			<div class="form-group row">
+				<div class="col-sm-2">申请已过期</div>
+			</div>
+		</c:when>
+		<c:when test="${(empty application.approval) and application.aging==false}">
 			<div class="form-group row">
 				<div class="col-sm-2">待审批</div>
 			</div>
@@ -160,8 +183,13 @@
 	<hr class="mb-4">
 	<div class="row">
 		<div class="m-auto">
+		<c:if test="${((empty application.approval) and application.aging==false) or application.approval==true}">
 			<button type="submit" class="btn btn-primary" onclick="toUpdateApplication()">提交</button>
+		</c:if>
 			<button type="button" class="btn btn-secondary" onclick="$('#page-content').load('../normalUser/myApplications')">返回</button>
+		<c:if test="${empty application.approval}">
+			<button type="submit" class="btn btn-danger" onclick="deleteApplication(${application.id})">删除</button>
+		</c:if>
 		</div>
 	</div>
     <script type="text/javascript">
@@ -173,12 +201,12 @@
 				async:true,
 				data: form,
 				success:function(data){
-					if(data=="0"){
+					if(data=="1"){
 						$("#page-content").load("../normalUser/myApplications");
-					}else if(data=="1"){
-						alert("与已有教室安排时间冲突");
-					}else if(data=="2"){
-						alert("与已有教室拟借用申请时间冲突");
+					}else if(data=="0"){
+						alert("与已有教室安排或申请安排时间冲突");
+					}else{
+						alert("更新异常");
 					}
 				},
 				error : function() {
@@ -186,6 +214,41 @@
 				}
 			});
 		}	
+		function deleteApplication(id){
+			$.ajax({
+				type: "post",//方法类型
+				url: "../normalUser/deleteApplicationById",
+				async:true,
+				data: {'id':id},
+				success:function(data){
+					if(data=='1'){
+						$("#page-content").load("../normalUser/myApplications");
+					}else if(data=='0'){
+						alert("删除失败");
+					}else{
+						alert("删除异常");
+					}
+				},
+				error : function() {
+					alert("异常请求！"+data.msg);
+				}
+			});
+		}	
+		$("#sJieCi").change(function(){
+			var sJieCi=$("#sJieCi").val();
+			var eJieCi=$("#eJieCi").val();
+			var newOptions='';
+			for(var i=sJieCi;i<=12;i++){	// 结束节次始终保持大于等于开始节次
+				if(i==sJieCi && sJieCi>eJieCi){
+					newOptions+="<option selected='selected' value='"+sJieCi+"'>"+sJieCi+"</option>";
+				}else if(i==eJieCi){
+					newOptions+="<option selected='selected' value='"+eJieCi+"'>"+eJieCi+"</option>";
+				}else{
+					newOptions+="<option value='"+i+"'>"+i+"</option>";
+				}
+			}
+			document.getElementById("eJieCi").innerHTML=newOptions;
+		});
     </script>
 </body>
 </html>

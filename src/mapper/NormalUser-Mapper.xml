@@ -6,10 +6,12 @@
 		select * from Application where UserID=#{userID}
 	</select>
 	<select id="getApplicationById" resultMap="applicationResultMap" parameterType="int">
-		select Application.ID as ApplicationID, UserID, RoomID, SubmitTime, ZhouCi, XingQi, SJieCi, EJieCi, 
-			Application.Type as ApplicationType, Purpose, ReviewerID, ReviewTime, Approval,ReviewContent,
+		select Application.ID as ApplicationID, UserID, RoomID, SubmitTime, zhouCi, XingQi, 
+			SJieCi, EJieCi, Application.Type as ApplicationType, Purpose, 
+			ReviewerID, ReviewTime, Approval,ReviewContent,
 			User.Name as UserName, Phone, Email, Department,
-			Classroom.Name as ClassroomName, Classroom.Type as RoomType, XiaoQu,JiaoXueQu, JiaoXueLou, Floor, Capacity 
+			Classroom.Name as ClassroomName, Classroom.Type as RoomType, 
+			XiaoQu,JiaoXueQu, JiaoXueLou, Floor, Capacity 
 				from Application,User,Classroom 
 					where Application.ID=#{id} and Application.UserID=User.ID and Application.RoomID=Classroom.ID;
 	</select>
@@ -60,8 +62,20 @@
 	</select>
 	<update id="updateApplication" parameterType="Application">
 		update Application set ZhouCi=${zhouCi}, XingQi=#{xingQi}, SJieCi=#{sJieCi}, 
-			EJieCi=#{eJieCi}, Type=#{type}, Purpose=#{purpose} where ID=${id} ;
+			EJieCi=#{eJieCi}, Type=#{type}, Purpose=#{purpose} 
+				where ID=${id} and not exists(
+					select 1 from Application where ((SJieCi &gt;=#{sJieCi} and SJieCi &lt;=#{eJieCi})
+						or (EJieCi &gt;=#{sJieCi} and EJieCi &lt;=#{eJieCi}))
+						and RoomID=#{roomID} and ZhouCi=#{zhouCi} and XingQi=#{xingQi} and ID !=#{id}
+				) and not exists(
+					select 1 from RoomStatus where ((SJieCi &gt;=#{sJieCi} and SJieCi &lt;=#{eJieCi})
+						or (EJieCi &gt;=#{sJieCi} and EJieCi &lt;=#{eJieCi}))
+						and RoomID=#{roomID} and ZhouCi=#{zhouCi} and XingQi=#{xingQi}
+				);
 	</update>
+	<delete id="deleteApplicationById" parameterType="int">
+		delete from Application where ID=#{id};
+	</delete>
 	
 	<select id="getAllXiaoQu" resultType="String">
 		select distinct XiaoQu from Classroom;
@@ -112,4 +126,17 @@
 	<select id="getClassroomById" resultType="Classroom" parameterType="String">
 		select * from Classroom where ID=#{id};
 	</select>
+	<insert id="insertApplication" parameterType="Application">
+		insert into Application(UserID,RoomID,ZhouCi,XingQi,SJieCi,EJieCi,Type,Purpose)
+			select #{userID},#{roomID},#{zhouCi},#{xingQi},#{sJieCi},#{eJieCi},#{type},#{purpose}
+				from dual where not exists(
+					select 1 from Application where ((SJieCi &gt;=#{sJieCi} and SJieCi &lt;=#{eJieCi})
+						or (EJieCi &gt;=#{sJieCi} and EJieCi &lt;=#{eJieCi}))
+						and RoomID=#{roomID} and ZhouCi=#{zhouCi} and XingQi=#{xingQi}
+					union
+					select 1 from RoomStatus where ((SJieCi &gt;=#{sJieCi} and SJieCi &lt;=#{eJieCi})
+						or (EJieCi &gt;=#{sJieCi} and EJieCi &lt;=#{eJieCi}))
+						and RoomID=#{roomID} and ZhouCi=#{zhouCi} and XingQi=#{xingQi}
+				);
+	</insert>
 </mapper>

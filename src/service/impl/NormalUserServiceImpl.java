@@ -2,8 +2,10 @@ package service.impl;
 
 import java.util.List;
 
+import org.apache.logging.log4j.core.config.AppendersPlugin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.method.annotation.SessionStatusMethodArgumentResolver;
 
 import dao.NormalUserDao;
 import entity.Application;
@@ -21,14 +23,25 @@ public class NormalUserServiceImpl implements NormalUserService {
 	/** 查询某一用户的所有申请记录 */
 	public List<Application> getApplicationsByUserId(String userID) {
 		// TODO Auto-generated method stub
-		return normalUserDao.getApplicationsByUserId(userID);
+		List<Application> applications=normalUserDao.getApplicationsByUserId(userID);
+		
+		// 设置申请是否过期
+		Semester semester=normalUserDao.getSemesters().get(0);
+		for(Application application:applications) {
+			application.setAging(semester);
+		}
+		return applications;
 	}
 	
 	@Override
 	/** 查询指定申请记录的所有信息 */
 	public Application getApplicationById(int id) {
 		// TODO Auto-generated method stub
-		return normalUserDao.getApplicationById(id);
+		Application application =normalUserDao.getApplicationById(id);
+		// 设置申请是否过期
+		Semester semester=normalUserDao.getSemesters().get(0);
+		application.setAging(semester);
+		return application;
 	}
 
 	@Override
@@ -38,6 +51,7 @@ public class NormalUserServiceImpl implements NormalUserService {
 	public int updateApplication(Application application) {
 		// TODO Auto-generated method stub
 		// 判断教室借用时段是否与已存在教室安排冲突
+		/*
 		List<RoomStatus> roomsStatus=normalUserDao.getRoomsStatusByApplication(application);
 		for(RoomStatus roomStatus:roomsStatus) {	
 			if(roomStatus.getsJieCi()>=application.getsJieCi() && roomStatus.getsJieCi()<=application.geteJieCi()) {
@@ -58,9 +72,15 @@ public class NormalUserServiceImpl implements NormalUserService {
 					return 2;
 				}
 			}
-		}
-		normalUserDao.updateApplication(application);
-		return 0;
+		}*/
+		return normalUserDao.updateApplication(application);
+		//return 0;
+	}
+
+	@Override
+	public int deleteApplicationById(int id) {
+		// TODO Auto-generated method stub
+		return normalUserDao.deleteApplicationById(id);
 	}
 
 	@Override
@@ -143,6 +163,12 @@ public class NormalUserServiceImpl implements NormalUserService {
 	public Classroom getClassroomById(String id) {
 		// TODO Auto-generated method stub
 		return normalUserDao.getClassroomById(id);
+	}
+
+	@Override
+	public int insertApplication(Application application) {
+		// TODO Auto-generated method stub
+		return normalUserDao.insertApplication(application);
 	}
 
 }

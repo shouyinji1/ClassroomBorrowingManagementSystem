@@ -32,9 +32,15 @@ public class NormalUserDaoImpl extends BaseDaoImpl<NormalUserDao> implements Nor
 	}
 
 	@Override
-	public void updateApplication(Application application) {
+	public int updateApplication(Application application) {
 		// TODO Auto-generated method stub
-		this.getMapper().updateApplication(application);
+		return this.getMapper().updateApplication(application);
+	}
+
+	@Override
+	public int deleteApplicationById(int id) {
+		// TODO Auto-generated method stub
+		return this.getMapper().deleteApplicationById(id);
 	}
 
 	@Override
@@ -103,4 +109,11 @@ public class NormalUserDaoImpl extends BaseDaoImpl<NormalUserDao> implements Nor
 		// TODO Auto-generated method stub
 		return this.getMapper().getClassroomById(id);
 	}
+
+	@Override
+	public int insertApplication(Application application) {
+		// TODO Auto-generated method stub
+		return getMapper().insertApplication(application);
+	}
+
 }

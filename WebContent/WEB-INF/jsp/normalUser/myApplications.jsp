@@ -50,7 +50,12 @@
 									<c:choose>
 										<c:when test="${application.approval==true}">已审批通过</c:when>
 										<c:when test="${application.approval==false}">已拒绝申请</c:when>
-										<c:otherwise>待审批</c:otherwise>
+										<c:when test="${empty application.approval}">
+											<c:choose>
+												<c:when test="${application.aging==true}">已过期</c:when>
+												<c:when test="${application.aging==false}">待审批</c:when>
+											</c:choose>
+										</c:when>
 									</c:choose>
 								</td>
 							</tr>

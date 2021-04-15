@@ -37,13 +37,23 @@ public class Semester implements Serializable{
 		this.tWeeks = tWeeks;
 	}
 	
-	public int getZhouCi() {
+	/** 获取今天相对于学期初相差多少天 */
+	public int getDaysDiffS() {
 		Calendar calendar=Calendar.getInstance();
 		calendar.setTime(this.sDate);
 		LocalDate today = LocalDate.now();
         LocalDate specificDay = LocalDate.of(calendar.get(Calendar.YEAR),
         		calendar.get(Calendar.MONTH)+1,calendar.get(Calendar.DAY_OF_MONTH));
-		long daysDiff = ChronoUnit.DAYS.between(specificDay, today);
-		return (int) (daysDiff/7+1);
+		return (int)ChronoUnit.DAYS.between(specificDay, today);
+	}
+	/** 获取当前周次 */
+	public int getZhouCiNow() {
+		return this.getDaysDiffS()/7+1;
+	}
+	/** 根据学期初始日期推算当前星期几 
+	 * @return 1-7:星期一~星期日
+	 * */
+	public int getXingQiNow() {
+		return this.getDaysDiffS()%7+1;
 	}
 }
