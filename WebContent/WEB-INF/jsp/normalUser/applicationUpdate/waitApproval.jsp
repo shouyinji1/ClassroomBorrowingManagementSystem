@@ -82,114 +82,77 @@
 	<form>
 		<input type="hidden" name="id" value="${application.id}">
 		<input type="hidden" name="roomID" value="${application.roomID}">
-		<c:if test="${application.approval != null or application.aging==true}"><fieldset disabled></c:if>
-			<div class="row">
-				<div class="col-sm-3 mb-3">
-					<label>周次</label>
-					<input type="text" class="form-control" name="zhouCi" value="${application.zhouCi}" readonly>
-				</div>
-				<div class="col-sm-3 mb-3">
-					<label>星期</label>
-					<input type="text" class="form-control" name="xingQi" value="${application.xingQi}" readonly>
-				</div>
-				<div class="col-sm-3 mb-3">
-					<label>开始节次</label>
-					<select class="form-control" id="sJieCi" name="sJieCi">
-						<c:forEach begin="1" end="12" var="i">
-							<c:choose>
-								<c:when test="${application.sJieCi==i}">
-									<option value="${i}" selected="selected">${i}</option>
-								</c:when>
-								<c:otherwise><option value="${i}">${i}</option></c:otherwise>
-							</c:choose>
-						</c:forEach>
-					</select>
-				</div>
-				<div class="col-sm-3 mb-3">
-					<label>结束节次</label>
-					<select class="form-control" id="eJieCi" name="eJieCi">
-						<c:forEach begin="1" end="12" var="i">
-							<c:choose>
-								<c:when test="${application.eJieCi==i}">
-									<option value="${i}" selected="selected">${i}</option>
-								</c:when>
-								<c:otherwise><option value="${i}">${i}</option></c:otherwise>
-							</c:choose>
-						</c:forEach>
-					</select>
-				</div>
+		<div class="row">
+			<div class="col-sm-3 mb-3">
+				<label>周次</label>
+				<input type="text" class="form-control" name="zhouCi" value="${application.zhouCi}" readonly>
 			</div>
-			<hr class="mb-4">
-			<h4 class="mb-3">申请目的</h4>
-			<div class="form-group row">
-				<label class="col-sm-2 col-form-label">申请类型</label>
-				<div class="col-sm-3">
-					<select class="form-control" name="type">
-						<option selected="selected" value="${application.type}">${application.type}</option>	
-						<c:forEach items="${application.types}" var="type">
-							<c:if test="${application.type != type}">
-								<option value="${type}">${type}</option>
-							</c:if>
-						</c:forEach>
-					</select>
-				</div>
+			<div class="col-sm-3 mb-3">
+				<label>星期</label>
+				<input type="text" class="form-control" name="xingQi" value="${application.xingQi}" readonly>
 			</div>
-			<div class="form-group row">
-				<label class="col-sm-2 col-form-label">申请用途</label>
-				<div class="col-sm-10">
-					<textarea class="form-control" id="message-text" name="purpose">${application.purpose}</textarea>
-				</div>
+			<div class="col-sm-3 mb-3">
+				<label>开始节次</label>
+				<select class="form-control" id="sJieCi" name="sJieCi">
+					<c:forEach begin="1" end="12" var="i">
+						<c:choose>
+							<c:when test="${application.sJieCi==i}">
+								<option value="${i}" selected="selected">${i}</option>
+							</c:when>
+							<c:otherwise><option value="${i}">${i}</option></c:otherwise>
+						</c:choose>
+					</c:forEach>
+				</select>
 			</div>
-		<c:if test="${application.approval != null or application.aging==true}"></fieldset></c:if>
+			<div class="col-sm-3 mb-3">
+				<label>结束节次</label>
+				<select class="form-control" id="eJieCi" name="eJieCi">
+					<c:forEach begin="1" end="12" var="i">
+						<c:choose>
+							<c:when test="${application.eJieCi==i}">
+								<option value="${i}" selected="selected">${i}</option>
+							</c:when>
+							<c:otherwise><option value="${i}">${i}</option></c:otherwise>
+						</c:choose>
+					</c:forEach>
+				</select>
+			</div>
+		</div>
+		<hr class="mb-4">
+		<h4 class="mb-3">申请目的</h4>
+		<div class="form-group row">
+			<label class="col-sm-2 col-form-label">申请类型</label>
+			<div class="col-sm-3">
+				<select class="form-control" name="type">
+					<option selected="selected" value="${application.type}">${application.type}</option>	
+					<c:forEach items="${application.types}" var="type">
+						<c:if test="${application.type != type}">
+							<option value="${type}">${type}</option>
+						</c:if>
+					</c:forEach>
+				</select>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="col-sm-2 col-form-label">申请用途</label>
+			<div class="col-sm-10">
+				<textarea class="form-control" id="message-text" name="purpose">${application.purpose}</textarea>
+			</div>
+		</div>
 	</form>
 	<hr class="mb-4">
 	<h4 class="mb-3">审批情况</h4>
-	<c:choose>
-		<c:when test="${application.aging==true}">
-			<div class="form-group row">
-				<div class="col-sm-2">申请已过期</div>
-			</div>
-		</c:when>
-		<c:when test="${(empty application.approval) and application.aging==false}">
-			<div class="form-group row">
-				<div class="col-sm-2">待审批</div>
-			</div>
-		</c:when>
-		<c:otherwise>
-			<div class="row">
-				<div class="col-sm-12 mb-3">
-					审批人：${application.reviewer.name}
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-12 mb-3">
-					审批时间：${application.formatReviewTime}
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-12 mb-3">
-					审批意见：${application.approval ? '通过' : '不通过'}
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-12 mb-3">
-					审批回复：${application.reviewContent}
-				</div>
-			</div>
-		</c:otherwise>
-	</c:choose>
+	<div class="form-group row">
+		<div class="col-sm-2">待审批</div>
+	</div>
 	<hr class="mb-4">
 	<h4 class="mb-3">评论/反馈（教室使用后可评论反馈）</h4>
 	<hr class="mb-4">
 	<div class="row">
 		<div class="m-auto">
-		<c:if test="${((empty application.approval) and application.aging==false) or application.approval==true}">
 			<button type="submit" class="btn btn-primary" onclick="toUpdateApplication()">提交</button>
-		</c:if>
 			<button type="button" class="btn btn-secondary" onclick="$('#page-content').load('../normalUser/myApplications')">返回</button>
-		<c:if test="${empty application.approval}">
 			<button type="submit" class="btn btn-danger" onclick="deleteApplication(${application.id})">删除</button>
-		</c:if>
 		</div>
 	</div>
     <script type="text/javascript">

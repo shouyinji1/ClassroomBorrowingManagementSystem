@@ -2,6 +2,8 @@ package service;
 
 import java.util.List;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import entity.Application;
 import entity.Classroom;
 import entity.Semester;

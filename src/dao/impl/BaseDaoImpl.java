@@ -17,7 +17,7 @@ public class BaseDaoImpl<T> {
 	
 	// 4. 为mapper创建get set
 	public T getMapper() {
-		return sqlSessionFactory.openSession().getMapper(mapper);
+			return sqlSessionFactory.openSession().getMapper(mapper);
 	}
 	public void setMapper(Class<T> mapper) {
 		this.mapper=mapper;

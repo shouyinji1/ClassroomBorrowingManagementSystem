@@ -170,5 +170,4 @@ public class NormalUserServiceImpl implements NormalUserService {
 		// TODO Auto-generated method stub
 		return normalUserDao.insertApplication(application);
 	}
-
 }

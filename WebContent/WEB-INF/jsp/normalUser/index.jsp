@@ -250,12 +250,12 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#myInfo-Modal">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     关于我
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <a class="dropdown-item" onclick="window.location.href='logout'">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     退出登录
                                 </a>
@@ -296,20 +296,65 @@
     </a>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="myInfo-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">个人信息</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-body"><form id="myInfo">
+					<div class="row">
+						<div class="col-sm-4 mb-3">
+							<label>ID</label>
+							<input type="text" class="form-control" value="${user.id}" readonly>
+						</div>
+						<div class="col-sm-4 mb-3">
+							<label>姓名</label>
+							<input type="text" class="form-control" value="${user.name}" readonly>
+						</div>
+						<div class="col-sm-4 mb-3">
+							<label>部门</label>
+							<input type="text" class="form-control" value="${user.department}" readonly>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6 mb-3">
+							<label>电话</label>
+							<input type="tel" class="form-control" value="${user.phone}">
+						</div>
+						<div class="col-sm-6 mb-3">
+							<label>邮箱</label>
+							<input type="email" class="form-control" value="${user.email}">
+						</div>
+					</div>
+					<hr class="mb-4">
+					<h5 class="mb-3">修改密码</h5>
+					<div class="form-group row">
+						<label class="col-sm-3 col-form-label">原密码</label>
+						<div class="col-sm-6">
+							<input type="password" class="form-control">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-3 col-form-label">新密码</label>
+						<div class="col-sm-6">
+							<input type="password" class="form-control">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-3 col-form-label">重复新密码</label>
+						<div class="col-sm-6">
+							<input type="password" class="form-control">
+						</div>
+					</div>
+                </form></div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">关闭</button>
+                    <a class="btn btn-primary" href="login.html">更改</a>
                 </div>
             </div>
         </div>

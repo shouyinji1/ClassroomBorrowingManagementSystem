@@ -1,6 +1,9 @@
 package service;
 
 import java.util.List;
+
+import org.springframework.transaction.annotation.Transactional;
+
 import entity.User;
 
 public interface UserService {

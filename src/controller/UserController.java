@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import entity.User;
@@ -82,5 +83,11 @@ public class UserController {
 		// 最后把ModelAndView对象返回出去
 		return mav;
 		//return "forward:normalUser/index";
+	}
+	
+	@RequestMapping("logout")
+	public String logout(SessionStatus status) {
+		status.setComplete();
+		return "redirect:/login.html";
 	}
 }

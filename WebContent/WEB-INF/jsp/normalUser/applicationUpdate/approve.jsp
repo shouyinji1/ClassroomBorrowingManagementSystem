@@ -86,36 +86,22 @@
 			<div class="row">
 				<div class="col-sm-3 mb-3">
 					<label>周次</label>
-					<input type="text" class="form-control" name="zhouCi" value="${application.zhouCi}" readonly>
+					<input type="text" class="form-control" value="${application.zhouCi}" readonly>
 				</div>
 				<div class="col-sm-3 mb-3">
 					<label>星期</label>
-					<input type="text" class="form-control" name="xingQi" value="${application.xingQi}" readonly>
+					<input type="text" class="form-control" value="${application.xingQi}" readonly>
 				</div>
 				<div class="col-sm-3 mb-3">
 					<label>开始节次</label>
-					<select class="form-control" id="sJieCi" name="sJieCi">
-						<c:forEach begin="1" end="12" var="i">
-							<c:choose>
-								<c:when test="${application.sJieCi==i}">
-									<option value="${i}" selected="selected">${i}</option>
-								</c:when>
-								<c:otherwise><option value="${i}">${i}</option></c:otherwise>
-							</c:choose>
-						</c:forEach>
+					<select class="form-control" id="sJieCi">
+						<option value="${application.sJieCi}" selected="selected">${application.sJieCi}</option>
 					</select>
 				</div>
 				<div class="col-sm-3 mb-3">
 					<label>结束节次</label>
-					<select class="form-control" id="eJieCi" name="eJieCi">
-						<c:forEach begin="1" end="12" var="i">
-							<c:choose>
-								<c:when test="${application.eJieCi==i}">
-									<option value="${i}" selected="selected">${i}</option>
-								</c:when>
-								<c:otherwise><option value="${i}">${i}</option></c:otherwise>
-							</c:choose>
-						</c:forEach>
+					<select class="form-control" id="eJieCi">
+						<option value="${application.eJieCi}" selected="selected">${application.eJieCi}</option>
 					</select>
 				</div>
 			</div>
@@ -124,13 +110,8 @@
 			<div class="form-group row">
 				<label class="col-sm-2 col-form-label">申请类型</label>
 				<div class="col-sm-3">
-					<select class="form-control" name="type">
+					<select class="form-control">
 						<option selected="selected" value="${application.type}">${application.type}</option>	
-						<c:forEach items="${application.types}" var="type">
-							<c:if test="${application.type != type}">
-								<option value="${type}">${type}</option>
-							</c:if>
-						</c:forEach>
 					</select>
 				</div>
 			</div>
@@ -144,46 +125,32 @@
 	</form>
 	<hr class="mb-4">
 	<h4 class="mb-3">审批情况</h4>
-	<c:choose>
-		<c:when test="${application.aging==true}">
-			<div class="form-group row">
-				<div class="col-sm-2">申请已过期</div>
-			</div>
-		</c:when>
-		<c:when test="${(empty application.approval) and application.aging==false}">
-			<div class="form-group row">
-				<div class="col-sm-2">待审批</div>
-			</div>
-		</c:when>
-		<c:otherwise>
-			<div class="row">
-				<div class="col-sm-12 mb-3">
-					审批人：${application.reviewer.name}
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-12 mb-3">
-					审批时间：${application.formatReviewTime}
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-12 mb-3">
-					审批意见：${application.approval ? '通过' : '不通过'}
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-12 mb-3">
-					审批回复：${application.reviewContent}
-				</div>
-			</div>
-		</c:otherwise>
-	</c:choose>
+	<div class="row">
+		<div class="col-sm-12 mb-3">
+			审批人：${application.reviewer.name}
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12 mb-3">
+			审批时间：${application.formatReviewTime}
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12 mb-3">
+			审批意见：${application.approval ? '通过' : '不通过'}
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12 mb-3">
+			审批回复：${application.reviewContent}
+		</div>
+	</div>
 	<hr class="mb-4">
 	<h4 class="mb-3">评论/反馈（教室使用后可评论反馈）</h4>
 	<hr class="mb-4">
 	<div class="row">
 		<div class="m-auto">
-			<button type="submit" class="btn btn-primary" onclick="toUpdateApplication()">提交</button>
+			<button type="submit" class="btn btn-primary" onclick="">提交</button>
 			<button type="button" class="btn btn-secondary" onclick="$('#page-content').load('../normalUser/myApplications')">返回</button>
 		</div>
 	</div>
@@ -209,21 +176,6 @@
 				}
 			});
 		}	
-		$("#sJieCi").change(function(){
-			var sJieCi=$("#sJieCi").val();
-			var eJieCi=$("#eJieCi").val();
-			var newOptions='';
-			for(var i=sJieCi;i<=12;i++){	// 结束节次始终保持大于等于开始节次
-				if(i==sJieCi && sJieCi>eJieCi){
-					newOptions+="<option selected='selected' value='"+sJieCi+"'>"+sJieCi+"</option>";
-				}else if(i==eJieCi){
-					newOptions+="<option selected='selected' value='"+eJieCi+"'>"+eJieCi+"</option>";
-				}else{
-					newOptions+="<option value='"+i+"'>"+i+"</option>";
-				}
-			}
-			document.getElementById("eJieCi").innerHTML=newOptions;
-		});
     </script>
 </body>
 </html>
