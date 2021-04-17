@@ -25,12 +25,18 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	@Override
-	public void updUser(User user) {
-		userDao.updUser(user);
+	public int updUser(User user) {
+		return userDao.updUser(user);
 	}
 	
 	@Override
 	public User login(String id,String password) {
 		return userDao.getUserByIdAndPassword(id, password);
+	}
+
+	@Override
+	public int updatePasssword(User user) {
+		// TODO Auto-generated method stub
+		return userDao.updatePassword(user);
 	}
 }

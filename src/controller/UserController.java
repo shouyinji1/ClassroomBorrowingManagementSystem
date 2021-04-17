@@ -48,10 +48,28 @@ public class UserController {
 		return mav;
 	}
 	
-	@RequestMapping("/updUser")
-	public String toUpd(User user) {
-		userService.updUser(user);
-		return "forward:getAllUser";
+	/**
+	 * @return 更新用户信息，不包括密码 */
+	@RequestMapping("updateUserInfo")
+	@ResponseBody
+	public String updateUserInfo(User user) {
+		return Integer.toString(userService.updUser(user));
+	}
+	
+	@RequestMapping("updatePassword")
+	@ResponseBody
+	public String updatePassword(String password,String newPassword,HttpServletRequest request) {
+			User newUser=(User)request.getSession().getAttribute("user");
+			User user=new User();
+			user.setId(newUser.getId());
+			user.setPassword(password);
+			user.setNewPassword(newPassword);
+			int status=userService.updatePasssword(user);
+			if(status==1) {
+				newUser.setPassword(newPassword);
+				request.getSession().setAttribute("user", newUser);
+			}
+			return Integer.toString(status);
 	}
 	
 	/** 登录验证

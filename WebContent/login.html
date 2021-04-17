@@ -98,6 +98,17 @@
 				}
 			});
 		}
+		function validate(){
+			var pw1=document.getElementById("newPassword").value;
+			var pw2=document.getElementById("renewPassword").value;
+			if(pw1==pw2){
+				document.getElementById("hint").innerHTML="";
+				document.getElementById("submit").disabled=false;
+			}else{
+				document.getElementById("hint").innerHTML="两次密码不同";
+				document.getElementById("submit").disabled=true;
+			}
+		}
 	</script>
 </body>
 

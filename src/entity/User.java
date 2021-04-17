@@ -16,6 +16,8 @@ public class User implements Serializable{
 	private String email;
 	private String department;
 
+	private String newPassword;
+	
 	public String getId() {
 		return id;
 	}
@@ -57,5 +59,11 @@ public class User implements Serializable{
 	}
 	public void setDepartment(String department) {
 		this.department = department;
+	}
+	public String getNewPassword() {
+		return newPassword;
+	}
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
 	}
 }

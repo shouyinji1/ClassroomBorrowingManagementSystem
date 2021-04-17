@@ -26,8 +26,8 @@ public class UserDaoImpl extends BaseDaoImpl<UserDao> implements UserDao{
 	}
 	// 修改用户信息
 	@Override
-	public void updUser(User user) {
-		this.getMapper().updUser(user);
+	public int updUser(User user) {
+		return this.getMapper().updUser(user);
 	}
 	// 删除用户
 	public void delUser(int uId) {
@@ -37,5 +37,10 @@ public class UserDaoImpl extends BaseDaoImpl<UserDao> implements UserDao{
 	@Override
 	public User getUserByIdAndPassword(String id, String password){
 		return this.getMapper().getUserByIdAndPassword(id, password);
+	}
+	@Override
+	public int updatePassword(User user) {
+		// TODO Auto-generated method stub
+		return this.getMapper().updatePassword(user);
 	}
 }

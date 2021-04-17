@@ -5,7 +5,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 	http://www.springframework.org/schema/context
-	https://www.springframework.org/schema/context/spring-context-4.0.xsd">
+	http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 	
 	<!-- c3p0连接池 -->
 	<context:property-placeholder location="classpath:db.properties"/>
