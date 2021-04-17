@@ -21,7 +21,6 @@ import org.springframework.web.servlet.ModelAndView;
 import entity.User;
 import service.UserService;
 
-@SessionAttributes("user")
 @RequestMapping(value="userController")
 @Controller("userController")
 public class UserController {
@@ -70,21 +69,6 @@ public class UserController {
 				request.getSession().setAttribute("user", newUser);
 			}
 			return Integer.toString(status);
-	}
-	
-	/** 登录验证
-	 * 此处提前讲session传入，避免在response之后再创建session的BUG */
-	@RequestMapping(value="/login", method = RequestMethod.POST)
-	//public @ResponseBody User login(@RequestBody User user) {
-	public @ResponseBody String login(@Param("id")String id, @Param("password")String password,
-			ModelMap modelMap, HttpSession session) {
-		User user=userService.login(id, password);
-		if(user != null) {
-			modelMap.addAttribute("user",user);
-			return "yes";
-		}else {
-			return "no";
-		}
 	}
 	
 	/** 首页跳转 */
