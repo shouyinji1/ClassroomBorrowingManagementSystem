@@ -80,7 +80,7 @@ public class NormalUser {
 		mav.addObject("allXiaoQu", normalUserService.getAllXiaoQu());
 		
 		// 计算前台可选的周次和星期
-		List<Semester> semesters=normalUserService.getSemesters();
+		List<Semester> semesters=userService.getSemesters();
 		int daysDiff=(int)util.DateTool.periodDay(semesters.get(0).getsDate());
 		int txingQi=daysDiff%7+1+1;	// 明日星期几
 		int zhouCi=daysDiff/7+1;	// 周本周次

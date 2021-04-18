@@ -23,6 +23,15 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
     		return true;
     	}
 		if (user==null) {
+			// 防止未登录用户使用系统功能
+			response.sendRedirect("../login.html");
+			return false;
+		}else if(user.getLevel().equals("NormalUser") && servletPath.contains("/admin/")) {
+			// 防止用户访问到管理员的功能
+			response.sendRedirect("../login.html");
+			return false;
+		}else if(user.getLevel().equals("Admin") && servletPath.contains("/normalUser/")) {
+			// 防止管理员访问到用户的功能
 			response.sendRedirect("../login.html");
 			return false;
 		}

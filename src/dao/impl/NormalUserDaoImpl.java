@@ -93,12 +93,6 @@ public class NormalUserDaoImpl extends BaseDaoImpl<NormalUserDao> implements Nor
 	}
 
 	@Override
-	public List<Semester> getSemesters() {
-		// TODO Auto-generated method stub
-		return this.getMapper().getSemesters();
-	}
-
-	@Override
 	public List<Classroom> getRoomsByApply(Application application) {
 		// TODO Auto-generated method stub
 		return this.getMapper().getRoomsByApply(application);

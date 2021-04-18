@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.AdminDao">
+	<select id="getApplicationsForApproval" resultMap="applicationResultMap">
+		select Application.ID as ApplicationID,UserID,RoomID,SubmitTime,ZhouCi,XingQi,
+				SJieCi,EJieCi,Application.Type as ApplicationType,Purpose,
+				ReviewerID, ReviewTime, Approval,ReviewContent,
+				User.Name as UserName
+			from Application,User 
+				where Application.UserID=User.ID and Approval is null 
+					and (ZhouCi &gt; #{zhouCiNow} or (ZhouCi=#{zhouCiNow} and XingQi &gt; #{xingQiNow}));
+	</select>
+	<select id="getApplicationById" resultMap="applicationResultMap" parameterType="int">
+		select Application.ID as ApplicationID, UserID, RoomID, SubmitTime, zhouCi, XingQi, 
+			SJieCi, EJieCi, Application.Type as ApplicationType, Purpose, 
+			ReviewerID, ReviewTime, Approval,ReviewContent,
+			User.Name as UserName, Phone, Email, Department,
+			Classroom.Name as ClassroomName, Classroom.Type as RoomType, 
+			XiaoQu,JiaoXueQu, JiaoXueLou, Floor, Capacity 
+				from Application,User,Classroom 
+					where Application.ID=#{id} and Application.UserID=User.ID and Application.RoomID=Classroom.ID;
+	</select>
+	<resultMap id="applicationResultMap" type="application">
+		<id column="ApplicationID" property="id"></id>
+		<id column="UserID" property="userID"></id>
+		<id column="RoomID" property="roomID"></id>
+		<id column="SubmitTime" property="submitTime"></id>
+		<id column="ZhouCi" property="zhouCi"></id>
+		<id column="XingQi" property="xingQi"></id>
+		<id column="SJieCi" property="sJieCi"></id>
+		<id column="EJieCi" property="eJieCi"></id>
+		<id column="ApplicationType" property="type"></id>
+		<id column="Purpose" property="purpose"></id>
+		<id column="ReviewerID" property="reviewerID"></id>
+		<id column="ReviewTime" property="reviewTime"></id>
+		<id column="Approval" property="approval"></id>
+		<id column="ReviewContent" property="reviewContent"></id>
+		
+		<association property="user" javaType="user">
+			<id column="UserName" property="name"></id>
+			<id column="Phone" property="phone"></id>
+			<id column="Email" property="email"></id>
+			<id column="Department" property="department"></id>
+		</association>
+		<association property="classroom" javaType="classroom">
+			<id column="ClassroomName" property="name"></id>
+			<id column="RoomType" property="type"></id>
+			<id column="XiaoQu" property="xiaoQu"></id>
+			<id column="JiaoXueQu" property="jiaoXueQu"></id>
+			<id column="JiaoXueLou" property="jiaoXueLou"></id>
+			<id column="Floor" property="floor"></id>
+			<id column="Capacity" property="capacity"></id>
+		</association>
+		<association property="reviewer" javaType="user">
+			<id column="UserName" property="name"></id>
+			<id column="Phone" property="phone"></id>
+			<id column="Email" property="email"></id>
+			<id column="Department" property="department"></id>
+		</association>
+	</resultMap>
+	<update id="updateReviewOfApplication" parameterType="Application">
+		update Application 
+			set ReviewerID=#{reviewerID},ReviewTime=#{reviewTime},
+					Approval=#{approval},ReviewContent=#{reviewContent}
+				where ID=#{id};
+	</update>
+</mapper>

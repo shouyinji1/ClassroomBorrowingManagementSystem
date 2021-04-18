@@ -56,9 +56,6 @@ public interface NormalUserDao {
 			@Param("type")String type,
 			@Param("floor")String floor);
 	
-	/** 查询学期信息 */
-	public List<Semester> getSemesters();
-	
 	/** 查询符合查询条件的空闲教室 */
 	public List<Classroom> getRoomsByApply(Application application);
 	

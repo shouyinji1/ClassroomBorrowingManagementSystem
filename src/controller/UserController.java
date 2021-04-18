@@ -51,8 +51,15 @@ public class UserController {
 	 * @return 更新用户信息，不包括密码 */
 	@RequestMapping("updateUserInfo")
 	@ResponseBody
-	public String updateUserInfo(User user) {
-		return Integer.toString(userService.updUser(user));
+	public String updateUserInfo(User user,HttpServletRequest request) {
+		int status=userService.updUser(user);
+		if (status==1) {
+			User newUser=(User)request.getSession().getAttribute("user");
+			newUser.setEmail(user.getEmail());
+			newUser.setPhone(user.getPhone());
+			request.getSession().setAttribute("user", newUser);
+		}
+		return Integer.toString(status);
 	}
 	
 	@RequestMapping("updatePassword")

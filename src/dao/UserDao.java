@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import entity.Semester;
 import entity.User;
 
 public interface UserDao {
@@ -18,4 +19,7 @@ public interface UserDao {
 	public User getUserByIdAndPassword(@Param("id")String id, @Param("password")String password);
 	
 	public int updatePassword(User user);
+
+	/** 查询学期信息 */
+	public List<Semester> getSemesters();
 }

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.method.annotation.SessionStatusMethodArgumentResolver;
 
 import dao.NormalUserDao;
+import dao.UserDao;
+import dao.impl.UserDaoImpl;
 import entity.Application;
 import entity.Classroom;
 import entity.RoomStatus;
@@ -18,6 +20,8 @@ import service.NormalUserService;
 public class NormalUserServiceImpl implements NormalUserService {
 	@Autowired
 	NormalUserDao normalUserDao;
+	@Autowired
+	UserDao userDao;
 
 	@Override
 	/** 查询某一用户的所有申请记录 */
@@ -26,7 +30,7 @@ public class NormalUserServiceImpl implements NormalUserService {
 		List<Application> applications=normalUserDao.getApplicationsByUserId(userID);
 		
 		// 设置申请是否过期
-		Semester semester=normalUserDao.getSemesters().get(0);
+		Semester semester=userDao.getSemesters().get(0);
 		for(Application application:applications) {
 			application.setAging(semester);
 		}
@@ -39,7 +43,7 @@ public class NormalUserServiceImpl implements NormalUserService {
 		// TODO Auto-generated method stub
 		Application application =normalUserDao.getApplicationById(id);
 		// 设置申请是否过期
-		Semester semester=normalUserDao.getSemesters().get(0);
+		Semester semester=userDao.getSemesters().get(0);
 		application.setAging(semester);
 		return application;
 	}
@@ -119,12 +123,6 @@ public class NormalUserServiceImpl implements NormalUserService {
 			String type,String floor) {
 		// TODO Auto-generated method stub
 		return normalUserDao.getAllRoomIDByXJJTF(xiaoQu, jiaoXueQu, jiaoXueLou, type, floor);
-	}
-
-	@Override
-	public List<Semester> getSemesters() {
-		// TODO Auto-generated method stub
-		return normalUserDao.getSemesters();
 	}
 
 	@Override

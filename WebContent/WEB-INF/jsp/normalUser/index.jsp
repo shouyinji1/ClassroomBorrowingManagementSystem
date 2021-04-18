@@ -46,8 +46,6 @@
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>借用记录</span></a>
             </li>
-
-            <!-- Nav Item - Tables -->
             <li class="nav-item" id="nav-item2">
                 <a class="nav-link" href="#">
                     <i class="fas fa-fw fa-table"></i>
@@ -313,7 +311,7 @@
 					<div class="row">
 						<div class="col-sm-4 mb-3">
 							<label>ID</label>
-							<input type="text" class="form-control" value="${user.id}" readonly>
+							<input type="text" class="form-control" name="id" value="${user.id}" readonly>
 						</div>
 						<div class="col-sm-4 mb-3">
 							<label>姓名</label>
@@ -400,13 +398,13 @@
 		// 左侧菜单栏点击变色效果，同时加载页面
 		$(function(){
 			$("#nav-item1").click(function() {
-				$("li").removeClass('active');  // 删除其他a元素的样式
+				$("li").removeClass('active');  // 删除其他元素的样式
 				$(this).addClass('active');	// 添加当前元素的样式
 				$( "#page-content" ).load( "../normalUser/myApplications" );
 				//turnPage("../normalUser/myApplications");
 			});
 			$("#nav-item2").click(function() {
-				$("li").removeClass('active');  // 删除其他a元素的样式
+				$("li").removeClass('active');  // 删除其他元素的样式
 				$(this).addClass('active');	// 添加当前元素的样式
 				//turnPage("../normalUser/apply");
 				$( "#page-content" ).load( "../normalUser/apply" );

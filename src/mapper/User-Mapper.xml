@@ -17,4 +17,7 @@
 	<update id="updatePassword" parameterType="User">
 		update User set Password=#{newPassword} where ID=#{id} and Password=#{password};
 	</update>
+	<select id="getSemesters" resultType="Semester">
+		select * from Semester order by ID desc; 
+	</select>
 </mapper>

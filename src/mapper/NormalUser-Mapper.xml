@@ -99,9 +99,6 @@
 			where XiaoQu=#{xiaoQu} and JiaoXueQu=#{jiaoXueQu} and JiaoXueLou=#{jiaoXueLou} 
 				and Type=#{type} and Floor=#{floor};
 	</select>
-	<select id="getSemesters" resultType="Semester">
-		select * from Semester order by ID desc; 
-	</select>
 	<select id="getRoomsByApply" resultType="Classroom" parameterType="Application">
 		select Floor,ID,Capacity,name from Classroom where ID not in(
 			select RoomID from Application,Classroom 
