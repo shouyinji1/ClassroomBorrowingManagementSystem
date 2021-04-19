@@ -48,18 +48,28 @@
             </li>
             <li class="nav-item" id="nav-item2">
                 <a class="nav-link" href="#">
+                    <i class="fas fa-fw fa-clipboard-list"></i>
+                    <span>历史审批</span></a>
+            </li>
+            <li class="nav-item" id="nav-item3">
+                <a class="nav-link" href="#">
                     <i class="fas fa-fw fa-table"></i>
                     <span>教室维护</span></a>
             </li>
-			<li class="nav-item" id="nav-item3">
+			<li class="nav-item" id="nav-item4">
                 <a class="nav-link" href="#">
-                    <i class="fas fa-fw fa-table"></i>
+                    <i class="fas fa-fw fa-comments"></i>
                     <span>使用者反馈</span></a>
             </li>
-            <li class="nav-item" id="nav-item4">
+            <li class="nav-item" id="nav-item5">
                 <a class="nav-link" href="#">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>使用统计</span></a>
+            </li>
+            <li class="nav-item" id="nav-item6">
+                <a class="nav-link" href="#">
+                    <i class="fas fa-fw fa-calendar"></i>
+                    <span>学期管理</span></a>
             </li>
 
             <!-- Divider -->
@@ -415,12 +425,27 @@
 			$("#nav-item2").click(function() {
 				$("li").removeClass('active');  // 删除其他元素的样式
 				$(this).addClass('active');	// 添加当前元素的样式
-				$( "#page-content" ).load( "../normalUser/apply" );
+				$( "#page-content" ).load( "../admin/historicalApplications" );
 			});
 			$("#nav-item3").click(function() {
 				$("li").removeClass('active');  // 删除其他元素的样式
 				$(this).addClass('active');	// 添加当前元素的样式
-				$( "#page-content" ).load( "../normalUser/apply" );
+				$( "#page-content" ).load( "../admin/apply" );
+			});			
+			$("#nav-item4").click(function() {
+				$("li").removeClass('active');  // 删除其他元素的样式
+				$(this).addClass('active');	// 添加当前元素的样式
+				$( "#page-content" ).load( "../admin/apply" );
+			});			
+			$("#nav-item5").click(function() {
+				$("li").removeClass('active');  // 删除其他元素的样式
+				$(this).addClass('active');	// 添加当前元素的样式
+				$( "#page-content" ).load( "../admin/apply" );
+			});
+			$("#nav-item6").click(function() {
+				$("li").removeClass('active');  // 删除其他元素的样式
+				$(this).addClass('active');	// 添加当前元素的样式
+				$( "#page-content" ).load( "../admin/apply" );
 			});
 		});
 

@@ -65,4 +65,47 @@
 					Approval=#{approval},ReviewContent=#{reviewContent}
 				where ID=#{id};
 	</update>
+	<select id="getAllXiaoQuOfApplications" resultType="String">
+		select distinct XiaoQu from Application as a,Classroom as c 
+			where a.RoomID=c.ID and Approval is not null;
+	</select>
+	<select id="getJiaoXueQuOfAByX" resultType="String" parameterType="Classroom">
+		select distinct JiaoXueQu from Application as a,Classroom as c 
+			where a.RoomID=c.ID and Approval is not null
+				and XiaoQu=#{xiaoQu};
+	</select>
+	<select id="getJiaoXueLouOfAByXJ" resultType="String" parameterType="Classroom">
+		select distinct JiaoXueLou from Application as a,Classroom as c 
+			where a.RoomID=c.ID and Approval is not null
+				and XiaoQu=#{xiaoQu} and JiaoXueQu=#{jiaoXueQu};
+	</select>
+	<select id="getTypeOfAByXJJ" resultType="String" parameterType="Classroom">
+		select distinct c.Type from Application as a,Classroom as c 
+			where a.RoomID=c.ID and Approval is not null
+				and XiaoQu=#{xiaoQu} and JiaoXueQu=#{jiaoXueQu} and JiaoXueLou=#{jiaoXueLou};
+	</select>
+	<select id="getFloorOfAByXJJT" resultType="String" parameterType="Classroom">
+		select distinct Floor from Application as a,Classroom as c 
+			where a.RoomID=c.ID and Approval is not null
+				and XiaoQu=#{xiaoQu} and JiaoXueQu=#{jiaoXueQu} 
+				and JiaoXueLou=#{jiaoXueLou} and c.Type=#{type};
+	</select>
+	<select id="getRoomIDOfAByXJJTF" resultType="String" parameterType="Classroom">
+		select distinct RoomID from Application as a,Classroom as c 
+			where a.RoomID=c.ID and Approval is not null
+				and XiaoQu=#{xiaoQu} and JiaoXueQu=#{jiaoXueQu} 
+				and JiaoXueLou=#{jiaoXueLou} and c.Type=#{type} and Floor=#{floor};
+	</select>
+	<select id="getApplicationsByRoom" resultMap="applicationResultMap" parameterType="Classroom">
+		select a.ID as ApplicationID,a.RoomID,a.SubmitTime,ZhouCi,XingQi,SJieCi,EJieCi,Approval,
+				u.name as UserName,c.Floor
+			from Application as a,Classroom as c,User as u
+			where a.RoomID=c.ID and a.UserID=u.ID and Approval is not null 
+				and XiaoQu=#{xiaoQu} and JiaoXueQu=#{jiaoXueQu} and JiaoXueLou=#{jiaoXueLou}
+				and c.Type=#{type};
+	</select>
+	<select id="getReviewedApplicationsOf7Days" resultMap="applicationResultMap">
+		select Application.ID as ApplicationID,Application.*,User.name as UserName from Application,User 
+			where Application.userID=User.ID and to_days(now())-to_days(ReviewTime) &lt;=7;
+	</select>
 </mapper>

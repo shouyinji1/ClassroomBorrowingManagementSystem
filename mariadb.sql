@@ -72,7 +72,7 @@ INSERT INTO Semester VALUES(1,'2021-03-01',20);
 INSERT INTO User VALUES('A00001','dlsf','123456','Admin','12345678901','abc@abc.com','abc');
 INSERT INTO User VALUES('A00002','蓝叠','123456','Admin','12345678911','abd@abc.com','计算机学院');
 INSERT INTO User VALUES('U00001','klsd','654321','NormalUser','12345678900','aba@abc.com','abc');
-INSERT INTO User VALUES('U00002','klsd','654321','NormalUser','12345678902','abc1@abc.com','马克思主义学院');
+INSERT INTO User VALUES('U00002','李小龙','654321','NormalUser','12345678902','abc1@abc.com','马克思主义学院');
 INSERT INTO User VALUES('U00003','张三','654321','NormalUser','12345678903','abc3@abc.com','计算机学院');
 INSERT INTO User VALUES('U00004','李四','654321','NormalUser','12345678904','abc4@abc.com','应用技术学院');
 INSERT INTO User VALUES('U00005','王二麻','654321','NormalUser','12345678904','abc4@abc.com','机械学院');
@@ -83,6 +83,7 @@ INSERT INTO Classroom VALUES('1#203','sdf','计算机教室','北京路校区','
 INSERT INTO Classroom VALUES('2#101','sdf','会议室','北京路校区','abc','2',1,60);
 INSERT INTO Classroom VALUES('11#101','sdf','多媒体教室','枚乘路校区','计算机学院','11',1,50);
 INSERT INTO Classroom VALUES('11#102','sdf','计算机教室','枚乘路校区','计算机学院','11',1,50);
+INSERT INTO Classroom VALUES('11#103','sdf','计算机教室','枚乘路校区','计算机学院','11',1,50);
 INSERT INTO Classroom VALUES('12#101','sdf','普通教室','枚乘路校区','计算机学院','12',1,100);
 INSERT INTO Classroom VALUES('22#201','sdf','会议室','枚乘路校区','应用技术学院','22',2,60);
 INSERT INTO Classroom VALUES('111#301','sdf','多媒体教室','萧湖校区','abc','111',3,50);

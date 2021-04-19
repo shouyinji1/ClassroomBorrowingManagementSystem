@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import dao.AdminDao;
 import dao.UserDao;
 import entity.Application;
+import entity.Classroom;
 import entity.Semester;
 import service.AdminService;
 
@@ -42,5 +43,82 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		application.setReviewTime(new Date());
 		return adminDao.updateReviewOfApplication(application);
+	}
+
+	@Override
+	public List<String> getAllXiaoQuOfApplications() {
+		// TODO Auto-generated method stub
+		return adminDao.getAllXiaoQuOfApplications();
+	}
+
+	@Override
+	public List<String> getJiaoXueQuOfAByX(Classroom room) {
+		// TODO Auto-generated method stub
+		return adminDao.getJiaoXueQuOfAByX(room);
+	}
+
+	@Override
+	public List<String> getJiaoXueLouOfAByXJ(Classroom room) {
+		// TODO Auto-generated method stub
+		return adminDao.getJiaoXueLouOfAByXJ(room);
+	}
+
+	@Override
+	public List<String> getTypeOfAByXJJ(Classroom room) {
+		// TODO Auto-generated method stub
+		return adminDao.getTypeOfAByXJJ(room);
+	}
+
+	@Override
+	public List<String> getFloorOfAByXJJT(Classroom room) {
+		// TODO Auto-generated method stub
+		return adminDao.getFloorOfAByXJJT(room);
+	}
+
+	@Override
+	public List<String> getRoomIDOfAByXJJTF(Classroom room) {
+		// TODO Auto-generated method stub
+		return adminDao.getRoomIDOfAByXJJTF(room);
+	}
+
+	@Override
+	public List<Application> getApplicationsByRoom(Classroom room,int approval) {
+		// TODO Auto-generated method stub
+		List<Application> applications=adminDao.getApplicationsByRoom(room);
+		String floor=room.getFloor();
+		String roomID=room.getId();
+		System.out.println(floor);
+		System.out.println(roomID);
+		if(floor !=null && !floor.equals("")) {
+			for(int i=applications.size()-1;i>=0;i--) {
+				if(!applications.get(i).getClassroom().getFloor().equals(floor))
+					applications.remove(i);
+			}
+		}
+		if(roomID !=null && !roomID.equals("")) {
+			for(int i=applications.size()-1;i>=0;i--) {
+				if(!applications.get(i).getRoomID().equals(roomID))
+					applications.remove(i);
+			}
+		}
+		if(approval==1 || approval==0) {
+			boolean approvalB;
+			if(approval==1)
+				approvalB=true;
+			else{
+				approvalB=false;
+			}
+			for(int i=applications.size()-1;i>=0;i--) {
+				if(!applications.get(i).getApproval()==approvalB)
+					applications.remove(i);
+			}
+		}
+		return applications;
+	}
+
+	@Override
+	public List<Application> getReviewedApplicationsOf7Days() {
+		// TODO Auto-generated method stub
+		return adminDao.getReviewedApplicationsOf7Days();
 	}
 }
