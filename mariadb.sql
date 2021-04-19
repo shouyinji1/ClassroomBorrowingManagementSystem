@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS Application(
 	FOREIGN KEY(RoomID) REFERENCES Classroom(ID) ON DELETE CASCADE,
 	FOREIGN KEY(ReviewerID) REFERENCES User(ID)
 ) CHARSET=utf8 COMMENT '教室申请记录表';
-CREATE TABLE IF NOT EXISTS RoomStatus(
+CREATE TABLE IF NOT EXISTS RoomSchedule(
 	ID INT AUTO_INCREMENT PRIMARY KEY COMMENT '教室状态ID',
 	RoomID VARCHAR(20) NOT NULL COMMENT '教室ID',
 	UserID VARCHAR(20) NOT NULL COMMENT '使用者ID',
@@ -100,9 +100,9 @@ INSERT INTO Application(UserID,RoomID,ZhouCi,XingQi,SJieCi,EJieCi,Type,Purpose) 
 INSERT INTO Application(UserID,RoomID,ZhouCi,XingQi,SJieCi,EJieCi,Type,Purpose) VALUES('U00001','22#201',10,1,3,3,'会议','开班会');
 INSERT INTO Application(UserID,RoomID,ZhouCi,XingQi,SJieCi,EJieCi,Type,Purpose) VALUES('U00001','22#201',7,1,3,3,'会议','开班会');
 INSERT INTO Application(UserID,RoomID,ZhouCi,XingQi,SJieCi,EJieCi,Type,Purpose,ReviewerID,ReviewTime,Approval,ReviewContent) VALUES('U00001','11#102',7,1,1,2,'教学活动','给学生上课','A00001',CURRENT_TIMESTAMP,1,'通过，可以');
-INSERT INTO RoomStatus(RoomID,UserID,ZhouCi,XingQi,SJieCi,EJieCi,Type) VALUES('11#102','U00001',7,1,1,2,'教学活动');
-INSERT INTO RoomStatus(RoomID,UserID,ZhouCi,XingQi,SJieCi,EJieCi,Type) VALUES('11#101','U00001',7,1,3,4,'课表课程');
-INSERT INTO RoomStatus(RoomID,UserID,ZhouCi,XingQi,SJieCi,EJieCi,Type) VALUES('11#101','U00001',10,1,3,4,'课表课程');
+INSERT INTO RoomSchedule(RoomID,UserID,ZhouCi,XingQi,SJieCi,EJieCi,Type) VALUES('11#102','U00001',7,1,1,2,'教学活动');
+INSERT INTO RoomSchedule(RoomID,UserID,ZhouCi,XingQi,SJieCi,EJieCi,Type) VALUES('11#101','U00001',7,1,3,4,'课表课程');
+INSERT INTO RoomSchedule(RoomID,UserID,ZhouCi,XingQi,SJieCi,EJieCi,Type) VALUES('11#101','U00001',10,1,3,4,'课表课程');
 
 
 DROP DATABASE ClassroomBorrowingManagementSystem;

@@ -6,8 +6,8 @@ import org.apache.ibatis.type.Alias;
 import org.springframework.stereotype.Component;
 
 /** 教室使用状态 */
-@Component("roomStatus")
-public class RoomStatus implements Serializable{
+@Component("roomSchedule")
+public class RoomSchedule implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private int id;
 	private String roomID;

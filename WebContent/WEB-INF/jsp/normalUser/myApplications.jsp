@@ -44,8 +44,8 @@
 								<td>${application.roomID}</td>
 								<td>${application.zhouCi}</td>
 								<td>${application.xingQi}</td>
-								<td>${application.sJieCi}</td>
-								<td>${application.eJieCi}</td>
+								<td id="application-${application.id}-sJieCi">${application.sJieCi}</td>
+								<td id="application-${application.id}-eJieCi">${application.eJieCi}</td>
 								<td>
 									<c:choose>
 										<c:when test="${application.approval==true}">已审批通过</c:when>

@@ -53,8 +53,8 @@
 			<id column="Department" property="department"></id>
 		</association>
 	</resultMap>
-	<select id="getRoomsStatusByApplication" resultType="roomStatus" parameterType="Application">
-		select * from RoomStatus where RoomID=#{roomID} and ZhouCi=#{zhouCi} and XingQi=#{xingQi};
+	<select id="getRoomsStatusByApplication" resultType="roomSchedule" parameterType="Application">
+		select * from RoomSchedule where RoomID=#{roomID} and ZhouCi=#{zhouCi} and XingQi=#{xingQi};
 	</select>
 	<select id="getApplicationsByApplication" resultType="application" parameterType="Application">
 		select * from Application where RoomID=#{roomID} and ZhouCi=#{zhouCi} and XingQi=#{xingQi} 
@@ -68,7 +68,7 @@
 						or (EJieCi &gt;=#{sJieCi} and EJieCi &lt;=#{eJieCi}))
 						and RoomID=#{roomID} and ZhouCi=#{zhouCi} and XingQi=#{xingQi} and ID !=#{id}
 				) and not exists(
-					select 1 from RoomStatus where ((SJieCi &gt;=#{sJieCi} and SJieCi &lt;=#{eJieCi})
+					select 1 from RoomSchedule where ((SJieCi &gt;=#{sJieCi} and SJieCi &lt;=#{eJieCi})
 						or (EJieCi &gt;=#{sJieCi} and EJieCi &lt;=#{eJieCi}))
 						and RoomID=#{roomID} and ZhouCi=#{zhouCi} and XingQi=#{xingQi}
 				);
@@ -110,8 +110,8 @@
 						or (EJieCi &gt;=#{sJieCi} and EJieCi &lt;=#{eJieCi}))
 					and (Approval=1 or Approval is null) 
 			union
-			select RoomID from Classroom,RoomStatus
-				where RoomStatus.RoomID=Classroom.ID and XiaoQu=#{classroom.xiaoQu} 
+			select RoomID from Classroom,RoomSchedule
+				where RoomSchedule.RoomID=Classroom.ID and XiaoQu=#{classroom.xiaoQu} 
 					and JiaoXueQu=#{classroom.jiaoXueQu} 
 					and JiaoXueLou=#{classroom.jiaoXueLou} and Classroom.Type=#{classroom.type} 
 					and ZhouCi=#{zhouCi} and XingQi=#{xingQi} 
@@ -131,7 +131,7 @@
 						or (EJieCi &gt;=#{sJieCi} and EJieCi &lt;=#{eJieCi}))
 						and RoomID=#{roomID} and ZhouCi=#{zhouCi} and XingQi=#{xingQi}
 					union
-					select 1 from RoomStatus where ((SJieCi &gt;=#{sJieCi} and SJieCi &lt;=#{eJieCi})
+					select 1 from RoomSchedule where ((SJieCi &gt;=#{sJieCi} and SJieCi &lt;=#{eJieCi})
 						or (EJieCi &gt;=#{sJieCi} and EJieCi &lt;=#{eJieCi}))
 						and RoomID=#{roomID} and ZhouCi=#{zhouCi} and XingQi=#{xingQi}
 				);

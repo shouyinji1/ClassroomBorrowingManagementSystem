@@ -176,6 +176,8 @@
 				data: form,
 				success:function(data){
 					if(data=="1"){
+						document.getElementById('application-${application.id}-sJieCi').innerHTML=$('#sJieCi').val();
+						document.getElementById('application-${application.id}-eJieCi').innerHTML=$('#eJieCi').val();
 						$("#application-Modal").modal('hide');
 					}else if(data=="0"){
 						alert("与已有教室安排或申请安排时间冲突");

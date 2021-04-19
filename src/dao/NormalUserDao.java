@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import entity.Application;
 import entity.Classroom;
-import entity.RoomStatus;
+import entity.RoomSchedule;
 import entity.Semester;
 
 public interface NormalUserDao {
@@ -17,7 +17,7 @@ public interface NormalUserDao {
 	public Application getApplicationById(int id);
 	
 	/** 查询与申请时间相似的教室状态 */
-	public List<RoomStatus> getRoomsStatusByApplication(Application application);
+	public List<RoomSchedule> getRoomsStatusByApplication(Application application);
 
 	/** 查询与申请时间相似的申请记录 */
 	public List<Application> getApplicationsByApplication(Application application);

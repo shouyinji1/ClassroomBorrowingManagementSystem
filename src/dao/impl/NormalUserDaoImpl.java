@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import dao.NormalUserDao;
 import entity.Application;
 import entity.Classroom;
-import entity.RoomStatus;
+import entity.RoomSchedule;
 import entity.Semester;
 
 @Repository
@@ -44,7 +44,7 @@ public class NormalUserDaoImpl extends BaseDaoImpl<NormalUserDao> implements Nor
 	}
 
 	@Override
-	public List<RoomStatus> getRoomsStatusByApplication(Application application) {
+	public List<RoomSchedule> getRoomsStatusByApplication(Application application) {
 		// TODO Auto-generated method stub
 		return this.getMapper().getRoomsStatusByApplication(application);
 	}
