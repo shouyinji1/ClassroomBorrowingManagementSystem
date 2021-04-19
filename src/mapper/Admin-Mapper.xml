@@ -108,4 +108,27 @@
 		select Application.ID as ApplicationID,Application.*,User.name as UserName from Application,User 
 			where Application.userID=User.ID and to_days(now())-to_days(ReviewTime) &lt;=7;
 	</select>
+	
+	<select id="getAllXiaoQu" resultType="String">
+		select distinct XiaoQu from Classroom;
+	</select>
+	<select id="getAllJiaoXueQuByXiaoQu" resultType="String" parameterType="String">
+		select distinct JiaoXueQu from Classroom where XiaoQu=#{xiaoQu};
+	</select>
+	<select id="getAllJiaoXueLouByXJ" resultType="String" parameterType="String">
+		select distinct JiaoXueLou from Classroom where XiaoQu=#{xiaoQu} and JiaoXueQu=#{jiaoXueQu};
+	</select>
+	<select id="getAllTypeByXJJ" resultType="String">
+		select distinct Type from Classroom where XiaoQu=#{xiaoQu} and JiaoXueQu=#{jiaoXueQu} 
+			and JiaoXueLou=#{jiaoXueLou};
+	</select>
+	<select id="getAllFloorByXJJT" resultType="String">
+		select distinct Floor from Classroom 
+			where XiaoQu=#{xiaoQu} and JiaoXueQu=#{jiaoXueQu} and JiaoXueLou=#{jiaoXueLou} and Type=#{type};
+	</select>
+	<select id="getAllRoomIDByXJJTF" resultType="String">
+		select distinct ID from Classroom 
+			where XiaoQu=#{xiaoQu} and JiaoXueQu=#{jiaoXueQu} and JiaoXueLou=#{jiaoXueLou} 
+				and Type=#{type} and Floor=#{floor};
+	</select>
 </mapper>

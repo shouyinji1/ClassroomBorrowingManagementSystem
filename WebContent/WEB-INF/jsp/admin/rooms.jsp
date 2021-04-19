@@ -10,7 +10,7 @@
 	<!-- DataTales Example -->
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
-			<h6 class="m-0 font-weight-bold text-primary">借用记录</h6>
+			<h6 class="m-0 font-weight-bold text-primary" id="applications-table-title">查询结果</h6>
 		</div>
 		<div class="card-body">
 			<div class="table-responsive">
@@ -18,29 +18,32 @@
 					<thead>
 						<tr>
 							<th>申请时间</th>
+							<th>申请者</th>
 							<th>教室</th>
 							<th>周次</th>
 							<th>星期</th>
 							<th>开始节次</th>
 							<th>结束节次</th>
-							<th>审批状态</th>
+							<th>审批结果</th>
 						</tr>
 					</thead>
 					<tfoot>
 						<tr>
 							<th>申请时间</th>
+							<th>申请者</th>
 							<th>教室</th>
 							<th>周次</th>
 							<th>星期</th>
 							<th>开始节次</th>
 							<th>结束节次</th>
-							<th>审批状态</th>
+							<th>审批结果</th>
 						</tr>
 					</tfoot>
 					<tbody>
 						<c:forEach items="${applications}" var="application" varStatus="status">
-							<tr onclick="toApplicationUpdate(${application.id})" id="application-${application.id}">
+							<tr onclick="application(${application.id})">
 								<td>${application.formatSubmitTime}</td>
+								<td>${application.user.name}</td>
 								<td>${application.roomID}</td>
 								<td>${application.zhouCi}</td>
 								<td>${application.xingQi}</td>
@@ -48,7 +51,7 @@
 								<td>${application.eJieCi}</td>
 								<td>
 									<c:choose>
-										<c:when test="${application.approval==true}">已审批通过</c:when>
+										<c:when test="${application.approval==true}">通过</c:when>
 										<c:when test="${application.approval==false}">已拒绝申请</c:when>
 										<c:when test="${empty application.approval}">
 											<c:choose>
@@ -81,10 +84,10 @@
 		} );
     </script>
     <script type="text/javascript">
-		function toApplicationUpdate(id){
+		function application(id){
 			$.ajax({
 				type: "get",//方法类型
-				url: "../normalUser/applicationUpdate" ,
+				url: "../admin/viewApplication" ,
 				async:true,
 				data: {'id':id},
 				success:function(data){

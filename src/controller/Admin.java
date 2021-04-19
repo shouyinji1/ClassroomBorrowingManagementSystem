@@ -47,6 +47,8 @@ public class Admin {
 		return Integer.toString(adminService.updateReviewOfApplication(application));
 	}
 	
+	
+	/**************** 历史审批记录管理 *******************/
 	/** 历史申请界面跳转 */
 	@RequestMapping("historicalApplications")
 	public ModelAndView historicalApplications() {
@@ -70,23 +72,23 @@ public class Admin {
 	public ModelAndView selectOption(String select,Classroom room) {
 		switch (select) {
 			case "XiaoQu": {
-				ModelAndView mav=new ModelAndView("admin/applicationsOptions/jiaoXueQu");
+				ModelAndView mav=new ModelAndView("admin/roomOptions/jiaoXueQu");
 				mav.addObject("allJiaoXueQu", adminService.getJiaoXueQuOfAByX(room));
 				return mav;
 			}case "JiaoXueQu": {
-				ModelAndView mav=new ModelAndView("admin/applicationsOptions/jiaoXueLou");
+				ModelAndView mav=new ModelAndView("admin/roomOptions/jiaoXueLou");
 				mav.addObject("allJiaoXueLou", adminService.getJiaoXueLouOfAByXJ(room));
 				return mav;
 			}case "JiaoXueLou": {
-				ModelAndView mav=new ModelAndView("admin/applicationsOptions/type");
+				ModelAndView mav=new ModelAndView("admin/roomOptions/type");
 				mav.addObject("allType", adminService.getTypeOfAByXJJ(room));
 				return mav;
 			}case "type": {
-				ModelAndView mav=new ModelAndView("admin/applicationsOptions/floor");
+				ModelAndView mav=new ModelAndView("admin/roomOptions/floor");
 				mav.addObject("allFloor", adminService.getFloorOfAByXJJT(room));
 				return mav;
 			}case "floor": {
-				ModelAndView mav=new ModelAndView("admin/applicationsOptions/room");
+				ModelAndView mav=new ModelAndView("admin/roomOptions/room");
 				mav.addObject("allRoom", adminService.getRoomIDOfAByXJJTF(room));
 				return mav;
 			}default:
@@ -106,6 +108,51 @@ public class Admin {
 	public ModelAndView viewApplication(int id) {
 		ModelAndView mav=new ModelAndView("admin/applicationModal");
 		mav.addObject("application",adminService.getApplicationById(id));
+		return mav;
+	}
+	
+
+	/*********** 教室维护 ***********/
+	/** 教室维护界面跳转 */
+	@RequestMapping("roomManagement")
+	public ModelAndView roomManagement() {
+		ModelAndView mav=new ModelAndView("admin/roomManagement");
+		mav.addObject("allXiaoQu",adminService.getAllXiaoQu());
+		return mav;
+	}
+
+	/** 申请查询选项动态变化 */
+	@RequestMapping("roomsOption")
+	public ModelAndView roomsOption(String select,Classroom room) {
+		switch (select) {
+			case "XiaoQu": {
+				ModelAndView mav=new ModelAndView("admin/roomOptions/jiaoXueQu");
+				mav.addObject("allJiaoXueQu", adminService.getAllJiaoXueQuByXiaoQu(room));
+				return mav;
+			}case "JiaoXueQu": {
+				ModelAndView mav=new ModelAndView("admin/roomOptions/jiaoXueLou");
+				mav.addObject("allJiaoXueLou", adminService.getAllJiaoXueLouByXJ(room));
+				return mav;
+			}case "JiaoXueLou": {
+				ModelAndView mav=new ModelAndView("admin/roomOptions/type");
+				mav.addObject("allType", adminService.getAllTypeByXJJ(room));
+				return mav;
+			}case "type": {
+				ModelAndView mav=new ModelAndView("admin/roomOptions/floor");
+				mav.addObject("allFloor", adminService.getAllFloorByXJJT(room));
+				return mav;
+			}case "floor": {
+				ModelAndView mav=new ModelAndView("admin/roomOptions/room");
+				mav.addObject("allRoom", adminService.getAllRoomIDByXJJTF(room));
+				return mav;
+			}default:
+				throw new IllegalArgumentException("Unexpected value: " + select);
+		}
+	}
+	
+	@RequestMapping("queryRooms")
+	public ModelAndView queryRooms() {
+		ModelAndView mav=new ModelAndView();
 		return mav;
 	}
 }

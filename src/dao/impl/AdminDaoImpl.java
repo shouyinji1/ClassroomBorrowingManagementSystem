@@ -82,4 +82,40 @@ public class AdminDaoImpl extends BaseDaoImpl<AdminDao> implements AdminDao {
 		// TODO Auto-generated method stub
 		return this.getMapper().getReviewedApplicationsOf7Days();
 	}
+
+	@Override
+	public List<String> getAllXiaoQu() {
+		// TODO Auto-generated method stub
+		return this.getMapper().getAllXiaoQu();
+	}
+
+	@Override
+	public List<String> getAllJiaoXueQuByXiaoQu(Classroom room) {
+		// TODO Auto-generated method stub
+		return this.getMapper().getAllJiaoXueQuByXiaoQu(room);
+	}
+
+	@Override
+	public List<String> getAllJiaoXueLouByXJ(Classroom room) {
+		// TODO Auto-generated method stub
+		return this.getMapper().getAllJiaoXueLouByXJ(room);
+	}
+
+	@Override
+	public List<String> getAllTypeByXJJ(Classroom room) {
+		// TODO Auto-generated method stub
+		return this.getMapper().getAllTypeByXJJ(room);
+	}
+
+	@Override
+	public List<String> getAllFloorByXJJT(Classroom room) {
+		// TODO Auto-generated method stub
+		return this.getMapper().getAllFloorByXJJT(room);
+	}
+
+	@Override
+	public List<String> getAllRoomIDByXJJTF(Classroom room) {
+		// TODO Auto-generated method stub
+		return this.getMapper().getAllRoomIDByXJJTF(room);
+	}
 }

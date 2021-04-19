@@ -430,7 +430,7 @@
 			$("#nav-item3").click(function() {
 				$("li").removeClass('active');  // 删除其他元素的样式
 				$(this).addClass('active');	// 添加当前元素的样式
-				$( "#page-content" ).load( "../admin/apply" );
+				$( "#page-content" ).load( "../admin/roomManagement" );
 			});			
 			$("#nav-item4").click(function() {
 				$("li").removeClass('active');  // 删除其他元素的样式

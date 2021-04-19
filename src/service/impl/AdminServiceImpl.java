@@ -121,4 +121,40 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		return adminDao.getReviewedApplicationsOf7Days();
 	}
+
+	@Override
+	public List<String> getAllXiaoQu() {
+		// TODO Auto-generated method stub
+		return adminDao.getAllXiaoQu();
+	}
+
+	@Override
+	public List<String> getAllJiaoXueQuByXiaoQu(Classroom room) {
+		// TODO Auto-generated method stub
+		return adminDao.getAllJiaoXueQuByXiaoQu(room);
+	}
+
+	@Override
+	public List<String> getAllJiaoXueLouByXJ(Classroom room) {
+		// TODO Auto-generated method stub
+		return adminDao.getAllJiaoXueLouByXJ(room);
+	}
+
+	@Override
+	public List<String> getAllTypeByXJJ(Classroom room) {
+		// TODO Auto-generated method stub
+		return adminDao.getAllTypeByXJJ(room);
+	}
+
+	@Override
+	public List<String> getAllFloorByXJJT(Classroom room) {
+		// TODO Auto-generated method stub
+		return adminDao.getAllFloorByXJJT(room);
+	}
+
+	@Override
+	public List<String> getAllRoomIDByXJJTF(Classroom room) {
+		// TODO Auto-generated method stub
+		return adminDao.getAllRoomIDByXJJTF(room);
+	}
 }

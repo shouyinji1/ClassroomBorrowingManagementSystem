@@ -6,10 +6,10 @@
 <body>
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
-			<h6 class="m-0 font-weight-bold text-primary">查找历史审批记录</h6>
+			<h6 class="m-0 font-weight-bold text-primary">查找教室</h6>
 		</div>
 		<div class="card-body">
-			<form id="queryHistoricalApplications">
+			<form id="queryRooms">
 				<div class="row">
 					<div class="form-group col-sm-3">
 						<label for="XiaoQu">校区</label>
@@ -52,15 +52,7 @@
 							<option selected="selected" disabled="disabled"  style='display: none' value=''></option>
 						</select>
 					</div>
-					<div class="form-group col-sm-3">
-						<label>审批结果</label>
-						<select class="form-control" name="approval">
-							<option selected="selected" value='-1'>所有结果</option>
-							<option value='1'>通过</option>
-							<option value='0'>拒绝</option>
-						</select>
-					</div>
-					<div class="col-sm-3">
+					<div class="col-sm-6">
 						<label></label>
 						<button class="btn btn-primary btn-lg btn-block" type="button" disabled="disabled" id="query" onclick="queryRooms()">查询</button>
 					</div>
@@ -73,7 +65,7 @@
 	<script type="text/javascript">
 		$("#XiaoQu").change(function(){
 			var opt=$("#XiaoQu").val();
-			$("#JiaoXueQu").load("../admin/applicationsOption?select=XiaoQu&xiaoQu="+opt);
+			$("#JiaoXueQu").load("../admin/roomsOption?select=XiaoQu&xiaoQu="+opt);
 			$('#JiaoXueQu').attr("disabled",false);
 			$('#JiaoXueLou').attr("disabled","disabled");
 			$('#JiaoXueLou').val('');
@@ -88,7 +80,7 @@
 		$("#JiaoXueQu").change(function(){
 			var xiaoQu=$("#XiaoQu").val();
 			var jiaoXueQu=$("#JiaoXueQu").val();
-			$("#JiaoXueLou").load("../admin/applicationsOption?select=JiaoXueQu&xiaoQu="+xiaoQu
+			$("#JiaoXueLou").load("../admin/roomsOption?select=JiaoXueQu&xiaoQu="+xiaoQu
 					+"&jiaoXueQu="+jiaoXueQu);
 			$('#JiaoXueLou').attr("disabled",false);
 			$('#type').attr("disabled","disabled");
@@ -103,7 +95,7 @@
 			var xiaoQu=$("#XiaoQu").val();
 			var jiaoXueQu=$("#JiaoXueQu").val();
 			var jiaoXueLou=$("#JiaoXueLou").val();
-			$("#type").load("../admin/applicationsOption?select=JiaoXueLou&xiaoQu="+xiaoQu
+			$("#type").load("../admin/roomsOption?select=JiaoXueLou&xiaoQu="+xiaoQu
 					+"&jiaoXueQu="+jiaoXueQu
 					+"&jiaoXueLou="+jiaoXueLou);
 			$('#type').attr("disabled",false);
@@ -118,7 +110,7 @@
 			var jiaoXueQu=$("#JiaoXueQu").val();
 			var jiaoXueLou=$("#JiaoXueLou").val();
 			var type=$("#type").val();
-			$("#floor").load("../admin/applicationsOption?select=type&xiaoQu="+xiaoQu
+			$("#floor").load("../admin/roomsOption?select=type&xiaoQu="+xiaoQu
 					+"&jiaoXueQu="+jiaoXueQu
 					+"&jiaoXueLou="+jiaoXueLou
 					+"&type="+type);
@@ -133,7 +125,7 @@
 			var jiaoXueLou=$("#JiaoXueLou").val();
 			var type=$("#type").val();
 			var floor=$("#floor").val();
-			$("#roomID").load("../admin/applicationsOption?select=floor&xiaoQu="+xiaoQu
+			$("#roomID").load("../admin/roomsOption?select=floor&xiaoQu="+xiaoQu
 					+"&jiaoXueQu="+jiaoXueQu
 					+"&jiaoXueLou="+jiaoXueLou
 					+"&type="+type
@@ -145,10 +137,10 @@
 			}
 		});
 		function queryRooms(){	//查询满足条件的教室
-			var form=$('#queryHistoricalApplications').serializeArray();
+			var form=$('#queryRooms').serializeArray();
 			$.ajax({
 				type: "post",//方法类型
-				url: "../admin/queryHistoricalApplications" ,
+				url: "../admin/queryRooms" ,
 				dataType:"text",
 				async:true,
 				data: form,
@@ -161,9 +153,6 @@
 				}
 			});
 		}
-		$(document).ready(function() {
-			$("#applications-div").load("../admin/getReviewedApplicationsOf7Days");
-		});
 	</script>
 </body>
 </html>
