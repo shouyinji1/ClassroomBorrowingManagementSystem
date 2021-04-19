@@ -33,8 +33,9 @@ public class Application implements Serializable{
 	
 	/** 所有的类型 */
 	private String[] types= {"教学活动","会议","文娱活动","社团活动"};
-	/** 申请是否过期 */
-	private boolean aging;
+	/** 申请状态
+	 * 1：待审批，2：审批通过不可反馈，3：审批通过可反馈，4：审批不通过； 5：过期，6：教室不可用，*/
+	private int status;
 	
 	public int getId() {
 		return id;
@@ -155,26 +156,48 @@ public class Application implements Serializable{
 	public void setTypes(String[] types) {
 		this.types = types;
 	}
-
-	public boolean isAging() {
-		return aging;
+	public int getStatus() {
+		return status;
 	}
-	public void setAging(Semester semester) {
+	public void setStatus(Semester semester) {
 		int zhouCiNow=semester.getZhouCiNow();
 		int xingQiNow=semester.getXingQiNow();
-		if(approval==null) {
-			if(zhouCi>zhouCiNow) {
-				this.aging=false;
+		if(approval==null) {	// 未审批
+			if(zhouCi>zhouCiNow) {	// 未过期
+				if(this.classroom.isAvailable()) {
+					this.status=1;	// 待审核
+				}else {
+					this.status=6;	// 不可用
+				}
 			}else if(zhouCi==zhouCiNow) {
-				if(xingQi>xingQiNow)
-					this.aging=false;
-				else 
-					this.aging=true;
-			}else {
-				this.aging=true;
+				if(xingQi>xingQiNow) {	// 未过期
+					if(this.classroom.isAvailable()) {
+						this.status=1;	// 待审核
+					}else {
+						this.status=6;	// 不可用
+					}
+				}else 	//过期
+					this.status=5;
+			}else {	// 过期
+				this.status=5;
 			}
-		}else {
-			this.aging=false;
+		}else if(approval==true) {	// 已审核通过
+			if (this.classroom.isAvailable()) {
+				int dayDiff=semester.getDaysDiffS()-((this.zhouCi-1)*7+this.xingQi);
+				if(dayDiff>0 && dayDiff<=3) {	// 如果在申请使用第2天至第4天内
+					this.status=3;	// 可反馈
+				}else {
+					this.status=2;	// 不可反馈
+				}
+			}else {
+				if (this.zhouCi>zhouCiNow || (this.zhouCi==zhouCiNow && this.xingQi>xingQiNow)) {
+					this.status=6;	// 不可用
+				}else {	// 历史已通过的申请
+					this.status=2;	// 不可反馈
+				}
+			}
+		}else {	// 审批不通过
+			this.status=4;
 		}
 	}
 }

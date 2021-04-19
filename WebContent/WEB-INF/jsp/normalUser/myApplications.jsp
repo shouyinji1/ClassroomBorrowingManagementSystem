@@ -48,14 +48,12 @@
 								<td id="application-${application.id}-eJieCi">${application.eJieCi}</td>
 								<td>
 									<c:choose>
-										<c:when test="${application.approval==true}">已审批通过</c:when>
-										<c:when test="${application.approval==false}">已拒绝申请</c:when>
-										<c:when test="${empty application.approval}">
-											<c:choose>
-												<c:when test="${application.aging==true}">已过期</c:when>
-												<c:when test="${application.aging==false}">待审批</c:when>
-											</c:choose>
-										</c:when>
+										<c:when test="${application.status==1}">待审批</c:when>
+										<c:when test="${application.status==2}">审批通过</c:when>
+										<c:when test="${application.status==3}">审批通过，可反馈</c:when>
+										<c:when test="${application.status==4}">审批不通过</c:when>
+										<c:when test="${application.status==5}">申请已过期</c:when>
+										<c:when test="${application.status==6}">教室不可用</c:when>
 									</c:choose>
 								</td>
 							</tr>

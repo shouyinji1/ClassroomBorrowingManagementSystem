@@ -44,9 +44,9 @@ public class NormalUserDaoImpl extends BaseDaoImpl<NormalUserDao> implements Nor
 	}
 
 	@Override
-	public List<RoomSchedule> getRoomsStatusByApplication(Application application) {
+	public List<RoomSchedule> getRoomSchedulesByApplication(Application application) {
 		// TODO Auto-generated method stub
-		return this.getMapper().getRoomsStatusByApplication(application);
+		return this.getMapper().getRoomSchedulesByApplication(application);
 	}
 
 	@Override

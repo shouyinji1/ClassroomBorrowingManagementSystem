@@ -154,42 +154,26 @@
 					</form>
 					<hr class="mb-4">
 					<h4 class="mb-3">审批情况</h4>
-					<c:choose>
-						<c:when test="${application.aging==true}">
-							<div class="form-group row">
-								<div class="col-sm-2">申请已过期</div>
+						<div class="row">
+							<div class="col-sm-12 mb-3">
+								审批人：${application.reviewer.name}
 							</div>
-						</c:when>
-						<c:when test="${(empty application.approval) and application.aging==false}">
-							<div class="form-group row">
-								<div class="col-sm-2">待审批</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12 mb-3">
+								审批时间：${application.formatReviewTime}
 							</div>
-						</c:when>
-						<c:otherwise>
-							<div class="row">
-								<div class="col-sm-12 mb-3">
-									审批人：${application.reviewer.name}
-								</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12 mb-3">
+								审批意见：不通过
 							</div>
-							<div class="row">
-								<div class="col-sm-12 mb-3">
-									审批时间：${application.formatReviewTime}
-								</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12 mb-3">
+								意见内容：${application.reviewContent}
 							</div>
-							<div class="row">
-								<div class="col-sm-12 mb-3">
-									审批意见：${application.approval ? '通过' : '不通过'}
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-sm-12 mb-3">
-									审批回复：${application.reviewContent}
-								</div>
-							</div>
-						</c:otherwise>
-					</c:choose>
-					<hr class="mb-4">
-					<h4 class="mb-3">评论/反馈（教室使用后可评论反馈）</h4>
+						</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
 					</div>

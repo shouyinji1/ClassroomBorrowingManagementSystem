@@ -33,8 +33,7 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		Application application =adminDao.getApplicationById(id);
 		// 设置申请是否过期
-		Semester semester=userDao.getSemesters().get(0);
-		application.setAging(semester);
+		application.setStatus(userDao.getSemesters().get(0));
 		return application;
 	}
 

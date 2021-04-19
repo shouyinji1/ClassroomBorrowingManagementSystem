@@ -15,6 +15,7 @@ public class Classroom implements Serializable{
 	private String jiaoXueLou;
 	private String floor;
 	private String capacity;
+	private boolean available;
 	
 	public String getId() {
 		return id;
@@ -63,5 +64,11 @@ public class Classroom implements Serializable{
 	}
 	public void setCapacity(String capacity) {
 		this.capacity = capacity;
+	}
+	public boolean isAvailable() {
+		return available;
+	}
+	public void setAvailable(boolean available) {
+		this.available = available;
 	}
 }

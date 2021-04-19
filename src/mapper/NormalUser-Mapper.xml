@@ -2,8 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="dao.NormalUserDao">
-	<select id="getApplicationsByUserId" resultType="application" parameterType="String">
-		select * from Application where UserID=#{userID}
+	<select id="getApplicationsByUserId" resultMap="applicationResultMap" parameterType="String">
+		select Application.ID as ApplicationID, UserID, RoomID, SubmitTime, zhouCi, XingQi, 
+			SJieCi, EJieCi, Application.Type as ApplicationType, Purpose, 
+			ReviewerID, ReviewTime, Approval,ReviewContent,
+			User.Name as UserName, Phone, Email, Department,
+			Classroom.Name as ClassroomName, Classroom.Type as RoomType, 
+			XiaoQu,JiaoXueQu, JiaoXueLou, Floor, Capacity, Available
+				from Application,User,Classroom 
+					where Application.UserID=User.ID and Application.RoomID=Classroom.ID
+						and UserID=#{userID};
 	</select>
 	<select id="getApplicationById" resultMap="applicationResultMap" parameterType="int">
 		select Application.ID as ApplicationID, UserID, RoomID, SubmitTime, zhouCi, XingQi, 
@@ -11,7 +19,7 @@
 			ReviewerID, ReviewTime, Approval,ReviewContent,
 			User.Name as UserName, Phone, Email, Department,
 			Classroom.Name as ClassroomName, Classroom.Type as RoomType, 
-			XiaoQu,JiaoXueQu, JiaoXueLou, Floor, Capacity 
+			XiaoQu,JiaoXueQu, JiaoXueLou, Floor, Capacity, Available
 				from Application,User,Classroom 
 					where Application.ID=#{id} and Application.UserID=User.ID and Application.RoomID=Classroom.ID;
 	</select>
@@ -45,6 +53,7 @@
 			<id column="JiaoXueLou" property="jiaoXueLou"></id>
 			<id column="Floor" property="floor"></id>
 			<id column="Capacity" property="capacity"></id>
+			<id column="Available" property="available"></id>
 		</association>
 		<association property="reviewer" javaType="user">
 			<id column="UserName" property="name"></id>
@@ -53,7 +62,7 @@
 			<id column="Department" property="department"></id>
 		</association>
 	</resultMap>
-	<select id="getRoomsStatusByApplication" resultType="roomSchedule" parameterType="Application">
+	<select id="getRoomSchedulesByApplication" resultType="roomSchedule" parameterType="Application">
 		select * from RoomSchedule where RoomID=#{roomID} and ZhouCi=#{zhouCi} and XingQi=#{xingQi};
 	</select>
 	<select id="getApplicationsByApplication" resultType="application" parameterType="Application">
@@ -78,26 +87,28 @@
 	</delete>
 	
 	<select id="getAllXiaoQu" resultType="String">
-		select distinct XiaoQu from Classroom;
+		select distinct XiaoQu from Classroom where Available=true;
 	</select>
 	<select id="getAllJiaoXueQuByXiaoQu" resultType="String" parameterType="String">
-		select distinct JiaoXueQu from Classroom where XiaoQu=#{xiaoQu};
+		select distinct JiaoXueQu from Classroom where Available=true and XiaoQu=#{xiaoQu};
 	</select>
 	<select id="getAllJiaoXueLouByXJ" resultType="String" parameterType="String">
-		select distinct JiaoXueLou from Classroom where XiaoQu=#{xiaoQu} and JiaoXueQu=#{jiaoXueQu};
+		select distinct JiaoXueLou from Classroom 
+			where Available=true and XiaoQu=#{xiaoQu} and JiaoXueQu=#{jiaoXueQu};
 	</select>
 	<select id="getAllTypeByXJJ" resultType="String">
-		select distinct Type from Classroom where XiaoQu=#{xiaoQu} and JiaoXueQu=#{jiaoXueQu} 
-			and JiaoXueLou=#{jiaoXueLou};
+		select distinct Type from Classroom where Available=true 
+				and XiaoQu=#{xiaoQu} and JiaoXueQu=#{jiaoXueQu} and JiaoXueLou=#{jiaoXueLou};
 	</select>
 	<select id="getAllFloorByXJJT" resultType="String">
 		select distinct Floor from Classroom 
-			where XiaoQu=#{xiaoQu} and JiaoXueQu=#{jiaoXueQu} and JiaoXueLou=#{jiaoXueLou} and Type=#{type};
+			where Available=true and XiaoQu=#{xiaoQu} and JiaoXueQu=#{jiaoXueQu} 
+				and JiaoXueLou=#{jiaoXueLou} and Type=#{type};
 	</select>
 	<select id="getAllRoomIDByXJJTF" resultType="String">
 		select distinct ID from Classroom 
-			where XiaoQu=#{xiaoQu} and JiaoXueQu=#{jiaoXueQu} and JiaoXueLou=#{jiaoXueLou} 
-				and Type=#{type} and Floor=#{floor};
+			where Available=true and XiaoQu=#{xiaoQu} and JiaoXueQu=#{jiaoXueQu} 
+				and JiaoXueLou=#{jiaoXueLou} and Type=#{type} and Floor=#{floor};
 	</select>
 	<select id="getRoomsByApply" resultType="Classroom" parameterType="Application">
 		select Floor,ID,Capacity,name from Classroom where ID not in(
@@ -118,7 +129,7 @@
 					and ((SJieCi &gt;=#{sJieCi} and SJieCi &lt;=#{eJieCi}) 
 						or (EJieCi &gt;=#{sJieCi} and EJieCi &lt;=#{eJieCi}))
 		) and XiaoQu=#{classroom.xiaoQu} and JiaoXueQu=#{classroom.jiaoXueQu} 
-			and jiaoXueLou=#{classroom.jiaoXueLou} and Type=#{classroom.type};
+			and jiaoXueLou=#{classroom.jiaoXueLou} and Type=#{classroom.type} and Available=true;
 	</select>
 	<select id="getClassroomById" resultType="Classroom" parameterType="String">
 		select * from Classroom where ID=#{id};
@@ -134,6 +145,8 @@
 					select 1 from RoomSchedule where ((SJieCi &gt;=#{sJieCi} and SJieCi &lt;=#{eJieCi})
 						or (EJieCi &gt;=#{sJieCi} and EJieCi &lt;=#{eJieCi}))
 						and RoomID=#{roomID} and ZhouCi=#{zhouCi} and XingQi=#{xingQi}
+					union
+					select 1 from Classroom where ID=#{roomID} and Available=false
 				);
 	</insert>
 </mapper>

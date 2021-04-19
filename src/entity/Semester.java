@@ -46,6 +46,7 @@ public class Semester implements Serializable{
         		calendar.get(Calendar.MONTH)+1,calendar.get(Calendar.DAY_OF_MONTH));
 		return (int)ChronoUnit.DAYS.between(specificDay, today);
 	}
+
 	/** 获取当前周次 */
 	public int getZhouCiNow() {
 		return this.getDaysDiffS()/7+1;

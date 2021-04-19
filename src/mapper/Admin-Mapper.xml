@@ -51,6 +51,7 @@
 			<id column="JiaoXueLou" property="jiaoXueLou"></id>
 			<id column="Floor" property="floor"></id>
 			<id column="Capacity" property="capacity"></id>
+			<id column="Status" property="status"></id>
 		</association>
 		<association property="reviewer" javaType="user">
 			<id column="UserName" property="name"></id>

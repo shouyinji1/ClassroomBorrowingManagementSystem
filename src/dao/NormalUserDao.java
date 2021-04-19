@@ -17,7 +17,7 @@ public interface NormalUserDao {
 	public Application getApplicationById(int id);
 	
 	/** 查询与申请时间相似的教室状态 */
-	public List<RoomSchedule> getRoomsStatusByApplication(Application application);
+	public List<RoomSchedule> getRoomSchedulesByApplication(Application application);
 
 	/** 查询与申请时间相似的申请记录 */
 	public List<Application> getApplicationsByApplication(Application application);

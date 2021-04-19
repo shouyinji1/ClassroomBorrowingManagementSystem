@@ -29,10 +29,10 @@ public class NormalUserServiceImpl implements NormalUserService {
 		// TODO Auto-generated method stub
 		List<Application> applications=normalUserDao.getApplicationsByUserId(userID);
 		
-		// 设置申请是否过期
+		// 设置申请记录的状态
 		Semester semester=userDao.getSemesters().get(0);
 		for(Application application:applications) {
-			application.setAging(semester);
+			application.setStatus(semester);
 		}
 		return applications;
 	}
@@ -42,9 +42,8 @@ public class NormalUserServiceImpl implements NormalUserService {
 	public Application getApplicationById(int id) {
 		// TODO Auto-generated method stub
 		Application application =normalUserDao.getApplicationById(id);
-		// 设置申请是否过期
-		Semester semester=userDao.getSemesters().get(0);
-		application.setAging(semester);
+		// 设置申请记录的状态
+		application.setStatus(userDao.getSemesters().get(0));
 		return application;
 	}
 

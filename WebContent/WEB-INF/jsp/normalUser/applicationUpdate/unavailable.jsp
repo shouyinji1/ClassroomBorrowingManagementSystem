@@ -89,70 +89,83 @@
 					</div>
 					<hr class="mb-4">
 					<h4 class="mb-3">申请使用时间</h4>
-					<form>
+					<form><fieldset disabled>
 						<input type="hidden" name="id" value="${application.id}">
 						<input type="hidden" name="roomID" value="${application.roomID}">
-						<fieldset disabled>
-							<div class="row">
-								<div class="col-sm-3 mb-3">
-									<label>周次</label>
-									<input type="text" class="form-control" value="${application.zhouCi}" readonly>
-								</div>
-								<div class="col-sm-3 mb-3">
-									<label>星期</label>
-									<input type="text" class="form-control" value="${application.xingQi}" readonly>
-								</div>
-								<div class="col-sm-3 mb-3">
-									<label>开始节次</label>
-									<select class="form-control" id="sJieCi">
-										<option value="${application.sJieCi}" selected="selected">${application.sJieCi}</option>
-									</select>
-								</div>
-								<div class="col-sm-3 mb-3">
-									<label>结束节次</label>
-									<select class="form-control" id="eJieCi">
-										<option value="${application.eJieCi}" selected="selected">${application.eJieCi}</option>
-									</select>
-								</div>
+						<div class="row">
+							<div class="col-sm-3 mb-3">
+								<label>周次</label>
+								<input type="text" class="form-control" value="${application.zhouCi}" readonly>
 							</div>
-							<hr class="mb-4">
-							<h4 class="mb-3">申请目的</h4>
-							<div class="form-group row">
-								<label class="col-sm-2 col-form-label">申请类型</label>
-								<div class="col-sm-3">
-									<select class="form-control">
-										<option selected="selected" value="${application.type}">${application.type}</option>	
-									</select>
-								</div>
+							<div class="col-sm-3 mb-3">
+								<label>星期</label>
+								<input type="text" class="form-control" value="${application.xingQi}" readonly>
 							</div>
-							<div class="form-group row">
-								<label class="col-sm-2 col-form-label">申请用途</label>
-								<div class="col-sm-10">
-									<textarea class="form-control" id="message-text" name="purpose">${application.purpose}</textarea>
-								</div>
+							<div class="col-sm-3 mb-3">
+								<label>开始节次</label>
+								<select class="form-control" id="sJieCi">
+									<option value="${application.sJieCi}" selected="selected">${application.sJieCi}</option>
+								</select>
 							</div>
-						</fieldset>
-					</form>
+							<div class="col-sm-3 mb-3">
+								<label>结束节次</label>
+								<select class="form-control" id="eJieCi">
+									<option value="${application.eJieCi}" selected="selected">${application.eJieCi}</option>
+								</select>
+							</div>
+						</div>
+						<hr class="mb-4">
+						<h4 class="mb-3">申请目的</h4>
+						<div class="form-group row">
+							<label class="col-sm-2 col-form-label">申请类型</label>
+							<div class="col-sm-3">
+								<select class="form-control" name="type">
+									<option selected="selected" value="${application.type}">${application.type}</option>	
+								</select>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-2 col-form-label">申请用途</label>
+							<div class="col-sm-10">
+								<textarea class="form-control" id="message-text" readonly="readonly">${application.purpose}</textarea>
+							</div>
+						</div>
+					</fieldset></form>
 					<hr class="mb-4">
 					<h4 class="mb-3">审批情况</h4>
-					<div class="row">
-						<div class="col-sm-12 mb-3">审批人：${application.reviewer.name}</div>
-					</div>
-					<div class="row">
-						<div class="col-sm-12 mb-3">审批时间：${application.formatReviewTime}</div>
-					</div>
-					<div class="row">
-						<div class="col-sm-12 mb-3">审批意见：通过</div>
-					</div>
-					<div class="row">
-						<div class="col-sm-12 mb-3">意见内容：${application.reviewContent}</div>
+					<div class="form-group row">
+						<div class="col-sm">教室暂时不可用</div>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+						<button type="submit" class="btn btn-danger" onclick="deleteApplication(${application.id})">删除</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+    <script type="text/javascript">
+		function deleteApplication(id){
+			$.ajax({
+				type: "post",//方法类型
+				url: "../normalUser/deleteApplicationById",
+				async:true,
+				data: {'id':id},
+				success:function(data){
+					if(data=='1'){
+						$("#application-Modal").modal('hide');
+						document.getElementById('application-${application.id}').remove();
+					}else if(data=='0'){
+						alert("删除失败");
+					}else{
+						alert("删除异常");
+					}
+				},
+				error : function() {
+					alert("异常请求！"+data.msg);
+				}
+			});
+		}	
+    </script>
 </body>
 </html>

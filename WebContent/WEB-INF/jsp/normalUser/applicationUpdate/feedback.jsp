@@ -136,19 +136,30 @@
 					<hr class="mb-4">
 					<h4 class="mb-3">审批情况</h4>
 					<div class="row">
-						<div class="col-sm-12 mb-3">审批人：${application.reviewer.name}</div>
+						<div class="col-sm-12 mb-3">
+							审批人：${application.reviewer.name}
+						</div>
 					</div>
 					<div class="row">
-						<div class="col-sm-12 mb-3">审批时间：${application.formatReviewTime}</div>
+						<div class="col-sm-12 mb-3">
+							审批时间：${application.formatReviewTime}
+						</div>
 					</div>
 					<div class="row">
-						<div class="col-sm-12 mb-3">审批意见：通过</div>
+						<div class="col-sm-12 mb-3">
+							审批意见：通过
+						</div>
 					</div>
 					<div class="row">
-						<div class="col-sm-12 mb-3">意见内容：${application.reviewContent}</div>
+						<div class="col-sm-12 mb-3">
+							意见内容：${application.reviewContent}
+						</div>
 					</div>
+					<hr class="mb-4">
+					<h4 class="mb-3">评论/反馈（教室使用后可评论反馈）</h4>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+						<button type="button" class="btn btn-primary" onclick="">提交</button>
 					</div>
 				</div>
 			</div>

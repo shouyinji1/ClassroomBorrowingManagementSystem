@@ -44,17 +44,28 @@ public class NormalUser {
 	@RequestMapping("applicationUpdate")
 	public ModelAndView applicationUpdate(@Param("id")int id,HttpServletRequest request, HttpServletResponse response) {
 		Application application=normalUserService.getApplicationById(id);
-		ModelAndView mav;
-		if(application.isAging()==true) {	// 申请已过期
-			mav=new ModelAndView("normalUser/applicationUpdate/aging");
-		}else if(application.getApproval()==null){	// 待审批
-			mav=new ModelAndView("normalUser/applicationUpdate/waitApproval");
-		}else if(application.getApproval()==true) {	// 批准
-			mav=new ModelAndView("normalUser/applicationUpdate/approve");
-		}else if(application.getApproval()==false) {	// 不批
-			mav=new ModelAndView("normalUser/applicationUpdate/oppose");
-		}else {
-			return null;
+		ModelAndView mav = null;
+		switch (application.getStatus()) {
+			case 1:	// 待审批
+				mav=new ModelAndView("normalUser/applicationUpdate/waitApproval");
+				break;
+			case 2:	// 审批通过，不可反馈
+				mav=new ModelAndView("normalUser/applicationUpdate/approve");
+				break;
+			case 3:	// 审批通过，可反馈
+				mav=new ModelAndView("normalUser/applicationUpdate/feedback");
+				break;
+			case 4:	// 审批不通过
+				mav=new ModelAndView("normalUser/applicationUpdate/oppose");
+				break;
+			case 5:	// 过期
+				mav=new ModelAndView("normalUser/applicationUpdate/aging");
+				break;
+			case 6:	// 教室不可用
+				mav=new ModelAndView("normalUser/applicationUpdate/unavailable");
+				break;
+			default:
+				return null;
 		}
 		mav.addObject("application",application);
 		return mav;
