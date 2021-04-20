@@ -143,4 +143,16 @@ public class NormalUserServiceImpl implements NormalUserService {
 		// TODO Auto-generated method stub
 		return normalUserDao.insertApplication(application);
 	}
+
+	@Override
+	public int updateFeedback(Application application) {
+		// TODO Auto-generated method stub
+		return normalUserDao.updateFeedback(application);
+	}
+
+	@Override
+	public List<Application> getFeedbacksByRoomID(String roomID) {
+		// TODO Auto-generated method stub
+		return normalUserDao.getFeedbacksByRoomID(roomID);
+	}
 }

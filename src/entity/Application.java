@@ -26,6 +26,9 @@ public class Application implements Serializable{
 	private Date reviewTime;
 	private Boolean approval;
 	private String reviewContent;
+	private String feedback;
+	private Date feedbackTime;
+	private Boolean readFeedback;
 	
 	private User user;
 	private Classroom classroom;
@@ -183,8 +186,9 @@ public class Application implements Serializable{
 			}
 		}else if(approval==true) {	// 已审核通过
 			if (this.classroom.isAvailable()) {
-				int dayDiff=semester.getDaysDiffS()-((this.zhouCi-1)*7+this.xingQi);
-				if(dayDiff>0 && dayDiff<=3) {	// 如果在申请使用第2天至第4天内
+				int dayDiff=semester.getDaysDiffS()-((this.zhouCi-1)*7+this.xingQi-1);
+				if(dayDiff>0 && dayDiff<=3 && this.feedbackTime ==null) {	
+					// 如果在申请使用第2天至第4天内，且未反馈过
 					this.status=3;	// 可反馈
 				}else {
 					this.status=2;	// 不可反馈
@@ -199,5 +203,23 @@ public class Application implements Serializable{
 		}else {	// 审批不通过
 			this.status=4;
 		}
+	}
+	public String getFeedback() {
+		return feedback;
+	}
+	public void setFeedback(String feedback) {
+		this.feedback = feedback;
+	}
+	public Date getFeedbackTime() {
+		return feedbackTime;
+	}
+	public void setFeedbackTime(Date feedbackTime) {
+		this.feedbackTime = feedbackTime;
+	}
+	public Boolean getReadFeedback() {
+		return readFeedback;
+	}
+	public void setReadFeedback(Boolean readFeedback) {
+		this.readFeedback = readFeedback;
 	}
 }

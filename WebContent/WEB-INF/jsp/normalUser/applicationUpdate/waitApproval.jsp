@@ -155,8 +155,6 @@
 					<div class="form-group row">
 						<div class="col-sm-2">待审批</div>
 					</div>
-					<hr class="mb-4">
-					<h4 class="mb-3">评论/反馈（教室使用后可评论反馈）</h4>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
 						<button type="button" class="btn btn-primary" onclick="toUpdateApplication()">修改</button>

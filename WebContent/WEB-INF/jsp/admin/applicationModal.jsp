@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,9 +13,18 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel">审批</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
+					<c:choose>
+						<c:when test="${(!empty application.feedbackTime) and application.readFeedback==false}">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="updateReadFeedback()">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</c:when>
+						<c:otherwise>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</c:otherwise>
+					</c:choose>
 				</div>
 				<div class="modal-body">
 					<div class="row">
@@ -151,12 +161,35 @@
 							意见内容：${application.reviewContent}
 						</div>
 					</div>
+					<c:if test="${!empty application.feedbackTime}">
+						<hr class="mb-4">
+						<h4 class="mb-3">使用者反馈</h4>
+						<div class="row">
+							<div class="col-sm-12 mb-3">反馈时间：<fmt:formatDate value="${application.feedbackTime}" pattern="yyyy-MM-dd HH:mm:ss" /></div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12 mb-3">反馈内容：${application.feedback}</div>
+						</div>
+					</c:if>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+					<c:choose>
+						<c:when test="${(!empty application.feedbackTime) and application.readFeedback==false}">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="updateReadFeedback()">关闭</button>
+						</c:when>
+						<c:otherwise>
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript">
+		function updateReadFeedback(){
+			$.get("../admin/updateReadFeedback?id=${application.id}&readFeedback=true");
+			document.getElementById('application-${application.id}-status').innerHTML='通过';
+		}
+	</script>
 </body>
 </html>

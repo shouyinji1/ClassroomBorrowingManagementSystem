@@ -155,6 +155,7 @@ public class NormalUser {
 	public ModelAndView applyRoom(Application application,HttpSession session) {
 		application.setClassroom(normalUserService.getClassroomById(application.getRoomID()));
 		ModelAndView mav=new ModelAndView("normalUser/apply-Modal");
+		mav.addObject("feedbacks",normalUserService.getFeedbacksByRoomID(application.getRoomID()));
 		return mav;
 	}
 	
@@ -162,5 +163,11 @@ public class NormalUser {
 	@ResponseBody
 	public String submitApplication(Application application) {
 		return Integer.toString(normalUserService.insertApplication(application));
+	}
+	
+	@RequestMapping("submitFeedback")
+	@ResponseBody
+	public String submitFeedback(Application application) {
+		return Integer.toString(normalUserService.updateFeedback(application));
 	}
 }

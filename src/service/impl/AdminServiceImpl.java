@@ -112,13 +112,20 @@ public class AdminServiceImpl implements AdminService {
 					applications.remove(i);
 			}
 		}
+		for(Application application:applications) {
+			application.setStatus(userDao.getSemesters().get(0));
+		}
 		return applications;
 	}
 
 	@Override
 	public List<Application> getReviewedApplicationsOf7Days() {
 		// TODO Auto-generated method stub
-		return adminDao.getReviewedApplicationsOf7Days();
+		List<Application> applications= adminDao.getReviewedApplicationsOf7Days();
+		for(Application application:applications) {
+			application.setStatus(userDao.getSemesters().get(0));
+		}
+		return applications;
 	}
 
 	@Override
@@ -155,5 +162,11 @@ public class AdminServiceImpl implements AdminService {
 	public List<String> getAllRoomIDByXJJTF(Classroom room) {
 		// TODO Auto-generated method stub
 		return adminDao.getAllRoomIDByXJJTF(room);
+	}
+
+	@Override
+	public int updateReadFeedback(Application application) {
+		// TODO Auto-generated method stub
+		return adminDao.updateReadFeedback(application);
 	}
 }

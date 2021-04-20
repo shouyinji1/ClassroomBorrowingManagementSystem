@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -147,6 +148,19 @@
 					<div class="row">
 						<div class="col-sm-12 mb-3">意见内容：${application.reviewContent}</div>
 					</div>
+					<c:if test="${!empty application.feedbackTime}">
+						<hr class="mb-4">
+						<h4 class="mb-3">我的反馈</h4>
+						<div class="row">
+							<div class="col-sm-12 mb-3">反馈时间：<fmt:formatDate value="${application.feedbackTime}" pattern="yyyy-MM-dd HH:mm:ss" /></div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12 mb-3">反馈内容：${application.feedback}</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-12 mb-3">管理员已读：${application.readFeedback ? '已读' : '未读'}</div>
+						</div>
+					</c:if>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
 					</div>

@@ -15,6 +15,7 @@ public class Semester implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private int id;
+	private String sName;
 	private Date sDate;
 	private int tWeeks;
 	
@@ -23,6 +24,12 @@ public class Semester implements Serializable{
 	}
 	public void setId(int id) {
 		this.id = id;
+	}	
+	public String getsName() {
+		return sName;
+	}
+	public void setsName(String sName) {
+		this.sName = sName;
 	}
 	public Date getsDate() {
 		return sDate;
@@ -57,4 +64,5 @@ public class Semester implements Serializable{
 	public int getXingQiNow() {
 		return this.getDaysDiffS()%7+1;
 	}
+
 }

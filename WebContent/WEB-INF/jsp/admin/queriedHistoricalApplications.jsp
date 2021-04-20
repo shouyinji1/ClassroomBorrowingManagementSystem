@@ -49,16 +49,14 @@
 								<td>${application.xingQi}</td>
 								<td>${application.sJieCi}</td>
 								<td>${application.eJieCi}</td>
-								<td>
+								<td id="application-${application.id}-status">
 									<c:choose>
-										<c:when test="${application.approval==true}">通过</c:when>
-										<c:when test="${application.approval==false}">已拒绝申请</c:when>
-										<c:when test="${empty application.approval}">
-											<c:choose>
-												<c:when test="${application.aging==true}">已过期</c:when>
-												<c:when test="${application.aging==false}">待审批</c:when>
-											</c:choose>
-										</c:when>
+										<c:when test="${!empty application.feedbackTime && application.readFeedback==false && application.status==2}">有反馈未阅读</c:when>
+										<c:when test="${application.status==2}">通过</c:when>
+										<c:when test="${application.status==3}">通过</c:when>
+										<c:when test="${application.status==4}">不通过</c:when>
+										<c:when test="${application.status==5}">过期</c:when>
+										<c:when test="${application.status==6}">教室不可用</c:when>
 									</c:choose>
 								</td>
 							</tr>

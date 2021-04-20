@@ -84,6 +84,12 @@ public class AdminDaoImpl extends BaseDaoImpl<AdminDao> implements AdminDao {
 	}
 
 	@Override
+	public int updateReadFeedback(Application application) {
+		// TODO Auto-generated method stub
+		return this.getMapper().updateReadFeedback(application);
+	}
+
+	@Override
 	public List<String> getAllXiaoQu() {
 		// TODO Auto-generated method stub
 		return this.getMapper().getAllXiaoQu();

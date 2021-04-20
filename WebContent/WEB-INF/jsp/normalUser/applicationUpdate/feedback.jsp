@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -89,50 +90,46 @@
 					</div>
 					<hr class="mb-4">
 					<h4 class="mb-3">申请使用时间</h4>
-					<form>
-						<input type="hidden" name="id" value="${application.id}">
-						<input type="hidden" name="roomID" value="${application.roomID}">
-						<fieldset disabled>
-							<div class="row">
-								<div class="col-sm-3 mb-3">
-									<label>周次</label>
-									<input type="text" class="form-control" value="${application.zhouCi}" readonly>
-								</div>
-								<div class="col-sm-3 mb-3">
-									<label>星期</label>
-									<input type="text" class="form-control" value="${application.xingQi}" readonly>
-								</div>
-								<div class="col-sm-3 mb-3">
-									<label>开始节次</label>
-									<select class="form-control" id="sJieCi">
-										<option value="${application.sJieCi}" selected="selected">${application.sJieCi}</option>
-									</select>
-								</div>
-								<div class="col-sm-3 mb-3">
-									<label>结束节次</label>
-									<select class="form-control" id="eJieCi">
-										<option value="${application.eJieCi}" selected="selected">${application.eJieCi}</option>
-									</select>
-								</div>
+					<fieldset disabled>
+						<div class="row">
+							<div class="col-sm-3 mb-3">
+								<label>周次</label>
+								<input type="text" class="form-control" value="${application.zhouCi}" readonly>
 							</div>
-							<hr class="mb-4">
-							<h4 class="mb-3">申请目的</h4>
-							<div class="form-group row">
-								<label class="col-sm-2 col-form-label">申请类型</label>
-								<div class="col-sm-3">
-									<select class="form-control">
-										<option selected="selected" value="${application.type}">${application.type}</option>	
-									</select>
-								</div>
+							<div class="col-sm-3 mb-3">
+								<label>星期</label>
+								<input type="text" class="form-control" value="${application.xingQi}" readonly>
 							</div>
-							<div class="form-group row">
-								<label class="col-sm-2 col-form-label">申请用途</label>
-								<div class="col-sm-10">
-									<textarea class="form-control" id="message-text" name="purpose">${application.purpose}</textarea>
-								</div>
+							<div class="col-sm-3 mb-3">
+								<label>开始节次</label>
+								<select class="form-control" id="sJieCi">
+									<option value="${application.sJieCi}" selected="selected">${application.sJieCi}</option>
+								</select>
 							</div>
-						</fieldset>
-					</form>
+							<div class="col-sm-3 mb-3">
+								<label>结束节次</label>
+								<select class="form-control" id="eJieCi">
+									<option value="${application.eJieCi}" selected="selected">${application.eJieCi}</option>
+								</select>
+							</div>
+						</div>
+						<hr class="mb-4">
+						<h4 class="mb-3">申请目的</h4>
+						<div class="form-group row">
+							<label class="col-sm-2 col-form-label">申请类型</label>
+							<div class="col-sm-3">
+								<select class="form-control">
+									<option selected="selected" value="${application.type}">${application.type}</option>	
+								</select>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-2 col-form-label">申请用途</label>
+							<div class="col-sm-10">
+								<textarea class="form-control" id="message-text" name="purpose">${application.purpose}</textarea>
+							</div>
+						</div>
+					</fieldset>
 					<hr class="mb-4">
 					<h4 class="mb-3">审批情况</h4>
 					<div class="row">
@@ -156,14 +153,54 @@
 						</div>
 					</div>
 					<hr class="mb-4">
-					<h4 class="mb-3">评论/反馈（教室使用后可评论反馈）</h4>
+					<h4 class="mb-3">我的反馈</h4>
+					<form id="feedback-form">
+						<input type="hidden" name="id" value="${application.id}">
+						<div class="form-group row">
+							<label class="col-sm-2 col-form-label">反馈内容：</label>
+							<div class="col-sm-10">
+								<textarea class="form-control" id="feedback-text" onkeyup="feedbackTextChange()" name="feedback"></textarea>
+							</div>
+						</div>
+					</form>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-						<button type="button" class="btn btn-primary" onclick="">提交</button>
+						<button type="button" class="btn btn-primary" id="submitFeedbackButton" onclick="submitFeedback()" disabled="disabled">提交</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript">
+		function feedbackTextChange(){
+			var feedbackText=$('#feedback-text').val();
+			if(feedbackText !=null && feedbackText != ''){
+				$("#submitFeedbackButton").attr("disabled",false);
+			}else{
+				$("#submitFeedbackButton").attr("disabled",true);
+			}
+		}
+		function submitFeedback(){
+			var form=$('#feedback-form').serializeArray();
+			$.ajax({
+				type: "post",//方法类型
+				url: "../normalUser/submitFeedback" ,
+				dataType:"text",
+				async:true,
+				data: form,
+				success: function (data) {
+					if (data=="1") {
+						$("#application-Modal").modal('hide');
+					 }else{
+						alert("提交失败");
+					}
+				},
+				error : function() {
+					//alert("异常请求！"+data.msg);
+					alert("异常请求！");
+				}
+			});
+		}
+	</script>
 </body>
 </html>

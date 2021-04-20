@@ -5,7 +5,7 @@
 	<select id="getApplicationsByUserId" resultMap="applicationResultMap" parameterType="String">
 		select Application.ID as ApplicationID, UserID, RoomID, SubmitTime, zhouCi, XingQi, 
 			SJieCi, EJieCi, Application.Type as ApplicationType, Purpose, 
-			ReviewerID, ReviewTime, Approval,ReviewContent,
+			ReviewerID, ReviewTime, Approval,ReviewContent,Feedback,FeedbackTime,ReadFeedback,
 			User.Name as UserName, Phone, Email, Department,
 			Classroom.Name as ClassroomName, Classroom.Type as RoomType, 
 			XiaoQu,JiaoXueQu, JiaoXueLou, Floor, Capacity, Available
@@ -16,7 +16,7 @@
 	<select id="getApplicationById" resultMap="applicationResultMap" parameterType="int">
 		select Application.ID as ApplicationID, UserID, RoomID, SubmitTime, zhouCi, XingQi, 
 			SJieCi, EJieCi, Application.Type as ApplicationType, Purpose, 
-			ReviewerID, ReviewTime, Approval,ReviewContent,
+			ReviewerID, ReviewTime, Approval,ReviewContent,Feedback,FeedbackTime,ReadFeedback,
 			User.Name as UserName, Phone, Email, Department,
 			Classroom.Name as ClassroomName, Classroom.Type as RoomType, 
 			XiaoQu,JiaoXueQu, JiaoXueLou, Floor, Capacity, Available
@@ -38,6 +38,9 @@
 		<id column="ReviewTime" property="reviewTime"></id>
 		<id column="Approval" property="approval"></id>
 		<id column="ReviewContent" property="reviewContent"></id>
+		<id column="Feedback" property="feedback"/>
+		<id column="FeedbackTime" property="feedbackTime"/>
+		<id column="ReadFeedback" property="readFeedback"/>
 		
 		<association property="user" javaType="user">
 			<id column="UserName" property="name"></id>
@@ -149,4 +152,12 @@
 					select 1 from Classroom where ID=#{roomID} and Available=false
 				);
 	</insert>
+	
+	<update id="updateFeedback" parameterType="Application">
+		update Application set Feedback=#{feedback},FeedbackTime=CURRENT_TIMESTAMP where ID=#{id};
+	</update>
+	<select id="getFeedbacksByRoomID" parameterType="String" resultMap="applicationResultMap">
+		select User.Name as UserName,Feedback,FeedbackTime from Application,User 
+			where Application.UserID=User.ID and RoomID=#{roomID};
+	</select>
 </mapper>

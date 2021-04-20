@@ -30,6 +30,9 @@ public interface AdminService {
 	/** 查询7天内的已审批记录 */
 	public List<Application> getReviewedApplicationsOf7Days();
 	
+	/** 更新反馈已读标志 */
+	public int updateReadFeedback(Application application);
+
 	/** 查询所有校区 */
 	public List<String> getAllXiaoQu();
 	/** 根据校区查询所有教学区 */

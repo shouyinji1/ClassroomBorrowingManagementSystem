@@ -50,7 +50,7 @@
 									<c:choose>
 										<c:when test="${application.status==1}">待审批</c:when>
 										<c:when test="${application.status==2}">审批通过</c:when>
-										<c:when test="${application.status==3}">审批通过，可反馈</c:when>
+										<c:when test="${application.status==3}">可反馈</c:when>
 										<c:when test="${application.status==4}">审批不通过</c:when>
 										<c:when test="${application.status==5}">申请已过期</c:when>
 										<c:when test="${application.status==6}">教室不可用</c:when>

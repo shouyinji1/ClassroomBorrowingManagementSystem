@@ -110,4 +110,15 @@ public class NormalUserDaoImpl extends BaseDaoImpl<NormalUserDao> implements Nor
 		return getMapper().insertApplication(application);
 	}
 
+	/** 更新反馈 */
+	@Override
+	public int updateFeedback(Application application) {
+		return getMapper().updateFeedback(application);
+	}
+
+	@Override
+	public List<Application> getFeedbacksByRoomID(String roomID) {
+		// TODO Auto-generated method stub
+		return getMapper().getFeedbacksByRoomID(roomID);
+	}
 }

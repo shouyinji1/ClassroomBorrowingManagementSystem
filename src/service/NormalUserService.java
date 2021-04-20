@@ -38,4 +38,10 @@ public interface NormalUserService {
 	
 	/** 插入申请记录 */
 	public int insertApplication(Application application);
+
+	/** 更新反馈 */
+	public int updateFeedback(Application application);
+
+	/** 获取某教室的所有用户反馈记录 */
+	public List<Application> getFeedbacksByRoomID(String roomID);
 }

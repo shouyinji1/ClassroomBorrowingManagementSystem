@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <body>
@@ -116,10 +117,16 @@
 						</div>
 					</div>
 				</form>
-				<hr class="mb-4">
-				<h4 class="mb-3">评论/反馈（教室使用后可评论反馈）</h4>
-				<hr class="mb-4">
-			</div>
+				<c:if test="${!empty feedbacks[0].feedbackTime}">
+					<hr class="mb-4">
+					<h4 class="mb-3">历史反馈</h4>
+					<table class="table">
+						<c:forEach items="${feedbacks}" var="feedback">
+							<tr><td rowspan="2" width="15%">${feedback.user.name}</td><td>${feedback.feedback}</td></tr>
+							<tr><td><font size="2"><fmt:formatDate value="${feedback.feedbackTime}" pattern="yyyy-MM-dd HH:mm:ss" /></font></td></tr>
+						</c:forEach>
+					</table>
+				</c:if>
 				<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
 				<button type="button" class="btn btn-primary" onclick="submitApplication()">提交</button>

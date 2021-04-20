@@ -34,6 +34,8 @@ public interface AdminDao {
 	/** 查询7天内的已审批记录 */
 	public List<Application> getReviewedApplicationsOf7Days();
 	
+	/** 更新反馈已读标志 */
+	public int updateReadFeedback(Application application);
 	
 	
 	/** 查询所有校区 */

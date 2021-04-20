@@ -12,9 +12,7 @@
 					and (ZhouCi &gt; #{zhouCiNow} or (ZhouCi=#{zhouCiNow} and XingQi &gt; #{xingQiNow}));
 	</select>
 	<select id="getApplicationById" resultMap="applicationResultMap" parameterType="int">
-		select Application.ID as ApplicationID, UserID, RoomID, SubmitTime, zhouCi, XingQi, 
-			SJieCi, EJieCi, Application.Type as ApplicationType, Purpose, 
-			ReviewerID, ReviewTime, Approval,ReviewContent,
+		select Application.ID as ApplicationID, Application.Type as ApplicationType, Application.*, 
 			User.Name as UserName, Phone, Email, Department,
 			Classroom.Name as ClassroomName, Classroom.Type as RoomType, 
 			XiaoQu,JiaoXueQu, JiaoXueLou, Floor, Capacity 
@@ -36,6 +34,9 @@
 		<id column="ReviewTime" property="reviewTime"></id>
 		<id column="Approval" property="approval"></id>
 		<id column="ReviewContent" property="reviewContent"></id>
+		<id column="Feedback" property="feedback"/>
+		<id column="FeedbackTime" property="feedbackTime"/>
+		<id column="ReadFeedback" property="readFeedback"/>
 		
 		<association property="user" javaType="user">
 			<id column="UserName" property="name"></id>
@@ -51,7 +52,7 @@
 			<id column="JiaoXueLou" property="jiaoXueLou"></id>
 			<id column="Floor" property="floor"></id>
 			<id column="Capacity" property="capacity"></id>
-			<id column="Status" property="status"></id>
+			<id column="Available" property="available"></id>
 		</association>
 		<association property="reviewer" javaType="user">
 			<id column="UserName" property="name"></id>
@@ -98,15 +99,15 @@
 				and JiaoXueLou=#{jiaoXueLou} and c.Type=#{type} and Floor=#{floor};
 	</select>
 	<select id="getApplicationsByRoom" resultMap="applicationResultMap" parameterType="Classroom">
-		select a.ID as ApplicationID,a.RoomID,a.SubmitTime,ZhouCi,XingQi,SJieCi,EJieCi,Approval,
-				u.name as UserName,c.Floor
+		select a.ID as ApplicationID,a.*, u.name as UserName,c.Floor,c.Available
 			from Application as a,Classroom as c,User as u
 			where a.RoomID=c.ID and a.UserID=u.ID and Approval is not null 
 				and XiaoQu=#{xiaoQu} and JiaoXueQu=#{jiaoXueQu} and JiaoXueLou=#{jiaoXueLou}
 				and c.Type=#{type};
 	</select>
 	<select id="getReviewedApplicationsOf7Days" resultMap="applicationResultMap">
-		select Application.ID as ApplicationID,Application.*,User.name as UserName from Application,User 
+		select Application.ID as ApplicationID,Application.*,User.name as UserName,Classroom.Available
+			from Application,User,Classroom
 			where Application.userID=User.ID and to_days(now())-to_days(ReviewTime) &lt;=7;
 	</select>
 	
@@ -132,4 +133,7 @@
 			where XiaoQu=#{xiaoQu} and JiaoXueQu=#{jiaoXueQu} and JiaoXueLou=#{jiaoXueLou} 
 				and Type=#{type} and Floor=#{floor};
 	</select>
+	<update id="updateReadFeedback" parameterType="Application">
+		update Application set ReadFeedback=#{readFeedback} where ID=${id};
+	</update>
 </mapper>
