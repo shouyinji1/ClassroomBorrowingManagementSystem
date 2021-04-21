@@ -10,55 +10,40 @@
 	<!-- DataTales Example -->
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
-			<h6 class="m-0 font-weight-bold text-primary" id="applications-table-title">查询结果</h6>
+			<h6 class="m-0 font-weight-bold text-primary">查询结果</h6>
 		</div>
 		<div class="card-body">
 			<div class="table-responsive">
 				<table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
 					<thead>
 						<tr>
-							<th>申请时间</th>
-							<th>申请者</th>
-							<th>教室</th>
-							<th>周次</th>
-							<th>星期</th>
-							<th>开始节次</th>
-							<th>结束节次</th>
-							<th>审批结果</th>
+							<th>教室编号</th>
+							<th>教室楼层</th>
+							<th>教室名称</th>
+							<th>教室容量</th>
+							<th>教室状态</th>
 						</tr>
 					</thead>
 					<tfoot>
 						<tr>
-							<th>申请时间</th>
-							<th>申请者</th>
-							<th>教室</th>
-							<th>周次</th>
-							<th>星期</th>
-							<th>开始节次</th>
-							<th>结束节次</th>
-							<th>审批结果</th>
+							<th>教室编号</th>
+							<th>教室楼层</th>
+							<th>教室名称</th>
+							<th>教室容量</th>
+							<th>教室状态</th>
 						</tr>
 					</tfoot>
 					<tbody>
-						<c:forEach items="${applications}" var="application" varStatus="status">
-							<tr onclick="application(${application.id})">
-								<td>${application.formatSubmitTime}</td>
-								<td>${application.user.name}</td>
-								<td>${application.roomID}</td>
-								<td>${application.zhouCi}</td>
-								<td>${application.xingQi}</td>
-								<td>${application.sJieCi}</td>
-								<td>${application.eJieCi}</td>
+						<c:forEach items="${rooms}" var="room" varStatus="status">
+							<tr onclick="room('${room.id}')">
+								<td>${room.id}</td>
+								<td>${room.floor}</td>
+								<td>${room.name}</td>
+								<td>${room.capacity}</td>
 								<td>
 									<c:choose>
-										<c:when test="${application.approval==true}">通过</c:when>
-										<c:when test="${application.approval==false}">已拒绝申请</c:when>
-										<c:when test="${empty application.approval}">
-											<c:choose>
-												<c:when test="${application.aging==true}">已过期</c:when>
-												<c:when test="${application.aging==false}">待审批</c:when>
-											</c:choose>
-										</c:when>
+										<c:when test="${room.available==true}">可申请</c:when>
+										<c:when test="${room.available==false}">不可申请</c:when>
 									</c:choose>
 								</td>
 							</tr>
@@ -68,7 +53,7 @@
 			</div>
 		</div>
 	</div>
-	<div id="application-Modal-div"></div>
+	<div id="room-Modal-div"></div>
     <!-- Page level custom scripts -->
     <script type="text/javascript">
 		// Call the dataTables jQuery plugin
@@ -82,17 +67,16 @@
 				"order": [[ 0, "desc" ]]	// 设置默认根据第1列降序
 			} );
 		} );
-    </script>
-    <script type="text/javascript">
-		function application(id){
+
+		function room(roomID){
 			$.ajax({
 				type: "get",//方法类型
-				url: "../admin/viewApplication" ,
+				url: "../admin/room" ,
 				async:true,
-				data: {'id':id},
+				data: {'roomID':roomID},
 				success:function(data){
-					$("#application-Modal-div").html(data);
-					$("#application-Modal").modal();
+					$("#room-Modal-div").html(data);
+					$("#room-Modal").modal();
 				},
 				error : function() {
 					alert("异常请求！"+data.msg);

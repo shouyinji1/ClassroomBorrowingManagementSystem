@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import entity.Application;
 import entity.Classroom;
+import entity.RoomSchedule;
 
 public interface AdminDao {
 	/** 查询没有过期的申请 */
@@ -55,4 +56,13 @@ public interface AdminDao {
 
 	/** 根据校区、教学楼、类型、楼层查询所有教室 */
 	public List<String> getAllRoomIDByXJJTF(Classroom room);
+	
+	/** 根据教室筛选条件查询教室 */
+	public List<Classroom> getRoomsByRoomInfo(Classroom room);
+	
+	/** 根据教室ID查询所有申请信息 */
+	public List<Application> getApplicationsByRoomID(String roomID);
+	
+	/** 根据教室ID查询所有课程安排 */
+	public List<RoomSchedule> getRoomSchedulesByRoomID(String roomID);
 }

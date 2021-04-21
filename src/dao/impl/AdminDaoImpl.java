@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import dao.AdminDao;
 import entity.Application;
 import entity.Classroom;
+import entity.RoomSchedule;
 
 @Repository
 public class AdminDaoImpl extends BaseDaoImpl<AdminDao> implements AdminDao {
@@ -123,5 +124,23 @@ public class AdminDaoImpl extends BaseDaoImpl<AdminDao> implements AdminDao {
 	public List<String> getAllRoomIDByXJJTF(Classroom room) {
 		// TODO Auto-generated method stub
 		return this.getMapper().getAllRoomIDByXJJTF(room);
+	}
+
+	@Override
+	public List<Classroom> getRoomsByRoomInfo(Classroom room) {
+		// TODO Auto-generated method stub
+		return this.getMapper().getRoomsByRoomInfo(room);
+	}
+
+	@Override
+	public List<Application> getApplicationsByRoomID(String roomID) {
+		// TODO Auto-generated method stub
+		return this.getMapper().getApplicationsByRoomID(roomID);
+	}
+
+	@Override
+	public List<RoomSchedule> getRoomSchedulesByRoomID(String roomID) {
+		// TODO Auto-generated method stub
+		return this.getMapper().getRoomSchedulesByRoomID(roomID);
 	}
 }

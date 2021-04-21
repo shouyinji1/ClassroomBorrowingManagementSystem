@@ -1,5 +1,6 @@
 package service.impl;
 
+import java.awt.datatransfer.FlavorListener;
 import java.util.Date;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import dao.AdminDao;
 import dao.UserDao;
 import entity.Application;
 import entity.Classroom;
+import entity.RoomSchedule;
 import entity.Semester;
 import service.AdminService;
 
@@ -168,5 +170,40 @@ public class AdminServiceImpl implements AdminService {
 	public int updateReadFeedback(Application application) {
 		// TODO Auto-generated method stub
 		return adminDao.updateReadFeedback(application);
+	}
+
+	@Override
+	public List<Classroom> getRoomsByRoomInfo(Classroom room) {
+		// TODO Auto-generated method stub
+		List<Classroom> rooms= adminDao.getRoomsByRoomInfo(room);
+		String floor=room.getFloor();
+		String roomID=room.getId();
+		if (floor !=null && !floor.equals("")) {
+			for(int i=rooms.size()-1;i>=0;i--) {
+				if (!rooms.get(i).getFloor().equals(floor)) {
+					rooms.remove(i);
+				}
+			}
+		}
+		if (roomID !=null && !roomID.equals("")) {
+			for(int i=rooms.size()-1;i>=0;i--) {
+				if (!rooms.get(i).getId().equals(roomID)) {
+					rooms.remove(i);
+				}
+			}
+		}
+		return rooms;
+	}
+
+	@Override
+	public List<Application> getApplicationsByRoomID(String roomID) {
+		// TODO Auto-generated method stub
+		return adminDao.getApplicationsByRoomID(roomID);
+	}
+
+	@Override
+	public List<RoomSchedule> getRoomSchedulesByRoomID(String roomID) {
+		// TODO Auto-generated method stub
+		return adminDao.getRoomSchedulesByRoomID(roomID);
 	}
 }

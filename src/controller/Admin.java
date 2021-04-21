@@ -152,8 +152,18 @@ public class Admin {
 	}
 	
 	@RequestMapping("queryRooms")
-	public ModelAndView queryRooms() {
-		ModelAndView mav=new ModelAndView();
+	public ModelAndView queryRooms(Classroom room) {
+		ModelAndView mav=new ModelAndView("admin/rooms");
+		mav.addObject("rooms",adminService.getRoomsByRoomInfo(room));
+		return mav;
+	}
+	
+	@RequestMapping("room")
+	public ModelAndView room(String roomID) {
+		ModelAndView mav=new ModelAndView("admin/room");
+		mav.addObject("applications",adminService.getApplicationsByRoomID(roomID));
+		mav.addObject("semester",userService.getSemesters().get(0));
+		mav.addObject("roomSchedules",adminService.getRoomSchedulesByRoomID(roomID));
 		return mav;
 	}
 }

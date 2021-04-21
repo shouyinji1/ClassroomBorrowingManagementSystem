@@ -60,8 +60,7 @@
 			</form>
 		</div>
 	</div>
-	<div id="applications-div">
-	</div>
+	<div id="rooms-div"></div>
 	<script type="text/javascript">
 		$("#XiaoQu").change(function(){
 			var opt=$("#XiaoQu").val();
@@ -145,7 +144,7 @@
 				async:true,
 				data: form,
 				success: function (data) {
-					$('#applications-div').html(data);
+					$('#rooms-div').html(data);
 				},
 				error : function() {
 					//alert("异常请求！"+data.msg);

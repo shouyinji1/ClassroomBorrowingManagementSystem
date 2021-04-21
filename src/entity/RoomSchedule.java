@@ -19,6 +19,8 @@ public class RoomSchedule implements Serializable{
 	private String type;
 	private String purpose;
 
+	private User user;
+	
 	public int getId() {
 		return id;
 	}
@@ -72,5 +74,11 @@ public class RoomSchedule implements Serializable{
 	}
 	public void setPurpose(String purpose) {
 		this.purpose = purpose;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
 	}
 }

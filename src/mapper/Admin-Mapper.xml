@@ -7,8 +7,9 @@
 				SJieCi,EJieCi,Application.Type as ApplicationType,Purpose,
 				ReviewerID, ReviewTime, Approval,ReviewContent,
 				User.Name as UserName
-			from Application,User 
-				where Application.UserID=User.ID and Approval is null 
+			from Application,User,Classroom
+				where Application.UserID=User.ID and Application.RoomID=Classroom.ID 
+					and Approval is null and Classroom.available=true 
 					and (ZhouCi &gt; #{zhouCiNow} or (ZhouCi=#{zhouCiNow} and XingQi &gt; #{xingQiNow}));
 	</select>
 	<select id="getApplicationById" resultMap="applicationResultMap" parameterType="int">
@@ -55,6 +56,23 @@
 			<id column="Available" property="available"></id>
 		</association>
 		<association property="reviewer" javaType="user">
+			<id column="UserName" property="name"></id>
+			<id column="Phone" property="phone"></id>
+			<id column="Email" property="email"></id>
+			<id column="Department" property="department"></id>
+		</association>
+	</resultMap>
+	<resultMap id="roomScheduleResultMap" type="roomSchedule">
+		<id column="RID" property="id"></id>
+		<id column="UserID" property="userID"></id>
+		<id column="RoomID" property="roomID"></id>
+		<id column="ZhouCi" property="zhouCi"></id>
+		<id column="XingQi" property="xingQi"></id>
+		<id column="SJieCi" property="sJieCi"></id>
+		<id column="EJieCi" property="eJieCi"></id>
+		<id column="RType" property="type"></id>
+		<id column="Purpose" property="purpose"></id>
+		<association property="user" javaType="user">
 			<id column="UserName" property="name"></id>
 			<id column="Phone" property="phone"></id>
 			<id column="Email" property="email"></id>
@@ -136,4 +154,17 @@
 	<update id="updateReadFeedback" parameterType="Application">
 		update Application set ReadFeedback=#{readFeedback} where ID=${id};
 	</update>
+	<select id="getRoomsByRoomInfo" parameterType="Classroom" resultType="Classroom">
+		select * from Classroom where XiaoQu=#{xiaoQu} and JiaoXueQu=#{jiaoXueQu} 
+			and JiaoXueLou=#{jiaoXueLou} and Type=#{type};
+	</select>
+	<select id="getApplicationsByRoomID" parameterType="String" resultMap="applicationResultMap">
+		select Application.ID as ApplicationID,Application.*,User.Name as UserName,User.* 
+			from Application,User where Application.UserID=User.ID and RoomID=#{roomID};
+	</select>
+	<select id="getRoomSchedulesByRoomID" parameterType="String" resultMap="roomScheduleResultMap">
+		select r.ID as RID, r.Type as RType,r.*,User.Name as UserName,User.* 
+			from RoomSchedule as r,User 
+			where r.UserID=User.ID and RoomID=#{roomID};
+	</select>
 </mapper>
