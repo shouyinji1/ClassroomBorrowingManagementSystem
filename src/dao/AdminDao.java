@@ -65,4 +65,10 @@ public interface AdminDao {
 	
 	/** 根据教室ID查询所有课程安排 */
 	public List<RoomSchedule> getRoomSchedulesByRoomID(String roomID);
+	
+	/** 查询所有未读反馈 */
+	public List<Application> getUnreadFeedbacks();
+	
+	/** 查询最近七天的反馈 */
+	public List<Application> getFeedbacksRecent7Days();
 }

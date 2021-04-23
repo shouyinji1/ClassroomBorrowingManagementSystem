@@ -206,4 +206,16 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		return adminDao.getRoomSchedulesByRoomID(roomID);
 	}
+
+	@Override
+	public List<Application> getUnreadFeedbacks() {
+		// TODO Auto-generated method stub
+		return adminDao.getUnreadFeedbacks();
+	}
+
+	@Override
+	public List<Application> getFeedbacksRecent7Days() {
+		// TODO Auto-generated method stub
+		return adminDao.getFeedbacksRecent7Days();
+	}
 }

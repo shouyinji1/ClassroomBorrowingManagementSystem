@@ -21,7 +21,7 @@
 					<div class="row">
 						<div class="col-sm-3 mb-3">
 							<label>申请ID</label>
-							<input type="text" class="form-control" value="${application.id}" readonly>
+							<input type="text" class="form-control" id="application-id" value="${application.id}" readonly>
 						</div>
 						<div class="col-sm-6 mb-3">
 							<label>申请发起时间</label>
@@ -191,6 +191,7 @@
 				success: function (data) {
 					if (data=="1") {
 						$("#application-Modal").modal('hide');
+						document.getElementById('application-${application.id}-status').innerHTML='审核通过';
 					 }else{
 						alert("提交失败");
 					}

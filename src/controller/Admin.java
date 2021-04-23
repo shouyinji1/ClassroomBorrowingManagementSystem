@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.Iterator;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -108,8 +110,9 @@ public class Admin {
 	}
 	
 	@RequestMapping("updateReadFeedback")
-	public void updateReadFeedback(Application application) {
-		adminService.updateReadFeedback(application);
+	@ResponseBody
+	public String updateReadFeedback(Application application) {
+		return Integer.toString(adminService.updateReadFeedback(application));
 	}
 	
 
@@ -164,6 +167,28 @@ public class Admin {
 		mav.addObject("applications",adminService.getApplicationsByRoomID(roomID));
 		mav.addObject("semester",userService.getSemesters().get(0));
 		mav.addObject("roomSchedules",adminService.getRoomSchedulesByRoomID(roomID));
+		return mav;
+	}
+	
+
+	/*************** 反馈浏览 *****************/
+	@RequestMapping("feedbackBrowsing")
+	public ModelAndView feedbackBrowsing() {
+		ModelAndView mav=new ModelAndView("admin/feedbacks");
+		return mav;
+	}
+	
+	@RequestMapping("newFeedbacksTable")
+	public ModelAndView newFeedbacksTable() {
+		ModelAndView mav=new ModelAndView("admin/feedbackTable/newFeedbacksTable");
+		mav.addObject("unreadFeedbacks",adminService.getUnreadFeedbacks());
+		return mav;
+	}
+
+	@RequestMapping("recentFeedbacksTable")
+	public ModelAndView recentFeedbacksTable() {
+		ModelAndView mav=new ModelAndView("admin/feedbackTable/recentFeedbacksTable");
+		mav.addObject("recentFeedbacks",adminService.getFeedbacksRecent7Days());
 		return mav;
 	}
 }

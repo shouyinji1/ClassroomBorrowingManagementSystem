@@ -167,4 +167,20 @@
 			from RoomSchedule as r,User 
 			where r.UserID=User.ID and RoomID=#{roomID};
 	</select>
+	<select id="getUnreadFeedbacks" resultMap="applicationResultMap">
+		select Application.ID as ApplicationID,Application.Type as ApplicationType,
+				Application.*,User.Name as UserName,User.*,
+				Classroom.Name as ClassroomName,Classroom.Type as RoomType,Classroom.*
+		 	from Application,User,Classroom
+		 	where Application.UserID=User.ID and Application.RoomID=Classroom.ID 
+		 		and ReadFeedback=false and FeedbackTime is not null;
+	</select>
+	<select id="getFeedbacksRecent7Days" resultMap="applicationResultMap">
+		select Application.ID as ApplicationID,Application.Type as ApplicationType,
+				Application.*,User.Name as UserName,User.*,
+				Classroom.Name as ClassroomName,Classroom.Type as RoomType,Classroom.*
+		 	from Application,User,Classroom
+			where Application.UserID=User.ID and Application.RoomID=Classroom.ID 
+				and FeedbackTime is not null and to_days(now())-to_days(FeedbackTime) &lt;=7;
+	</select>
 </mapper>

@@ -46,7 +46,7 @@
 								<td>${application.xingQi}</td>
 								<td id="application-${application.id}-sJieCi">${application.sJieCi}</td>
 								<td id="application-${application.id}-eJieCi">${application.eJieCi}</td>
-								<td>
+								<td id='application-${application.id}-status'>
 									<c:choose>
 										<c:when test="${application.status==1}">待审批</c:when>
 										<c:when test="${application.status==2}">审批通过</c:when>

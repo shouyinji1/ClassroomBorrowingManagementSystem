@@ -44,7 +44,10 @@
 													<c:if test="${application.zhouCi>semester.zhouCiNow or (application.zhouCi==semester.zhouCiNow and application.xingQi>=semester.xingQiNow)}">
 														<tr>
 															<td>${application.id}</td>
-															<td id="application-${application.userID}-userID" onmouseover="popoverInfo('application','${application.userID}','${application.user.phone}','${application.user.email}','${application.user.department}')">${application.user.name}</td>
+															<td data-trigger="hover" data-html="true" data-toggle="popover" title="用户信息" 
+																data-content="用户编号：${application.userID}</br>
+																电话号码：${application.user.phone}</br>邮箱：${application.user.email}</br>
+																部门：${application.user.department}">${application.user.name}</td>
 															<td>${application.zhouCi}</td>
 															<td>${application.xingQi}</td>
 															<td>${application.sJieCi}</td>
@@ -108,7 +111,10 @@
 												<!-- 显示所有教室待使用或正在使用的申请 -->
 												<c:forEach items="${roomSchedules}" var="roomSchedule">
 													<tr>
-														<td id="roomSchedule-${roomSchedule.userID}-userID" onmouseover="popoverInfo('roomSchedule','${roomSchedule.userID}','${roomSchedule.user.phone}','${roomSchedule.user.email}','${roomSchedule.user.department}')">${roomSchedule.user.name}</td>
+														<td data-trigger="hover" data-html="true" data-toggle="popover" title="用户信息" 
+															data-content="用户编号：${roomSchedule.userID}</br>
+															电话号码：${roomSchedule.user.phone}</br>邮箱：${roomSchedule.user.email}</br>
+															部门：${roomSchedule.user.department}">${roomSchedule.user.name}</td>
 														<td>${roomSchedule.zhouCi}</td>
 														<td>${roomSchedule.xingQi}</td>
 														<td>${roomSchedule.sJieCi}</td>
@@ -222,15 +228,8 @@ var myChart = new Chart(ctx, {
 			});
 		});
 		
-		// popover提示
-		function popoverInfo(type,userID,phone,email,department){
-			$("#"+type+"-"+userID+"-userID").popover({
-				html:true,
-				placement:"right",    //定位方向
-				title:"用户信息",  //如果不需要标题就不要配置这个选项
-				content:'用户编号：'+userID+'</br>电话号码：'+phone+"</br>邮箱："+email+"</br>部门："+department
-			});
-		}
+		// 激活popover插件
+		$(function () { $("[data-toggle='popover']").popover(); });
 	</script>
 </body>
 </html>

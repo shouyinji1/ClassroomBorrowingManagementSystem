@@ -143,4 +143,16 @@ public class AdminDaoImpl extends BaseDaoImpl<AdminDao> implements AdminDao {
 		// TODO Auto-generated method stub
 		return this.getMapper().getRoomSchedulesByRoomID(roomID);
 	}
+
+	@Override
+	public List<Application> getUnreadFeedbacks() {
+		// TODO Auto-generated method stub
+		return this.getMapper().getUnreadFeedbacks();
+	}
+
+	@Override
+	public List<Application> getFeedbacksRecent7Days() {
+		// TODO Auto-generated method stub
+		return this.getMapper().getFeedbacksRecent7Days();
+	}
 }
