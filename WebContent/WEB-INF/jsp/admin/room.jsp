@@ -76,7 +76,18 @@
 											<!-- 显示所有教室待使用或正在使用的申请 -->
 											<c:forEach items="${applications}" var="application">
 												<c:if test="${!empty application.feedbackTime}">
-													<tr><td rowspan="2" width="15%" id="feedback-${application.userID}-userID" onmouseover="popoverInfo('feedback','${application.userID}','${application.user.phone}','${application.user.email}','${application.user.department}')">${application.user.name}</td><td>${application.feedback}</td></tr>
+													<tr><td rowspan="2" width="15%" data-trigger="hover" data-html="true" data-toggle="popover" title="用户信息" 
+																data-content="用户编号：${application.userID}</br>
+																电话号码：${application.user.phone}</br>邮箱：${application.user.email}</br>
+																部门：${application.user.department}">
+															${application.user.name}</td>
+														<td>${application.feedback}</td>
+														<c:if test="${application.readFeedback==false}">
+															<td rowspan="2" width="10%" id="readFeedback-${application.id}">
+																<button class="btn btn-primary" type="button" onclick="updateReadFeedback(${application.id})">已读</button>
+															</td>
+														</c:if>
+													</tr>
 													<tr><td><font size="2"><fmt:formatDate value="${application.feedbackTime}" pattern="yyyy-MM-dd HH:mm:ss" /></font></td></tr>
 												</c:if>
 											</c:forEach>
@@ -194,7 +205,6 @@ var myChart = new Chart(ctx, {
 							</div>
 						</div>
 					</div>
-					<hr class="mb-4">
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
@@ -208,6 +218,17 @@ var myChart = new Chart(ctx, {
 	<script src="../js/demo/chart-area-demo.js"></script>
 
     <script type="text/javascript">
+    	// 更新新反馈计数徽标，新反馈数=原新反馈数-subcount
+    	function updateNewFeedbackCounter(subcount){
+    		var counter=document.getElementById('feedback-badge-counter').innerHTML;
+    		counter=counter-subcount;
+			if(counter>0){
+				document.getElementById('feedback-badge-counter').innerHTML=counter;
+			}else{
+				document.getElementById('feedback-badge-counter').remove();
+			}
+    	}
+    
 		// Call the dataTables jQuery plugin
 		$(document).ready(function() {
 			$('#applications-dataTable').DataTable( {
@@ -230,6 +251,28 @@ var myChart = new Chart(ctx, {
 		
 		// 激活popover插件
 		$(function () { $("[data-toggle='popover']").popover(); });
+		
+		// 已读反馈
+		function updateReadFeedback(id){
+			$.ajax({
+				type: "get",//方法类型
+				url: "../admin/updateReadFeedback" ,
+				async:true,
+				data: {'id':id, 'readFeedback':true},
+				success: function (data) {
+					if (data=="1") {
+						document.getElementById('readFeedback-'+id).remove();
+						updateNewFeedbackCounter(1);
+					}else{
+						alert("出错");
+					}
+				},
+				error : function() {
+					//alert("异常请求！"+data.msg);
+					alert("异常请求！");
+				}
+			});
+		}
 	</script>
 </body>
 </html>

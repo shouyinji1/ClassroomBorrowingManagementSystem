@@ -14,6 +14,7 @@
 					<th>使用者姓名</th>
 					<th>反馈时间</th>
 					<th>反馈内容</th>
+					<th>状态</th>
 				</tr>
 			</thead>
 			<tfoot>
@@ -23,6 +24,7 @@
 					<th>使用者姓名</th>
 					<th>反馈时间</th>
 					<th>反馈内容</th>
+					<th>状态</th>
 				</tr>
 			</tfoot>
 			<tbody>
@@ -42,12 +44,31 @@
 								部门：${feedback.user.department}">${feedback.user.name}</td>
 						<td><fmt:formatDate value="${feedback.feedbackTime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 						<td>${feedback.feedback}</td>
+						<td id="readFeedback-${feedback.id}">
+							<c:choose>
+								<c:when test="${feedback.readFeedback==false}">
+									<button class="btn btn-primary" type="button" onclick="updateReadFeedback(${feedback.id})">已读</button>
+								</c:when>
+								<c:otherwise>已读</c:otherwise>
+							</c:choose>
+						</td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
 	</div>
     <script type="text/javascript">
+    	// 更新新反馈计数徽标，新反馈数=原新反馈数-subcount
+    	function updateNewFeedbackCounter(subcount){
+    		var counter=document.getElementById('feedback-badge-counter').innerHTML;
+    		counter=counter-subcount;
+			if(counter>0){
+				document.getElementById('feedback-badge-counter').innerHTML=counter;
+			}else{
+				document.getElementById('feedback-badge-counter').remove();
+			}
+    	}
+    
 		// Call the dataTables jQuery plugin
 		$(document).ready(function() {
 			$('#dataTable').DataTable( {
@@ -64,6 +85,28 @@
 
 		// 激活popover插件
 		$(function () { $("[data-toggle='popover']").popover(); });
+		
+		// 已读反馈
+		function updateReadFeedback(id){
+			$.ajax({
+				type: "get",//方法类型
+				url: "../admin/updateReadFeedback" ,
+				async:true,
+				data: {'id':id, 'readFeedback':true},
+				success: function (data) {
+					if (data=="1") {
+						document.getElementById('readFeedback-'+id).innerHTML='已读';
+						updateNewFeedbackCounter(1);
+					}else{
+						alert("出错");
+					}
+				},
+				error : function() {
+					//alert("异常请求！"+data.msg);
+					alert("异常请求！");
+				}
+			});
+		}
     </script>
 </body>
 </html>

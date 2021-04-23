@@ -173,22 +173,30 @@
 					</c:if>
 				</div>
 				<div class="modal-footer">
-					<c:choose>
-						<c:when test="${(!empty application.feedbackTime) and application.readFeedback==false}">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="updateReadFeedback()">关闭</button>
-						</c:when>
-						<c:otherwise>
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-						</c:otherwise>
-					</c:choose>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+					<c:if test="${(!empty application.feedbackTime) and application.readFeedback==false}">
+						<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="updateReadFeedback()">已读</button>
+					</c:if>
 				</div>
 			</div>
 		</div>
 	</div>
 	<script type="text/javascript">
+    	// 更新新反馈计数徽标，新反馈数=原新反馈数-subcount
+    	function updateNewFeedbackCounter(subcount){
+    		var counter=document.getElementById('feedback-badge-counter').innerHTML;
+    		counter=counter-subcount;
+			if(counter>0){
+				document.getElementById('feedback-badge-counter').innerHTML=counter;
+			}else{
+				document.getElementById('feedback-badge-counter').remove();
+			}
+    	}
+
 		function updateReadFeedback(){
 			$.get("../admin/updateReadFeedback?id=${application.id}&readFeedback=true");
 			document.getElementById('application-${application.id}-status').innerHTML='通过';
+			updateNewFeedbackCounter(1);
 		}
 	</script>
 </body>
