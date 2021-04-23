@@ -19,6 +19,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import entity.User;
+import service.AdminService;
 import service.UserService;
 
 @RequestMapping(value="userController")
@@ -26,6 +27,8 @@ import service.UserService;
 public class UserController {
 	@Autowired
 	UserService userService;
+	@Autowired
+	AdminService adminService;
 	
 	@RequestMapping("/getAllUser")
 	public ModelAndView getAllUser() {
@@ -85,9 +88,10 @@ public class UserController {
 		ModelAndView mav;
 		if(user == null)
 			mav=new ModelAndView("redirect:/login.html");
-		else if(user.getLevel().equals("Admin"))
+		else if(user.getLevel().equals("Admin")) {
 			mav=new ModelAndView("admin/index");
-		else 
+			mav.addObject("newFeedbackCounter",adminService.getCounterOfNewFeedback());
+		}else 
 			mav=new ModelAndView("normalUser/index");
 		// 最后把ModelAndView对象返回出去
 		return mav;

@@ -182,6 +182,7 @@ public class Admin {
 	public ModelAndView newFeedbacksTable() {
 		ModelAndView mav=new ModelAndView("admin/feedbackTable/newFeedbacksTable");
 		mav.addObject("unreadFeedbacks",adminService.getUnreadFeedbacks());
+		mav.addObject("newFeedbackCounter",adminService.getCounterOfNewFeedback());
 		return mav;
 	}
 

@@ -155,4 +155,10 @@ public class AdminDaoImpl extends BaseDaoImpl<AdminDao> implements AdminDao {
 		// TODO Auto-generated method stub
 		return this.getMapper().getFeedbacksRecent7Days();
 	}
+
+	@Override
+	public int getCounterOfNewFeedback() {
+		// TODO Auto-generated method stub
+		return this.getMapper().getCounterOfNewFeedback();
+	}
 }

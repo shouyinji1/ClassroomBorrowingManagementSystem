@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -59,7 +60,11 @@
 			<li class="nav-item" id="nav-item4">
                 <a class="nav-link" href="#">
                     <i class="fas fa-fw fa-comments"></i>
-                    <span>使用者反馈</span></a>
+                    <span>使用者反馈</span>
+					<c:if test="${newFeedbackCounter>0}">
+						<span class="badge badge-danger" id='feedback-badge-counter'>${newFeedbackCounter}</span>
+					</c:if>
+                </a>
             </li>
             <li class="nav-item" id="nav-item5">
                 <a class="nav-link" href="#">

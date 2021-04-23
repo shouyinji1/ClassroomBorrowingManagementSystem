@@ -71,4 +71,7 @@ public interface AdminDao {
 	
 	/** 查询最近七天的反馈 */
 	public List<Application> getFeedbacksRecent7Days();
+	
+	/** 查询新反馈的个数 */
+	public int getCounterOfNewFeedback();
 }

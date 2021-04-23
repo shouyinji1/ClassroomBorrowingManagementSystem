@@ -53,6 +53,17 @@
 		</table>
 	</div>
     <script type="text/javascript">
+    	// 更新新反馈计数徽标，新反馈数=原新反馈数-subcount
+    	function updateNewFeedbackCounter(subcount){
+    		var counter=document.getElementById('feedback-badge-counter').innerHTML;
+    		counter=counter-subcount;
+			if(counter>0){
+				document.getElementById('feedback-badge-counter').innerHTML=counter;
+			}else{
+				document.getElementById('feedback-badge-counter').remove();
+			}
+    	}
+    
 		// Call the dataTables jQuery plugin
 		$(document).ready(function() {
 			$('#dataTable').DataTable( {
@@ -65,6 +76,14 @@
 
 			// 改变卡片标题
 			document.getElementById('card-header-text').innerHTML='新反馈';
+			
+			// 重新设置新反馈计数徽标
+			var counter=${newFeedbackCounter};
+			if(counter>0){
+				document.getElementById('feedback-badge-counter').innerHTML=${newFeedbackCounter};
+			}else{
+				document.getElementById('feedback-badge-counter').remove();
+			}
 		});
 
 		// 激活popover插件
@@ -80,6 +99,7 @@
 				success: function (data) {
 					if (data=="1") {
 						document.getElementById('application-'+id).remove();
+						updateNewFeedbackCounter(1);
 					}else{
 						alert("出错");
 					}

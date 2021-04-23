@@ -183,4 +183,7 @@
 			where Application.UserID=User.ID and Application.RoomID=Classroom.ID 
 				and FeedbackTime is not null and to_days(now())-to_days(FeedbackTime) &lt;=7;
 	</select>
+	<select id="getCounterOfNewFeedback" resultType="int">
+		select count(*) from Application where ReadFeedback=false and FeedbackTime is not null;
+	</select>
 </mapper>

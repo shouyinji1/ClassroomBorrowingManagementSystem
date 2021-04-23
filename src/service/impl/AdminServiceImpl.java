@@ -218,4 +218,10 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		return adminDao.getFeedbacksRecent7Days();
 	}
+
+	@Override
+	public int getCounterOfNewFeedback() {
+		// TODO Auto-generated method stub
+		return adminDao.getCounterOfNewFeedback();
+	}
 }
