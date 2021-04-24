@@ -8,6 +8,7 @@ import dao.AdminDao;
 import entity.Application;
 import entity.Classroom;
 import entity.RoomSchedule;
+import entity.Semester;
 
 @Repository
 public class AdminDaoImpl extends BaseDaoImpl<AdminDao> implements AdminDao {
@@ -160,5 +161,11 @@ public class AdminDaoImpl extends BaseDaoImpl<AdminDao> implements AdminDao {
 	public int getCounterOfNewFeedback() {
 		// TODO Auto-generated method stub
 		return this.getMapper().getCounterOfNewFeedback();
+	}
+
+	@Override
+	public int updateSemester(Semester semester) {
+		// TODO Auto-generated method stub
+		return this.getMapper().updateSemester(semester);
 	}
 }

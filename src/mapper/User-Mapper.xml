@@ -20,4 +20,7 @@
 	<select id="getSemesters" resultType="Semester">
 		select * from Semester order by ID desc; 
 	</select>
+	<insert id="insertSemester">
+		insert into Semester values();
+	</insert>
 </mapper>

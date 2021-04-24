@@ -22,4 +22,7 @@ public interface UserDao {
 
 	/** 查询学期信息 */
 	public List<Semester> getSemesters();
+	
+	/** 插入空的学期信息 */
+	public int insertSemester();
 }

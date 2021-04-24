@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import org.apache.ibatis.type.Alias;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
 /** 学期信息 */
@@ -16,6 +17,7 @@ public class Semester implements Serializable{
 	
 	private int id;
 	private String sName;
+	@DateTimeFormat(pattern="yyyy-MM-dd")	//防止前端传值时typeMismatch.java.util.Date
 	private Date sDate;
 	private int tWeeks;
 	

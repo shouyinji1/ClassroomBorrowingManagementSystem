@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,6 +21,9 @@
 
     <!-- Custom styles for this page -->
     <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    
+    <!-- 日期选择器插件 -->
+    <link href="../vendor/tempusdominus-bootstrap-4.css" rel="stylesheet">
 </head>
 
 <body id="page-top">
@@ -70,11 +74,6 @@
                 <a class="nav-link" href="#">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>使用统计</span></a>
-            </li>
-            <li class="nav-item" id="nav-item6">
-                <a class="nav-link" href="#">
-                    <i class="fas fa-fw fa-calendar"></i>
-                    <span>学期管理</span></a>
             </li>
 
             <!-- Divider -->
@@ -143,121 +142,12 @@
                             </div>
                         </li>
 
-                        <!-- Nav Item - Alerts -->
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-bell fa-fw"></i>
-                                <!-- Counter - Alerts -->
-                                <span class="badge badge-danger badge-counter">3+</span>
-                            </a>
-                            <!-- Dropdown - Alerts -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="alertsDropdown">
-                                <h6 class="dropdown-header">
-                                    Alerts Center
-                                </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-primary">
-                                            <i class="fas fa-file-alt text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 12, 2019</div>
-                                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-success">
-                                            <i class="fas fa-donate text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 7, 2019</div>
-                                        $290.29 has been deposited into your account!
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-warning">
-                                            <i class="fas fa-exclamation-triangle text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 2, 2019</div>
-                                        Spending Alert: We've noticed unusually high spending for your account.
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                            </div>
-                        </li>
-
                         <!-- Nav Item - Messages -->
                         <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-envelope fa-fw"></i>
-                                <!-- Counter - Messages -->
-                                <span class="badge badge-danger badge-counter">7</span>
+                            <a class="nav-link" role="button"
+                                data-toggle="modal"  data-target="#semester-Modal">
+                                <i class="fas fa-calendar"></i>
                             </a>
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="messagesDropdown">
-                                <h6 class="dropdown-header">
-                                    Message Center
-                                </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_1.svg"
-                                            alt="">
-                                        <div class="status-indicator bg-success"></div>
-                                    </div>
-                                    <div class="font-weight-bold">
-                                        <div class="text-truncate">Hi there! I am wondering if you can help me with a
-                                            problem I've been having.</div>
-                                        <div class="small text-gray-500">Emily Fowler · 58m</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_2.svg"
-                                            alt="">
-                                        <div class="status-indicator"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">I have the photos that you ordered last month, how
-                                            would you like them sent to you?</div>
-                                        <div class="small text-gray-500">Jae Chun · 1d</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_3.svg"
-                                            alt="">
-                                        <div class="status-indicator bg-warning"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">Last month's report looks great, I am very happy with
-                                            the progress so far, keep up the good work!</div>
-                                        <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
-                                            alt="">
-                                        <div class="status-indicator bg-success"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">Am I a good boy? The reason I ask is because someone
-                                            told me that people say this to all dogs, even if they aren't good...</div>
-                                        <div class="small text-gray-500">Chicken the Dog · 2w</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
-                            </div>
                         </li>
 
                         <div class="topbar-divider d-none d-sm-block"></div>
@@ -310,7 +200,6 @@
                 </div>
             </footer>
             <!-- End of Footer -->
-
         </div>
         <!-- End of Content Wrapper -->
 
@@ -322,6 +211,7 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
+	<!-- 个人信息设置模态框 -->
     <div class="modal fade" id="myInfo-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -366,6 +256,7 @@
         </div>
     </div>
 
+	<!-- 修改个人密码模块框 -->
     <div class="modal fade" id="myPassword-Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -405,6 +296,55 @@
         </div>
     </div>
 
+	<!-- 学期信息设置模态框 -->
+	<div class="modal fade" id="semester-Modal" tabindex="-1" role="dialog" data-backdrop="static">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">学期信息设置</h5>
+					<c:if test="${!empty semester.sDate}">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</c:if>
+				</div>
+				<div class="modal-body">
+					<form id="semester-form">
+						<div class="form-group row">
+							<label class="col-sm-4 col-form-label">学期名称：</label>
+							<div class="col-sm">
+								<input type="text" class="form-control" name="sName" value="${semester.sName}">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-4 col-form-label">起始日期(周一)：</label>
+							<div class="col-sm">
+								<div class="input-group date" id="datetimepicker2" data-target-input="nearest">
+									<input type="text" name="sDate" value="<fmt:formatDate value='${semester.sDate}' pattern='yyyy-MM-dd' />" class="form-control datetimepicker-input" data-target="#datetimepicker2"/>
+									<div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
+										<div class="input-group-text"><i class="fa fa-calendar"></i></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-4 col-form-label">学期总周数：</label>
+							<div class="col-sm">
+								<input type="text" class="form-control" name="tWeeks" value="${semester.tWeeks}">
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<c:if test="${!empty semester.sDate}">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+					</c:if>
+					<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="updateSemester()">更新</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
     <!-- Bootstrap core JavaScript-->
     <script src="../vendor/jquery/jquery.min.js"></script>
     <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -418,8 +358,23 @@
     <!-- Page level plugins -->
     <script src="../vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
-    
+
+	<!-- 日期选择器插件 -->
+	<script src="../vendor/moment/moment.min.js"></script>
+	<script src="../vendor/moment/moment-with-locales.min.js"></script>
+	<script src="../vendor/tempusdominus-bootstrap-4.js"></script>
+
 	<script type="text/javascript">
+		// 日历选择器配置
+		$(function () {
+			$('#datetimepicker2').datetimepicker({
+				locale: 'zh-cn',
+				format: 'L',
+				//defaultDate: '2021-03-01',
+				format: 'YYYY-MM-DD'
+			});
+		});
+
 		// 左侧菜单栏点击变色效果，同时加载页面
 		$(function(){
 			$("#nav-item1").click(function() {
@@ -447,15 +402,15 @@
 				$(this).addClass('active');	// 添加当前元素的样式
 				$( "#page-content" ).load( "../admin/apply" );
 			});
-			$("#nav-item6").click(function() {
-				$("li").removeClass('active');  // 删除其他元素的样式
-				$(this).addClass('active');	// 添加当前元素的样式
-				$( "#page-content" ).load( "../admin/apply" );
-			});
 		});
 
 		$(document).ready(function() {
 			$( "#page-content" ).load( "../admin/applications" );
+			
+			if(${mustSetSDate}==true){
+				$('#semester-Modal').modal('show');
+				
+			}
 		});
 		
 		// 控制密码确认提示
@@ -523,6 +478,28 @@
 					}else if(data=='1'){
 						$('#myPassword-Modal').modal('hide');
 						//location.reload();
+					}
+				},
+				error : function() {
+					//alert("异常请求！"+data.msg);
+					alert("异常请求！");
+				}
+			});
+		}
+		
+		// 更新学期信息
+		function updateSemester(){	// 更新个人密码
+			var form=$('#semester-form').serializeArray();
+			$.ajax({
+				type: "post",//方法类型
+				url: "../admin/updateSemester" ,
+				async:true,
+				data: form,
+				success: function (data) {
+					if(data=='1'){
+						location.reload();
+					}else{
+						alert("原密码不匹配");
 					}
 				},
 				error : function() {

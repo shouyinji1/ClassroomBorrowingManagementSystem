@@ -46,4 +46,10 @@ public class UserServiceImpl implements UserService{
 		// TODO Auto-generated method stub
 		return userDao.getSemesters();
 	}
+
+	@Override
+	public int insertSemester() {
+		// TODO Auto-generated method stub
+		return userDao.insertSemester();
+	}
 }

@@ -50,4 +50,9 @@ public class UserDaoImpl extends BaseDaoImpl<UserDao> implements UserDao{
 		// TODO Auto-generated method stub
 		return this.getMapper().getSemesters();
 	}
+	@Override
+	public int insertSemester() {
+		// TODO Auto-generated method stub
+		return this.getMapper().insertSemester();
+	}
 }

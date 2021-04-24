@@ -224,4 +224,10 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		return adminDao.getCounterOfNewFeedback();
 	}
+
+	@Override
+	public int updateSemester(Semester semester) {
+		// TODO Auto-generated method stub
+		return adminDao.updateSemester(semester);
+	}
 }

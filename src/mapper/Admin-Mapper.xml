@@ -186,4 +186,8 @@
 	<select id="getCounterOfNewFeedback" resultType="int">
 		select count(*) from Application where ReadFeedback=false and FeedbackTime is not null;
 	</select>
+	<update id="updateSemester" parameterType="Semester">
+		update Semester set SName=#{sName},SDate=#{sDate},TWeeks=#{tWeeks} 
+			WHERE 1 ORDER BY ID DESC LIMIT 1;
+	</update>
 </mapper>

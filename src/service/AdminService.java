@@ -4,6 +4,7 @@ import java.util.List;
 import entity.Application;
 import entity.Classroom;
 import entity.RoomSchedule;
+import entity.Semester;
 
 public interface AdminService {
 	/** 查询没有过期的申请 */
@@ -64,4 +65,7 @@ public interface AdminService {
 
 	/** 查询新反馈的个数 */
 	public int getCounterOfNewFeedback();
+
+	/** 更新学期信息 */
+	public int updateSemester(Semester semester);
 }

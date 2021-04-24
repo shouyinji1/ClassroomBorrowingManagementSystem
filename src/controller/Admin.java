@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import entity.Application;
 import entity.Classroom;
+import entity.Semester;
 import service.AdminService;
 import service.UserService;
 
@@ -191,5 +192,11 @@ public class Admin {
 		ModelAndView mav=new ModelAndView("admin/feedbackTable/recentFeedbacksTable");
 		mav.addObject("recentFeedbacks",adminService.getFeedbacksRecent7Days());
 		return mav;
+	}
+	
+	@RequestMapping("updateSemester")
+	@ResponseBody
+	public String updateSemester(Semester semester) {
+		return Integer.toString(adminService.updateSemester(semester));
 	}
 }

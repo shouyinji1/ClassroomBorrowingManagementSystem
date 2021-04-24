@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import entity.Semester;
 import entity.User;
 import service.AdminService;
 import service.UserService;
@@ -91,6 +92,20 @@ public class UserController {
 		else if(user.getLevel().equals("Admin")) {
 			mav=new ModelAndView("admin/index");
 			mav.addObject("newFeedbackCounter",adminService.getCounterOfNewFeedback());
+			Semester semester=null;
+			try {
+				semester=userService.getSemesters().get(0);
+			} catch (IndexOutOfBoundsException e) {	// 学期信息表没有记录
+				// TODO: handle exception
+				userService.insertSemester();
+				semester=userService.getSemesters().get(0);
+			}
+			if(semester.getsDate()==null) {
+				mav.addObject("mustSetSDate",true);
+			}else {
+				mav.addObject("mustSetSDate",false);
+			}
+			mav.addObject("semester",semester);
 		}else 
 			mav=new ModelAndView("normalUser/index");
 		// 最后把ModelAndView对象返回出去
