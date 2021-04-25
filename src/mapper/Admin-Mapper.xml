@@ -199,5 +199,24 @@
 	<update id="updateRoomAvailable" parameterType="Classroom">
 		update Classroom set Available=#{available} where ID=#{id};
 	</update>
+	
 	<!-- 统计 -->
+	<!-- 统计每个教室的借用次数 -->
+	<select id="getApplicationStatistic" resultType="java.util.Map">
+		select RoomID,count(RoomID) as countRoomID from Application,Classroom 
+			where Application.RoomID=Classroom.ID and Approval=true 
+			group by RoomID order by count(RoomID) desc limit 5;
+	</select>
+	<!-- 统计每个被借教室的反馈次数 -->
+	<select id="getFeedbackStatistic" resultType="java.util.Map">
+		select RoomID,count(RoomID) as countRoomID from Application,Classroom 
+			where Application.RoomID=Classroom.ID and FeedbackTime is not null
+			group by RoomID order by count(RoomID) desc limit 5;
+	</select>
+	<!-- 统计每个用户的借用次数 -->
+	<select id="getUserStatistic" resultType="java.util.Map">
+		select User.Name as UserName,count(User.ID) as countUserID from Application,User 
+			where Application.UserID=User.ID and Approval=true
+			group by User.ID order by countUserID desc limit 5;
+	</select>
 </mapper>

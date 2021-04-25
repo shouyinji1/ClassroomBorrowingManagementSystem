@@ -3,6 +3,7 @@ package service.impl;
 import java.awt.datatransfer.FlavorListener;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -281,5 +282,23 @@ public class AdminServiceImpl implements AdminService {
 	public int updateRoomAvailable(Classroom room) {
 		// TODO Auto-generated method stub
 		return adminDao.updateRoomAvailable(room);
+	}
+
+	@Override
+	public List<Map<String, String>> getApplicationStatistic() {
+		// TODO Auto-generated method stub
+		return adminDao.getApplicationStatistic();
+	}
+
+	@Override
+	public List<Map<String, String>> getFeedbackStatistic() {
+		// TODO Auto-generated method stub
+		return adminDao.getFeedbackStatistic();
+	}
+
+	@Override
+	public List<Map<String, String>> getUserStatistic() {
+		// TODO Auto-generated method stub
+		return adminDao.getUserStatistic();
 	}
 }

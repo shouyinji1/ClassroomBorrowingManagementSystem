@@ -1,6 +1,7 @@
 package dao.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
@@ -179,5 +180,23 @@ public class AdminDaoImpl extends BaseDaoImpl<AdminDao> implements AdminDao {
 	public int updateRoomAvailable(Classroom room) {
 		// TODO Auto-generated method stub
 		return this.getMapper().updateRoomAvailable(room);
+	}
+
+	@Override
+	public List<Map<String, String>> getApplicationStatistic() {
+		// TODO Auto-generated method stub
+		return this.getMapper().getApplicationStatistic();
+	}
+
+	@Override
+	public List<Map<String, String>> getFeedbackStatistic() {
+		// TODO Auto-generated method stub
+		return this.getMapper().getFeedbackStatistic();
+	}
+
+	@Override
+	public List<Map<String, String>> getUserStatistic() {
+		// TODO Auto-generated method stub
+		return this.getMapper().getUserStatistic();
 	}
 }

@@ -228,4 +228,19 @@ public class Admin {
 	public String updateSemester(Semester semester) {
 		return Integer.toString(adminService.updateSemester(semester));
 	}
+	
+	
+	/** 统计 */
+	@RequestMapping("statistic")
+	public ModelAndView statistic() {
+		ModelAndView mav=new ModelAndView("admin/statistic");
+		mav.addObject("as",adminService.getApplicationStatistic());
+		mav.addObject("fs",adminService.getFeedbackStatistic());
+		mav.addObject("us",adminService.getUserStatistic());
+		
+		// 进度条颜色
+		String[] colorClass= {"bg-danger","bg-warning","","bg-info","bg-success"};
+		mav.addObject("colorClass",colorClass);
+		return mav;
+	}
 }

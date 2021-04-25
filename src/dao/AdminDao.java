@@ -1,6 +1,7 @@
 package dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -84,4 +85,13 @@ public interface AdminDao {
 	
 	/** 更新教室可用状态 */
 	public int updateRoomAvailable(Classroom room);
+	
+	/** 获得教室借用频度 */
+	public List<Map<String, String>> getApplicationStatistic();
+	
+	/** 获得每个教室的反馈量 */
+	public List<Map<String, String>> getFeedbackStatistic();
+	
+	/** 获得每个用户的教室借用次数 */
+	public List<Map<String, String>> getUserStatistic();
 }
