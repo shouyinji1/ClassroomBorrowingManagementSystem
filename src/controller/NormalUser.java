@@ -151,11 +151,13 @@ public class NormalUser {
 		return mav;
 	}
 	
+	/** 跳转教室申请填写页面 */
 	@RequestMapping("applyRoom")
 	public ModelAndView applyRoom(Application application,HttpSession session) {
 		application.setClassroom(normalUserService.getClassroomById(application.getRoomID()));
 		ModelAndView mav=new ModelAndView("normalUser/apply-Modal");
 		mav.addObject("feedbacks",normalUserService.getFeedbacksByRoomID(application.getRoomID()));
+		mav.addObject("arrange",normalUserService.getRoomArrangeByRoomIDAndZhouCi(application));
 		return mav;
 	}
 	

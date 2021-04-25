@@ -121,4 +121,16 @@ public class NormalUserDaoImpl extends BaseDaoImpl<NormalUserDao> implements Nor
 		// TODO Auto-generated method stub
 		return getMapper().getFeedbacksByRoomID(roomID);
 	}
+
+	@Override
+	public List<Application> getApplicationsByRoomIDAndZhouCi(Application application) {
+		// TODO Auto-generated method stub
+		return this.getMapper().getApplicationsByRoomIDAndZhouCi(application);
+	}
+
+	@Override
+	public List<RoomSchedule> getRoomSchedulesByRoomIDAndZhouCi(Application application) {
+		// TODO Auto-generated method stub
+		return this.getMapper().getRoomSchedulesByRoomIDAndZhouCi(application);
+	}
 }

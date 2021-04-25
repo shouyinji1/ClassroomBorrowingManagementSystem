@@ -158,6 +158,15 @@
 	</update>
 	<select id="getFeedbacksByRoomID" parameterType="String" resultMap="applicationResultMap">
 		select User.Name as UserName,Feedback,FeedbackTime from Application,User 
-			where Application.UserID=User.ID and RoomID=#{roomID};
+			where Application.UserID=User.ID and RoomID=#{roomID} and FeedbackTime is not null;
+	</select>
+	<select id="getApplicationsByRoomIDAndZhouCi" parameterType="Application" resultMap="applicationResultMap">
+		select Application.ID as ApplicationID, Application.Type as ApplicationType,
+				Application.*,Classroom.Type as RoomType,Classroom.* 
+			from Application,Classroom 
+			where Application.RoomID=Classroom.ID and RoomID=#{roomID} and ZhouCi=#{zhouCi};
+	</select>
+	<select id="getRoomSchedulesByRoomIDAndZhouCi" parameterType="Application" resultType="RoomSchedule">
+		select * from RoomSchedule where RoomID=#{roomID} and ZhouCi=#{zhouCi};
 	</select>
 </mapper>

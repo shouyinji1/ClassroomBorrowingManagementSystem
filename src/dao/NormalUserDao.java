@@ -70,4 +70,10 @@ public interface NormalUserDao {
 	
 	/** 获取某教室的所有用户反馈记录 */
 	public List<Application> getFeedbacksByRoomID(String roomID);
+	
+	/** 获取某教室某一周的申请记录 */
+	public List<Application> getApplicationsByRoomIDAndZhouCi(Application application);
+	
+	/** 获取某教室某一周的课程安排 */
+	public List<RoomSchedule> getRoomSchedulesByRoomIDAndZhouCi(Application application);
 }

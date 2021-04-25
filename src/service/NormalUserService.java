@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import entity.Application;
 import entity.Classroom;
+import entity.RoomSchedule;
 import entity.Semester;
 
 public interface NormalUserService {
@@ -44,4 +45,7 @@ public interface NormalUserService {
 
 	/** 获取某教室的所有用户反馈记录 */
 	public List<Application> getFeedbacksByRoomID(String roomID);
+	
+	/** 获取某教室某一周的使用 */
+	public String[][][] getRoomArrangeByRoomIDAndZhouCi(Application application);
 }

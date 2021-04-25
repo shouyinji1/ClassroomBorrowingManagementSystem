@@ -155,4 +155,34 @@ public class NormalUserServiceImpl implements NormalUserService {
 		// TODO Auto-generated method stub
 		return normalUserDao.getFeedbacksByRoomID(roomID);
 	}
+
+	@Override
+	public String[][][] getRoomArrangeByRoomIDAndZhouCi(Application application) {
+		// TODO Auto-generated method stub
+		List<Application> applications=normalUserDao.getApplicationsByRoomIDAndZhouCi(application);
+		List<RoomSchedule> roomSchedules=normalUserDao.getRoomSchedulesByRoomIDAndZhouCi(application);
+		String[][][] arrange=new String[8][13][2];
+		Semester semester=userDao.getSemesters().get(0);
+		for(Application a: applications) {
+			a.setStatus(semester);
+			if(a.getStatus()==1) {
+				for(int i=a.getsJieCi();i<=a.geteJieCi();i++) {
+					arrange[a.getXingQi()][i][0]="pink";	// 待审批借用，前台显示粉红色
+					arrange[a.getXingQi()][i][1]=a.getType();
+				}
+			}else if(a.getStatus()==2 || a.getStatus()==3) {
+				for(int i=a.getsJieCi();i<=a.geteJieCi();i++) {
+					arrange[a.getXingQi()][i][0]="red";	// 已确定借用，前台显示红色
+					arrange[a.getXingQi()][i][1]=a.getType();
+				}
+			}
+		}
+		for(RoomSchedule roomSchedule:roomSchedules) {
+			for(int i=roomSchedule.getsJieCi();i<=roomSchedule.geteJieCi();i++) {
+				arrange[roomSchedule.getXingQi()][i][0]="red";
+				arrange[roomSchedule.getXingQi()][i][1]=roomSchedule.getType();
+			}
+		}
+		return arrange;
+	}
 }

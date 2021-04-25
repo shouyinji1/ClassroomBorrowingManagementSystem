@@ -117,15 +117,167 @@
 						</div>
 					</div>
 				</form>
+				<hr class="mb-4">
+				<div class="accordion" id="accordionOne">
+					<div class="card">
+						<div class="card-header py-3" id="headingOne" onclick="$('#collapseOne').collapse('toggle');">
+							<h6 class="m-0 font-weight-bold text-primary">一周的教室安排</h6>
+						</div>
+						<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionOne">
+							<div class="card-body">
+								<div class="table-responsive">
+									<table class="table table-bordered">
+										<thead><tr><td>节次\星期</td><td>一</td><td>二</td><td>三</td><td>四</td><td>五</td><td>六</td><td>日</td></tr></thead>
+										<tbody>
+											<tr>
+												<td>1</td>
+												<td bgcolor="${arrange[1][1][0]}">${arrange[1][1][1]}</td>
+												<td bgcolor="${arrange[2][1][0]}">${arrange[2][1][1]}</td>
+												<td bgcolor="${arrange[3][1][0]}">${arrange[3][1][1]}</td>
+												<td bgcolor="${arrange[4][1][0]}">${arrange[4][1][1]}</td>
+												<td bgcolor="${arrange[5][1][0]}">${arrange[5][1][1]}</td>
+												<td bgcolor="${arrange[6][1][0]}">${arrange[6][1][1]}</td>
+												<td bgcolor="${arrange[7][1][0]}">${arrange[7][1][1]}</td>
+											</tr>
+											<tr>
+												<td>2</td>
+												<td bgcolor="${arrange[1][2][0]}">${arrange[1][2][1]}</td>
+												<td bgcolor="${arrange[2][2][0]}">${arrange[2][2][1]}</td>
+												<td bgcolor="${arrange[3][2][0]}">${arrange[3][2][1]}</td>
+												<td bgcolor="${arrange[4][2][0]}">${arrange[4][2][1]}</td>
+												<td bgcolor="${arrange[5][2][0]}">${arrange[5][2][1]}</td>
+												<td bgcolor="${arrange[6][2][0]}">${arrange[6][2][1]}</td>
+												<td bgcolor="${arrange[7][2][0]}">${arrange[7][2][1]}</td>
+											</tr>
+											<tr>
+												<td>3</td>
+												<td bgcolor="${arrange[1][3][0]}">${arrange[1][3][1]}</td>
+												<td bgcolor="${arrange[2][3][0]}">${arrange[2][3][1]}</td>
+												<td bgcolor="${arrange[3][3][0]}">${arrange[3][3][1]}</td>
+												<td bgcolor="${arrange[4][3][0]}">${arrange[4][3][1]}</td>
+												<td bgcolor="${arrange[5][3][0]}">${arrange[5][3][1]}</td>
+												<td bgcolor="${arrange[6][3][0]}">${arrange[6][3][1]}</td>
+												<td bgcolor="${arrange[7][3][0]}">${arrange[7][3][1]}</td>
+											</tr>
+											<tr>
+												<td>4</td>
+												<td bgcolor="${arrange[1][4][0]}">${arrange[1][4][1]}</td>
+												<td bgcolor="${arrange[2][4][0]}">${arrange[2][4][1]}</td>
+												<td bgcolor="${arrange[3][4][0]}">${arrange[3][4][1]}</td>
+												<td bgcolor="${arrange[4][4][0]}">${arrange[4][4][1]}</td>
+												<td bgcolor="${arrange[5][4][0]}">${arrange[5][4][1]}</td>
+												<td bgcolor="${arrange[6][4][0]}">${arrange[6][4][1]}</td>
+												<td bgcolor="${arrange[7][4][0]}">${arrange[7][4][1]}</td>
+											</tr>
+											<tr><td colspan="8"></td></tr>
+											<tr>
+												<td>5</td>
+												<td bgcolor="${arrange[1][5][0]}">${arrange[1][5][1]}</td>
+												<td bgcolor="${arrange[2][5][0]}">${arrange[2][5][1]}</td>
+												<td bgcolor="${arrange[3][5][0]}">${arrange[3][5][1]}</td>
+												<td bgcolor="${arrange[4][5][0]}">${arrange[4][5][1]}</td>
+												<td bgcolor="${arrange[5][5][0]}">${arrange[5][5][1]}</td>
+												<td bgcolor="${arrange[6][5][0]}">${arrange[6][5][1]}</td>
+												<td bgcolor="${arrange[7][5][0]}">${arrange[7][5][1]}</td>
+											</tr>
+											<tr>
+												<td>6</td>
+												<td bgcolor="${arrange[1][6][0]}">${arrange[1][6][1]}</td>
+												<td bgcolor="${arrange[2][6][0]}">${arrange[2][6][1]}</td>
+												<td bgcolor="${arrange[3][6][0]}">${arrange[3][6][1]}</td>
+												<td bgcolor="${arrange[4][6][0]}">${arrange[4][6][1]}</td>
+												<td bgcolor="${arrange[5][6][0]}">${arrange[5][6][1]}</td>
+												<td bgcolor="${arrange[6][6][0]}">${arrange[6][6][1]}</td>
+												<td bgcolor="${arrange[7][6][0]}">${arrange[7][6][1]}</td>
+											</tr>
+											<tr>
+												<td>7</td>
+												<td bgcolor="${arrange[1][7][0]}">${arrange[1][7][1]}</td>
+												<td bgcolor="${arrange[2][7][0]}">${arrange[2][7][1]}</td>
+												<td bgcolor="${arrange[3][7][0]}">${arrange[3][7][1]}</td>
+												<td bgcolor="${arrange[4][7][0]}">${arrange[4][7][1]}</td>
+												<td bgcolor="${arrange[5][7][0]}">${arrange[5][7][1]}</td>
+												<td bgcolor="${arrange[6][7][0]}">${arrange[6][7][1]}</td>
+												<td bgcolor="${arrange[7][7][0]}">${arrange[7][7][1]}</td>
+											</tr>
+											<tr>
+												<td>8</td>
+												<td bgcolor="${arrange[1][8][0]}">${arrange[1][8][1]}</td>
+												<td bgcolor="${arrange[2][8][0]}">${arrange[2][8][1]}</td>
+												<td bgcolor="${arrange[3][8][0]}">${arrange[3][8][1]}</td>
+												<td bgcolor="${arrange[4][8][0]}">${arrange[4][8][1]}</td>
+												<td bgcolor="${arrange[5][8][0]}">${arrange[5][8][1]}</td>
+												<td bgcolor="${arrange[6][8][0]}">${arrange[6][8][1]}</td>
+												<td bgcolor="${arrange[7][8][0]}">${arrange[7][8][1]}</td>
+											</tr>
+											<tr>
+												<td>9</td>
+												<td bgcolor="${arrange[1][9][0]}">${arrange[1][9][1]}</td>
+												<td bgcolor="${arrange[2][9][0]}">${arrange[2][9][1]}</td>
+												<td bgcolor="${arrange[3][9][0]}">${arrange[3][9][1]}</td>
+												<td bgcolor="${arrange[4][9][0]}">${arrange[4][9][1]}</td>
+												<td bgcolor="${arrange[5][9][0]}">${arrange[5][9][1]}</td>
+												<td bgcolor="${arrange[6][9][0]}">${arrange[6][9][1]}</td>
+												<td bgcolor="${arrange[7][9][0]}">${arrange[7][9][1]}</td>
+											</tr>
+											<tr><td colspan="8"></td></tr>
+											<tr>
+												<td>10</td>
+												<td bgcolor="${arrange[1][10][0]}">${arrange[1][10][1]}</td>
+												<td bgcolor="${arrange[2][10][0]}">${arrange[2][10][1]}</td>
+												<td bgcolor="${arrange[3][10][0]}">${arrange[3][10][1]}</td>
+												<td bgcolor="${arrange[4][10][0]}">${arrange[4][10][1]}</td>
+												<td bgcolor="${arrange[5][10][0]}">${arrange[5][10][1]}</td>
+												<td bgcolor="${arrange[6][10][0]}">${arrange[6][10][1]}</td>
+												<td bgcolor="${arrange[7][10][0]}">${arrange[7][10][1]}</td>
+											</tr>
+											<tr>
+												<td>11</td>
+												<td bgcolor="${arrange[1][11][0]}">${arrange[1][11][1]}</td>
+												<td bgcolor="${arrange[2][11][0]}">${arrange[2][11][1]}</td>
+												<td bgcolor="${arrange[3][11][0]}">${arrange[3][11][1]}</td>
+												<td bgcolor="${arrange[4][11][0]}">${arrange[4][11][1]}</td>
+												<td bgcolor="${arrange[5][11][0]}">${arrange[5][11][1]}</td>
+												<td bgcolor="${arrange[6][11][0]}">${arrange[6][11][1]}</td>
+												<td bgcolor="${arrange[7][11][0]}">${arrange[7][11][1]}</td>
+											</tr>
+											<tr>
+												<td>12</td>
+												<td bgcolor="${arrange[1][12][0]}">${arrange[1][12][1]}</td>
+												<td bgcolor="${arrange[2][12][0]}">${arrange[2][12][1]}</td>
+												<td bgcolor="${arrange[3][12][0]}">${arrange[3][12][1]}</td>
+												<td bgcolor="${arrange[4][12][0]}">${arrange[4][12][1]}</td>
+												<td bgcolor="${arrange[5][12][0]}">${arrange[5][12][1]}</td>
+												<td bgcolor="${arrange[6][12][0]}">${arrange[6][12][1]}</td>
+												<td bgcolor="${arrange[7][12][0]}">${arrange[7][12][1]}</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 				<c:if test="${!empty feedbacks[0].feedbackTime}">
-					<hr class="mb-4">
-					<h4 class="mb-3">历史反馈</h4>
-					<table class="table">
-						<c:forEach items="${feedbacks}" var="feedback">
-							<tr><td rowspan="2" width="15%">${feedback.user.name}</td><td>${feedback.feedback}</td></tr>
-							<tr><td><font size="2"><fmt:formatDate value="${feedback.feedbackTime}" pattern="yyyy-MM-dd HH:mm:ss" /></font></td></tr>
-						</c:forEach>
-					</table>
+					<div class="accordion" id="accordionTwo">
+						<div class="card">
+							<div class="card-header py-3" id="headingTwo" onclick="$('#collapseTwo').collapse('toggle');">
+								<h6 class="m-0 font-weight-bold text-primary">历史反馈</h6>
+							</div>
+							<div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionTwo">
+								<div class="card-body">
+									<div class="table-responsive">
+										<table class="table">
+											<c:forEach items="${feedbacks}" var="feedback">
+												<tr><td rowspan="2" width="15%">${feedback.user.name}</td><td>${feedback.feedback}</td></tr>
+												<tr><td><font size="2"><fmt:formatDate value="${feedback.feedbackTime}" pattern="yyyy-MM-dd HH:mm:ss" /></font></td></tr>
+											</c:forEach>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</c:if>
 				<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
