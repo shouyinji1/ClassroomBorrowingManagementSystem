@@ -168,4 +168,16 @@ public class AdminDaoImpl extends BaseDaoImpl<AdminDao> implements AdminDao {
 		// TODO Auto-generated method stub
 		return this.getMapper().updateSemester(semester);
 	}
+
+	@Override
+	public Classroom getRoomByRoomID(String roomID) {
+		// TODO Auto-generated method stub
+		return this.getMapper().getRoomByRoomID(roomID);
+	}
+
+	@Override
+	public int updateRoomAvailable(Classroom room) {
+		// TODO Auto-generated method stub
+		return this.getMapper().updateRoomAvailable(room);
+	}
 }

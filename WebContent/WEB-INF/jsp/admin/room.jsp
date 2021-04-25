@@ -145,51 +145,11 @@
 					<div class="accordion" id="accordionFour">
 						<div class="card">
 							<div class="card-header py-3" id="headingFour" onclick="$('#collapseFour').collapse('toggle');">
-								<h6 class="m-0 font-weight-bold text-primary">教室使用频度</h6>
+								<h6 class="m-0 font-weight-bold text-primary">教室使用统计</h6>
 							</div>
 							<div id="collapseFour" class="collapse show" aria-labelledby="headingFour" data-parent="#accordionFour">
 								<div class="card-body">
-								
-								
-<canvas id="myChart" width="400" height="400"></canvas>
-<script>
-var ctx = document.getElementById('myChart').getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
-    }
-});
-</script>
-								
+									教室节次占用频度：
 									<div class="chart-area">
 										<div class="chartjs-size-monitor">
 											<div class="chartjs-size-monitor-expand">
@@ -199,7 +159,19 @@ var myChart = new Chart(ctx, {
 												<div class=""></div>
 											</div>
 										</div>
-                                        <canvas id="myAreaChart" style="display: block; width: 617px; height: 320px;" width="617" height="320" class="chartjs-render-monitor"></canvas>
+                                        <canvas id="relativeFrequency" style="display: block; width: 617px; height: 320px;" width="617" height="320" class="chartjs-render-monitor"></canvas>
+                                    </div></br>
+                                    教室使用频度：
+									<div class="chart-area">
+										<div class="chartjs-size-monitor">
+											<div class="chartjs-size-monitor-expand">
+												<div class=""></div>
+											</div>
+											<div class="chartjs-size-monitor-shrink">
+												<div class=""></div>
+											</div>
+										</div>
+                                        <canvas id="frequency" style="display: block; width: 617px; height: 320px;" width="617" height="320" class="chartjs-render-monitor"></canvas>
                                     </div>
 								</div>
 							</div>
@@ -208,14 +180,18 @@ var myChart = new Chart(ctx, {
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+					<c:choose>
+						<c:when test="${room.available==true}">
+							<button type="button" class="btn btn-primary" onclick="updateRoomAvailable('${room.id}',false)">停用</button>
+						</c:when>
+						<c:otherwise>
+							<button type="button" class="btn btn-primary" onclick="updateRoomAvailable('${room.id}',true)">启用</button>
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 		</div>
 	</div>
-	
-	<!-- Chart.js插件 -->
-	<script src="../vendor/chart.js/Chart.min.js"></script>
-	<script src="../js/demo/chart-area-demo.js"></script>
 
     <script type="text/javascript">
     	// 更新新反馈计数徽标，新反馈数=原新反馈数-subcount
@@ -228,9 +204,213 @@ var myChart = new Chart(ctx, {
 				document.getElementById('feedback-badge-counter').remove();
 			}
     	}
+    	
+		// 统计图数字格式化
+		function number_format(number, decimals, dec_point, thousands_sep) {
+		  // *     example: number_format(1234.56, 2, ',', ' ');
+		  // *     return: '1 234,56'
+		  number = (number + '').replace(',', '').replace(' ', '');
+		  var n = !isFinite(+number) ? 0 : +number,
+			prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+			sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+			dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+			s = '',
+			toFixedFix = function(n, prec) {
+			  var k = Math.pow(10, prec);
+			  return '' + Math.round(n * k) / k;
+			};
+		  // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+		  s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+		  if (s[0].length > 3) {
+			s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+		  }
+		  if ((s[1] || '').length < prec) {
+			s[1] = s[1] || '';
+			s[1] += new Array(prec - s[1].length + 1).join('0');
+		  }
+		  return s.join(dec);
+		}
+		// 生成统计图
+		function frequency(weekSequence,frequency){
+			var ctx = document.getElementById('frequency');
+			var myLineChart = new Chart(ctx, {
+			  type: 'line',
+			  data: {
+				labels: weekSequence,
+				datasets: [{
+				  label: "教室使用频度",
+				  lineTension: 0.3,
+				  backgroundColor: "rgba(78, 115, 223, 0.05)",
+				  borderColor: "rgba(78, 115, 223, 1)",
+				  pointRadius: 3,
+				  pointBackgroundColor: "rgba(78, 115, 223, 1)",
+				  pointBorderColor: "rgba(78, 115, 223, 1)",
+				  pointHoverRadius: 3,
+				  pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+				  pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+				  pointHitRadius: 10,
+				  pointBorderWidth: 2,
+				  //data: [0, 1, 0, 0,1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				  data: frequency,
+				}],
+			  },
+			  options: {
+				maintainAspectRatio: false,
+				layout: {
+				  padding: {
+					left: 10,
+					right: 25,
+					top: 25,
+					bottom: 0
+				  }
+				},
+				scales: {
+				  xAxes: [{
+					time: {
+					  unit: 'date'
+					},
+					gridLines: {
+					  display: false,
+					  drawBorder: false
+					},
+					ticks: {
+					  maxTicksLimit: 7
+					}
+				  }],
+				  yAxes: [{
+					ticks: {
+					  maxTicksLimit: 5,
+					  padding: 10,
+					  precision: 0,	// 只显示整数
+					},
+					gridLines: {
+					  color: "rgb(234, 236, 244)",
+					  zeroLineColor: "rgb(234, 236, 244)",
+					  drawBorder: false,
+					  borderDash: [2],
+					  zeroLineBorderDash: [2]
+					}
+				  }],
+				},
+				legend: {
+				  display: false
+				},
+				tooltips: {
+				  backgroundColor: "rgb(255,255,255)",
+				  bodyFontColor: "#858796",
+				  titleMarginBottom: 10,
+				  titleFontColor: '#6e707e',
+				  titleFontSize: 14,
+				  borderColor: '#dddfeb',
+				  borderWidth: 1,
+				  xPadding: 15,
+				  yPadding: 15,
+				  displayColors: false,
+				  intersect: false,
+				  mode: 'index',
+				  caretPadding: 10,
+				  callbacks: {
+					label: function(tooltipItem, chart) {
+					  var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+					  return datasetLabel + ': ' + number_format(tooltipItem.yLabel);
+					}
+				  }
+				}
+			  }
+			});
+		}
+		function relativeFrequency(weekSequence,relativeFrequency){
+			var ctx = document.getElementById('relativeFrequency');
+			var myLineChart = new Chart(ctx, {
+			  type: 'line',
+			  data: {
+				labels: weekSequence,
+				datasets: [{
+				  label: "教室节次使用频度",
+				  lineTension: 0.3,
+				  backgroundColor: "rgba(78, 115, 223, 0.05)",
+				  borderColor: "rgba(78, 115, 223, 1)",
+				  pointRadius: 3,
+				  pointBackgroundColor: "rgba(78, 115, 223, 1)",
+				  pointBorderColor: "rgba(78, 115, 223, 1)",
+				  pointHoverRadius: 3,
+				  pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+				  pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+				  pointHitRadius: 10,
+				  pointBorderWidth: 2,
+				  //data: [0, 1.1, 0, 0,1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+				  data: relativeFrequency,
+				  //data: ["0.0","0.0","0.0","0.0","0.0","0.0","0.0","0.0","0.0","0.0","0.0","0.0","0.0","0.0","0.0","0.0","0.0","0.0","0.0","0.0"],
+				}],
+			  },
+			  options: {
+				maintainAspectRatio: false,
+				layout: {
+				  padding: {
+					left: 10,
+					right: 25,
+					top: 25,
+					bottom: 0
+				  }
+				},
+				scales: {
+				  xAxes: [{
+					time: {
+					  unit: 'date'
+					},
+					gridLines: {
+					  display: false,
+					  drawBorder: false
+					},
+					ticks: {
+					  maxTicksLimit: 7
+					}
+				  }],
+				  yAxes: [{
+					ticks: {
+					  maxTicksLimit: 5,
+					  padding: 10,
+					  precision: 0,	// 只显示整数
+					},
+					gridLines: {
+					  color: "rgb(234, 236, 244)",
+					  zeroLineColor: "rgb(234, 236, 244)",
+					  drawBorder: false,
+					  borderDash: [2],
+					  zeroLineBorderDash: [2]
+					}
+				  }],
+				},
+				legend: {
+				  display: false
+				},
+				tooltips: {
+				  backgroundColor: "rgb(255,255,255)",
+				  bodyFontColor: "#858796",
+				  titleMarginBottom: 10,
+				  titleFontColor: '#6e707e',
+				  titleFontSize: 14,
+				  borderColor: '#dddfeb',
+				  borderWidth: 1,
+				  xPadding: 15,
+				  yPadding: 15,
+				  displayColors: false,
+				  intersect: false,
+				  mode: 'index',
+				  caretPadding: 10,
+				  callbacks: {
+					label: function(tooltipItem, chart) {
+					  var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+					  return datasetLabel + ': ' + number_format(tooltipItem.yLabel);
+					}
+				  }
+				}
+			  }
+			});
+		}
     
-		// Call the dataTables jQuery plugin
 		$(document).ready(function() {
+			// Call the dataTables jQuery plugin
 			$('#applications-dataTable').DataTable( {
  			   	// 设置datatables插件的显示语言为中文
 				language: {
@@ -246,6 +426,21 @@ var myChart = new Chart(ctx, {
 					url: '../vendor/datatables/zh.json'
 				},
 				"order": [[ 0, "desc" ]]	// 设置默认根据第1列降序
+			});
+			
+			$.ajax({
+				type: "get",//方法类型
+				url: "../admin/getRoomStatistic",
+				async:true,
+				data: {'roomID':'${room.id}'},
+				success: function (data) {
+					frequency(data['weekSequence'],data['frequency']);
+					relativeFrequency(data['weekSequence'],data['relativeFrequency']);
+				},
+				error : function() {
+					//alert("异常请求！"+data.msg);
+					alert("异常请求！");
+				}
 			});
 		});
 		
@@ -263,6 +458,31 @@ var myChart = new Chart(ctx, {
 					if (data=="1") {
 						document.getElementById('readFeedback-'+id).remove();
 						updateNewFeedbackCounter(1);
+					}else{
+						alert("出错");
+					}
+				},
+				error : function() {
+					//alert("异常请求！"+data.msg);
+					alert("异常请求！");
+				}
+			});
+		}
+		
+		function updateRoomAvailable(roomID,available){
+			$.ajax({
+				type: "get",//方法类型
+				url: "../admin/updateRoomAvailable" ,
+				async:true,
+				data: {'id':roomID, 'available':available},
+				success: function (data) {
+					if (data=="1") {
+						$('#room-Modal').modal('hide');
+						if(available==true){
+							document.getElementById('room-available').innerHTML='可申请';
+						}else{
+							document.getElementById('room-available').innerHTML='不可申请';
+						}
 					}else{
 						alert("出错");
 					}

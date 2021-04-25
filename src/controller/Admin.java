@@ -1,8 +1,13 @@
 package controller;
 
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
+import org.apache.catalina.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.codec.json.Jackson2JsonEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -162,15 +167,39 @@ public class Admin {
 		return mav;
 	}
 	
+	/** 查看某个教室的相关信息 */
 	@RequestMapping("room")
 	public ModelAndView room(String roomID) {
 		ModelAndView mav=new ModelAndView("admin/room");
 		mav.addObject("applications",adminService.getApplicationsByRoomID(roomID));
 		mav.addObject("semester",userService.getSemesters().get(0));
 		mav.addObject("roomSchedules",adminService.getRoomSchedulesByRoomID(roomID));
+		mav.addObject("room",adminService.getRoomByRoomID(roomID));
 		return mav;
 	}
 	
+	/** 教室使用统计 */
+	@RequestMapping("getRoomStatistic")
+	@ResponseBody
+	public Map<String, Object> getRoomStatistic(String roomID) {
+		Map<String,Object> map=new HashMap<String,Object>();
+		map.put("relativeFrequency", adminService.getRelativeFrequencyOfEveryWeek(roomID));
+		map.put("frequency", adminService.getFrequencyOfEveryWeek(roomID));
+		int tWeeks=userService.getSemesters().get(0).gettWeeks();
+		int[] weekSequence=new int[tWeeks];
+		for(int i=0;i<tWeeks;i++) {
+			weekSequence[i]=i+1;
+		}
+		map.put("weekSequence", weekSequence);
+		return map;
+	}
+	
+	/** 更新教室可用状态 */
+	@RequestMapping("updateRoomAvailable")
+	@ResponseBody
+	public String updateRoomAvailable(Classroom room) {
+		return Integer.toString(adminService.updateRoomAvailable(room));
+	}
 
 	/*************** 反馈浏览 *****************/
 	@RequestMapping("feedbackBrowsing")

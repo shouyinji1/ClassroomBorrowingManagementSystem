@@ -230,4 +230,56 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		return adminDao.updateSemester(semester);
 	}
+
+	@Override
+	public int[] getRelativeFrequencyOfEveryWeek(String roomID) {
+		// TODO Auto-generated method stub
+		List<Application> applications=adminDao.getApplicationsByRoomID(roomID);
+		List<RoomSchedule> roomSchedules=adminDao.getRoomSchedulesByRoomID(roomID);
+		Semester semester=userDao.getSemesters().get(0);
+		int tWeeks=semester.gettWeeks();
+		int[] tmp=new int[tWeeks];
+		for(Application application:applications) {
+			application.setStatus(semester);
+			if(application.getStatus()==1 || application.getStatus()==2 || application.getStatus()==3){
+				tmp[application.getZhouCi()]+=application.geteJieCi()-application.getsJieCi()+1;
+			}
+		}
+		for(RoomSchedule roomSchedule:roomSchedules) {
+			tmp[roomSchedule.getZhouCi()]+=roomSchedule.geteJieCi()-roomSchedule.getsJieCi()+1;
+		}
+		return tmp;
+	}
+
+	@Override
+	public int[] getFrequencyOfEveryWeek(String roomID) {
+		// TODO Auto-generated method stub
+		List<Application> applications=adminDao.getApplicationsByRoomID(roomID);
+		List<RoomSchedule> roomSchedules=adminDao.getRoomSchedulesByRoomID(roomID);
+		Semester semester=userDao.getSemesters().get(0);
+		int tWeeks=semester.gettWeeks();
+		int[] tmp=new int[tWeeks];
+		for(Application application:applications) {
+			application.setStatus(semester);
+			if(application.getStatus()==1 || application.getStatus()==2 || application.getStatus()==3){
+				tmp[application.getZhouCi()]++;
+			}
+		}
+		for(RoomSchedule roomSchedule:roomSchedules) {
+			tmp[roomSchedule.getZhouCi()]++;
+		}
+		return tmp;
+	}
+
+	@Override
+	public Classroom getRoomByRoomID(String roomID) {
+		// TODO Auto-generated method stub
+		return adminDao.getRoomByRoomID(roomID);
+	}
+
+	@Override
+	public int updateRoomAvailable(Classroom room) {
+		// TODO Auto-generated method stub
+		return adminDao.updateRoomAvailable(room);
+	}
 }

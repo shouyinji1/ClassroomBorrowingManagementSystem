@@ -47,6 +47,6 @@
 	</mvc:interceptors>
 
 	<!-- 自动扫描组件 -->
-	<mvc:annotation-driven />
+	<mvc:annotation-driven enable-matrix-variables="true"/>
 	<mvc:default-servlet-handler />
 </beans>

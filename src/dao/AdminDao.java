@@ -78,4 +78,10 @@ public interface AdminDao {
 	
 	/** 更新学期信息 */
 	public int updateSemester(Semester semester);
+	
+	/** 根据RoomID获取教室信息 */
+	public Classroom getRoomByRoomID(String roomID);
+	
+	/** 更新教室可用状态 */
+	public int updateRoomAvailable(Classroom room);
 }

@@ -68,4 +68,20 @@ public interface AdminService {
 
 	/** 更新学期信息 */
 	public int updateSemester(Semester semester);
+	
+	
+	/*********** 统计 ***********/
+	/** 获取每周节次占用率
+	 * */
+	public int[] getRelativeFrequencyOfEveryWeek(String roomID);
+
+	/** 获取每周使用频数
+	 * */
+	public int[] getFrequencyOfEveryWeek(String roomID);
+	
+	/** 根据RoomID获取教室信息 */
+	public Classroom getRoomByRoomID(String roomID);
+	
+	/** 更新教室可用状态 */
+	public int updateRoomAvailable(Classroom room);
 }

@@ -159,8 +159,11 @@
 			and JiaoXueLou=#{jiaoXueLou} and Type=#{type};
 	</select>
 	<select id="getApplicationsByRoomID" parameterType="String" resultMap="applicationResultMap">
-		select Application.ID as ApplicationID,Application.*,User.Name as UserName,User.* 
-			from Application,User where Application.UserID=User.ID and RoomID=#{roomID};
+		select Application.ID as ApplicationID,Application.Type as ApplicationType,
+				Application.*,User.Name as UserName,User.*,
+				Classroom.Name as ClassroomName,Classroom.Type as RoomType,Classroom.*
+			from Application,User,Classroom
+			where Application.UserID=User.ID and Application.RoomID=Classroom.ID and RoomID=#{roomID};
 	</select>
 	<select id="getRoomSchedulesByRoomID" parameterType="String" resultMap="roomScheduleResultMap">
 		select r.ID as RID, r.Type as RType,r.*,User.Name as UserName,User.* 
@@ -190,4 +193,11 @@
 		update Semester set SName=#{sName},SDate=#{sDate},TWeeks=#{tWeeks} 
 			WHERE 1 ORDER BY ID DESC LIMIT 1;
 	</update>
+	<select id="getRoomByRoomID" parameterType="String" resultType="Classroom">
+		select * from Classroom where ID=#{roomID};
+	</select>
+	<update id="updateRoomAvailable" parameterType="Classroom">
+		update Classroom set Available=#{available} where ID=#{id};
+	</update>
+	<!-- 统计 -->
 </mapper>

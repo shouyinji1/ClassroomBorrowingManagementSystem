@@ -359,6 +359,9 @@
     <script src="../vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
+	<!-- Chart.js插件 -->
+	<script src="../vendor/chart.js/Chart.min.js"></script>
+
 	<!-- 日期选择器插件 -->
 	<script src="../vendor/moment/moment.min.js"></script>
 	<script src="../vendor/moment/moment-with-locales.min.js"></script>

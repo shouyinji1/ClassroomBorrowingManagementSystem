@@ -40,7 +40,7 @@
 								<td>${room.floor}</td>
 								<td>${room.name}</td>
 								<td>${room.capacity}</td>
-								<td>
+								<td id="room-available">
 									<c:choose>
 										<c:when test="${room.available==true}">可申请</c:when>
 										<c:when test="${room.available==false}">不可申请</c:when>
