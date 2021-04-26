@@ -57,7 +57,7 @@
 					</div>
 					<div class="col-sm-2 mb-2">
 						<label for="capacity">人数</label>
-						<input type="text" class="form-control" id="capacity" name="capacity" placeholder="">
+						<input type="text" class="form-control" id="capacity" name="capacity" placeholder="" oninput="value=value.replace(/[^\d]/g,'')">
 						<div class="invalid-feedback">
 							输入不合法
 						</div>

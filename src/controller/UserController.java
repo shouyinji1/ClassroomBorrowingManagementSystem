@@ -106,8 +106,19 @@ public class UserController {
 				mav.addObject("mustSetSDate",false);
 			}
 			mav.addObject("semester",semester);
-		}else 
+		}else {
 			mav=new ModelAndView("normalUser/index");
+
+			Semester semester=null;
+			try {
+				semester=userService.getSemesters().get(0);
+			} catch (IndexOutOfBoundsException e) {	// 学期信息表没有记录
+				// TODO: handle exception
+				userService.insertSemester();
+				semester=userService.getSemesters().get(0);
+			}
+			mav.addObject("semester",semester);
+		}
 		// 最后把ModelAndView对象返回出去
 		return mav;
 		//return "forward:normalUser/index";

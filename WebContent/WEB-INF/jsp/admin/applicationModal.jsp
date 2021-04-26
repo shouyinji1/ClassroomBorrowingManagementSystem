@@ -12,7 +12,7 @@
 		<div class="modal-dialog modal-xl" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">审批</h5>
+					<h4 class="modal-title" id="exampleModalLabel">审批</h4>
 					<c:choose>
 						<c:when test="${(!empty application.feedbackTime) and application.readFeedback==false}">
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="updateReadFeedback()">
@@ -60,7 +60,7 @@
 						</div>
 					</div>
 					<hr class="mb-4">
-					<h4 class="mb-3">教室</h4>
+					<h5 class="mb-3">教室</h5>
 					<div class="row">
 						<div class="col-sm-3 mb-3">
 							<label>教室编号</label>
@@ -98,7 +98,7 @@
 						</div>
 					</div>
 					<hr class="mb-4">
-					<h4 class="mb-3">申请使用时间</h4>
+					<h5 class="mb-3">申请使用时间</h5>
 					<fieldset disabled>
 						<div class="row">
 							<div class="col-sm-3 mb-3">
@@ -123,7 +123,7 @@
 							</div>
 						</div>
 						<hr class="mb-4">
-						<h4 class="mb-3">申请目的</h4>
+						<h5 class="mb-3">申请目的</h5>
 						<div class="form-group row">
 							<label class="col-sm-2 col-form-label">申请类型</label>
 							<div class="col-sm-3">
@@ -140,7 +140,7 @@
 						</div>
 					</fieldset>
 					<hr class="mb-4">
-					<h4 class="mb-3">审批</h4>
+					<h5 class="mb-3">审批</h5>
 					<div class="row">
 						<div class="col-sm-12 mb-3">
 							审批人：${application.reviewer.name}
@@ -163,7 +163,7 @@
 					</div>
 					<c:if test="${!empty application.feedbackTime}">
 						<hr class="mb-4">
-						<h4 class="mb-3">使用者反馈</h4>
+						<h5 class="mb-3">使用者反馈</h5>
 						<div class="row">
 							<div class="col-sm-12 mb-3">反馈时间：<fmt:formatDate value="${application.feedbackTime}" pattern="yyyy-MM-dd HH:mm:ss" /></div>
 						</div>

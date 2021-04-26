@@ -8,14 +8,14 @@
 	<div class="modal-dialog modal-xl" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">填写申请</h5>
+				<h4 class="modal-title" id="exampleModalLabel">填写申请</h4>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="modal-body">
 				<form id="modal-Application">
-					<h4 class="mb-3">申请者信息</h4>
+					<h5 class="mb-3">申请者信息</h5>
 					<div class="row">
 						<div class="col-sm-3 mb-3">
 							<label>ID</label>
@@ -41,7 +41,7 @@
 						</div>
 					</div>
 					<hr class="mb-4">
-					<h4 class="mb-3">教室</h4>
+					<h5 class="mb-3">教室</h5>
 					<div class="row">
 						<div class="col-sm-3 mb-3">
 							<label>教室编号</label>
@@ -79,7 +79,7 @@
 						</div>
 					</div>
 					<hr class="mb-4">
-					<h4 class="mb-3">申请使用时间</h4>
+					<h5 class="mb-3">申请使用时间</h5>
 					<div class="row">
 						<div class="col-sm-3 mb-3">
 							<label>周次</label>
@@ -99,7 +99,7 @@
 						</div>
 					</div>
 					<hr class="mb-4">
-					<h4 class="mb-3">申请目的</h4>
+					<h5 class="mb-3">申请目的</h5>
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label">申请类型</label>
 						<div class="col-sm-3">
