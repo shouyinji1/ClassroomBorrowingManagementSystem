@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import dao.UserDao;
+import entity.Semester;
 import entity.User;
 
 @Repository
@@ -26,12 +27,32 @@ public class UserDaoImpl extends BaseDaoImpl<UserDao> implements UserDao{
 	}
 	// 修改用户信息
 	@Override
-	public void updUser(User user) {
-		this.getMapper().updUser(user);
+	public int updUser(User user) {
+		return this.getMapper().updUser(user);
 	}
 	// 删除用户
 	public void delUser(int uId) {
 		
 	}
-}
+	
+	@Override
+	public User getUserByIdAndPassword(String id, String password){
+		return this.getMapper().getUserByIdAndPassword(id, password);
+	}
+	@Override
+	public int updatePassword(User user) {
+		// TODO Auto-generated method stub
+		return this.getMapper().updatePassword(user);
+	}
 
+	@Override
+	public List<Semester> getSemesters() {
+		// TODO Auto-generated method stub
+		return this.getMapper().getSemesters();
+	}
+	@Override
+	public int insertSemester() {
+		// TODO Auto-generated method stub
+		return this.getMapper().insertSemester();
+	}
+}

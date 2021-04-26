@@ -8,7 +8,19 @@
 	<select id="getUserById" resultType="user" parameterType="String">
 		select * from User where id=#{id}
 	</select>
-	<update id="updUser" parameterType="String">
-		update User set name=#{name} where id=#{id};
+	<select id="getUserByIdAndPassword" resultType="user" parameterType="String">
+		select * from User where id=#{id} and password=#{password};
+	</select>
+	<update id="updUser" parameterType="User">
+		update User set Phone=#{phone},Email=#{email} where ID=#{id};
 	</update>
+	<update id="updatePassword" parameterType="User">
+		update User set Password=#{newPassword} where ID=#{id} and Password=#{password};
+	</update>
+	<select id="getSemesters" resultType="Semester">
+		select * from Semester order by ID desc; 
+	</select>
+	<insert id="insertSemester">
+		insert into Semester values();
+	</insert>
 </mapper>

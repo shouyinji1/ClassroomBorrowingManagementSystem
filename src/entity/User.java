@@ -2,12 +2,10 @@ package entity;
 
 import java.io.Serializable;
 
-import org.apache.ibatis.type.Alias;
 import org.springframework.stereotype.Component;
 
 /** 用户信息 */
-@Alias("user")
-@Component
+@Component("user")
 public class User implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private String id;
@@ -18,6 +16,8 @@ public class User implements Serializable{
 	private String email;
 	private String department;
 
+	private String newPassword;
+	
 	public String getId() {
 		return id;
 	}
@@ -59,5 +59,11 @@ public class User implements Serializable{
 	}
 	public void setDepartment(String department) {
 		this.department = department;
+	}
+	public String getNewPassword() {
+		return newPassword;
+	}
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
 	}
 }

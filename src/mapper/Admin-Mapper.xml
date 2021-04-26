@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.AdminDao">
+	<select id="getApplicationsForApproval" resultMap="applicationResultMap">
+		select Application.ID as ApplicationID,UserID,RoomID,SubmitTime,ZhouCi,XingQi,
+				SJieCi,EJieCi,Application.Type as ApplicationType,Purpose,
+				ReviewerID, ReviewTime, Approval,ReviewContent,
+				User.Name as UserName
+			from Application,User,Classroom
+				where Application.UserID=User.ID and Application.RoomID=Classroom.ID 
+					and Approval is null and Classroom.available=true 
+					and (ZhouCi &gt; #{zhouCiNow} or (ZhouCi=#{zhouCiNow} and XingQi &gt; #{xingQiNow}));
+	</select>
+	<select id="getApplicationById" resultMap="applicationResultMap" parameterType="int">
+		select Application.ID as ApplicationID, Application.Type as ApplicationType, Application.*, 
+			User.Name as UserName, Phone, Email, Department,
+			Classroom.Name as ClassroomName, Classroom.Type as RoomType, 
+			XiaoQu,JiaoXueQu, JiaoXueLou, Floor, Capacity 
+				from Application,User,Classroom 
+					where Application.ID=#{id} and Application.UserID=User.ID and Application.RoomID=Classroom.ID;
+	</select>
+	<resultMap id="applicationResultMap" type="application">
+		<id column="ApplicationID" property="id"></id>
+		<id column="UserID" property="userID"></id>
+		<id column="RoomID" property="roomID"></id>
+		<id column="SubmitTime" property="submitTime"></id>
+		<id column="ZhouCi" property="zhouCi"></id>
+		<id column="XingQi" property="xingQi"></id>
+		<id column="SJieCi" property="sJieCi"></id>
+		<id column="EJieCi" property="eJieCi"></id>
+		<id column="ApplicationType" property="type"></id>
+		<id column="Purpose" property="purpose"></id>
+		<id column="ReviewerID" property="reviewerID"></id>
+		<id column="ReviewTime" property="reviewTime"></id>
+		<id column="Approval" property="approval"></id>
+		<id column="ReviewContent" property="reviewContent"></id>
+		<id column="Feedback" property="feedback"/>
+		<id column="FeedbackTime" property="feedbackTime"/>
+		<id column="ReadFeedback" property="readFeedback"/>
+		
+		<association property="user" javaType="user">
+			<id column="UserName" property="name"></id>
+			<id column="Phone" property="phone"></id>
+			<id column="Email" property="email"></id>
+			<id column="Department" property="department"></id>
+		</association>
+		<association property="classroom" javaType="classroom">
+			<id column="ClassroomName" property="name"></id>
+			<id column="RoomType" property="type"></id>
+			<id column="XiaoQu" property="xiaoQu"></id>
+			<id column="JiaoXueQu" property="jiaoXueQu"></id>
+			<id column="JiaoXueLou" property="jiaoXueLou"></id>
+			<id column="Floor" property="floor"></id>
+			<id column="Capacity" property="capacity"></id>
+			<id column="Available" property="available"></id>
+		</association>
+		<association property="reviewer" javaType="user">
+			<id column="UserName" property="name"></id>
+			<id column="Phone" property="phone"></id>
+			<id column="Email" property="email"></id>
+			<id column="Department" property="department"></id>
+		</association>
+	</resultMap>
+	<resultMap id="roomScheduleResultMap" type="roomSchedule">
+		<id column="RID" property="id"></id>
+		<id column="UserID" property="userID"></id>
+		<id column="RoomID" property="roomID"></id>
+		<id column="ZhouCi" property="zhouCi"></id>
+		<id column="XingQi" property="xingQi"></id>
+		<id column="SJieCi" property="sJieCi"></id>
+		<id column="EJieCi" property="eJieCi"></id>
+		<id column="RType" property="type"></id>
+		<id column="Purpose" property="purpose"></id>
+		<association property="user" javaType="user">
+			<id column="UserName" property="name"></id>
+			<id column="Phone" property="phone"></id>
+			<id column="Email" property="email"></id>
+			<id column="Department" property="department"></id>
+		</association>
+	</resultMap>
+	<update id="updateReviewOfApplication" parameterType="Application">
+		update Application 
+			set ReviewerID=#{reviewerID},ReviewTime=#{reviewTime},
+					Approval=#{approval},ReviewContent=#{reviewContent}
+				where ID=#{id};
+	</update>
+	<select id="getAllXiaoQuOfApplications" resultType="String">
+		select distinct XiaoQu from Application as a,Classroom as c 
+			where a.RoomID=c.ID and Approval is not null;
+	</select>
+	<select id="getJiaoXueQuOfAByX" resultType="String" parameterType="Classroom">
+		select distinct JiaoXueQu from Application as a,Classroom as c 
+			where a.RoomID=c.ID and Approval is not null
+				and XiaoQu=#{xiaoQu};
+	</select>
+	<select id="getJiaoXueLouOfAByXJ" resultType="String" parameterType="Classroom">
+		select distinct JiaoXueLou from Application as a,Classroom as c 
+			where a.RoomID=c.ID and Approval is not null
+				and XiaoQu=#{xiaoQu} and JiaoXueQu=#{jiaoXueQu};
+	</select>
+	<select id="getTypeOfAByXJJ" resultType="String" parameterType="Classroom">
+		select distinct c.Type from Application as a,Classroom as c 
+			where a.RoomID=c.ID and Approval is not null
+				and XiaoQu=#{xiaoQu} and JiaoXueQu=#{jiaoXueQu} and JiaoXueLou=#{jiaoXueLou};
+	</select>
+	<select id="getFloorOfAByXJJT" resultType="String" parameterType="Classroom">
+		select distinct Floor from Application as a,Classroom as c 
+			where a.RoomID=c.ID and Approval is not null
+				and XiaoQu=#{xiaoQu} and JiaoXueQu=#{jiaoXueQu} 
+				and JiaoXueLou=#{jiaoXueLou} and c.Type=#{type};
+	</select>
+	<select id="getRoomIDOfAByXJJTF" resultType="String" parameterType="Classroom">
+		select distinct RoomID from Application as a,Classroom as c 
+			where a.RoomID=c.ID and Approval is not null
+				and XiaoQu=#{xiaoQu} and JiaoXueQu=#{jiaoXueQu} 
+				and JiaoXueLou=#{jiaoXueLou} and c.Type=#{type} and Floor=#{floor};
+	</select>
+	<select id="getApplicationsByRoom" resultMap="applicationResultMap" parameterType="Classroom">
+		select a.ID as ApplicationID,a.*, u.name as UserName,c.Floor,c.Available
+			from Application as a,Classroom as c,User as u
+			where a.RoomID=c.ID and a.UserID=u.ID and Approval is not null 
+				and XiaoQu=#{xiaoQu} and JiaoXueQu=#{jiaoXueQu} and JiaoXueLou=#{jiaoXueLou}
+				and c.Type=#{type};
+	</select>
+	<select id="getReviewedApplicationsOf7Days" resultMap="applicationResultMap">
+		select Application.ID as ApplicationID,Application.*,User.name as UserName,Classroom.Available
+			from Application,User,Classroom
+			where Application.userID=User.ID and to_days(now())-to_days(ReviewTime) &lt;=7;
+	</select>
+	
+	<select id="getAllXiaoQu" resultType="String">
+		select distinct XiaoQu from Classroom;
+	</select>
+	<select id="getAllJiaoXueQuByXiaoQu" resultType="String" parameterType="String">
+		select distinct JiaoXueQu from Classroom where XiaoQu=#{xiaoQu};
+	</select>
+	<select id="getAllJiaoXueLouByXJ" resultType="String" parameterType="String">
+		select distinct JiaoXueLou from Classroom where XiaoQu=#{xiaoQu} and JiaoXueQu=#{jiaoXueQu};
+	</select>
+	<select id="getAllTypeByXJJ" resultType="String">
+		select distinct Type from Classroom where XiaoQu=#{xiaoQu} and JiaoXueQu=#{jiaoXueQu} 
+			and JiaoXueLou=#{jiaoXueLou};
+	</select>
+	<select id="getAllFloorByXJJT" resultType="String">
+		select distinct Floor from Classroom 
+			where XiaoQu=#{xiaoQu} and JiaoXueQu=#{jiaoXueQu} and JiaoXueLou=#{jiaoXueLou} and Type=#{type};
+	</select>
+	<select id="getAllRoomIDByXJJTF" resultType="String">
+		select distinct ID from Classroom 
+			where XiaoQu=#{xiaoQu} and JiaoXueQu=#{jiaoXueQu} and JiaoXueLou=#{jiaoXueLou} 
+				and Type=#{type} and Floor=#{floor};
+	</select>
+	<update id="updateReadFeedback" parameterType="Application">
+		update Application set ReadFeedback=#{readFeedback} where ID=${id};
+	</update>
+	<select id="getRoomsByRoomInfo" parameterType="Classroom" resultType="Classroom">
+		select * from Classroom where XiaoQu=#{xiaoQu} and JiaoXueQu=#{jiaoXueQu} 
+			and JiaoXueLou=#{jiaoXueLou} and Type=#{type};
+	</select>
+	<select id="getApplicationsByRoomID" parameterType="String" resultMap="applicationResultMap">
+		select Application.ID as ApplicationID,Application.Type as ApplicationType,
+				Application.*,User.Name as UserName,User.*,
+				Classroom.Name as ClassroomName,Classroom.Type as RoomType,Classroom.*
+			from Application,User,Classroom
+			where Application.UserID=User.ID and Application.RoomID=Classroom.ID and RoomID=#{roomID};
+	</select>
+	<select id="getRoomSchedulesByRoomID" parameterType="String" resultMap="roomScheduleResultMap">
+		select r.ID as RID, r.Type as RType,r.*,User.Name as UserName,User.* 
+			from RoomSchedule as r,User 
+			where r.UserID=User.ID and RoomID=#{roomID};
+	</select>
+	<select id="getUnreadFeedbacks" resultMap="applicationResultMap">
+		select Application.ID as ApplicationID,Application.Type as ApplicationType,
+				Application.*,User.Name as UserName,User.*,
+				Classroom.Name as ClassroomName,Classroom.Type as RoomType,Classroom.*
+		 	from Application,User,Classroom
+		 	where Application.UserID=User.ID and Application.RoomID=Classroom.ID 
+		 		and ReadFeedback=false and FeedbackTime is not null;
+	</select>
+	<select id="getFeedbacksRecent7Days" resultMap="applicationResultMap">
+		select Application.ID as ApplicationID,Application.Type as ApplicationType,
+				Application.*,User.Name as UserName,User.*,
+				Classroom.Name as ClassroomName,Classroom.Type as RoomType,Classroom.*
+		 	from Application,User,Classroom
+			where Application.UserID=User.ID and Application.RoomID=Classroom.ID 
+				and FeedbackTime is not null and to_days(now())-to_days(FeedbackTime) &lt;=7;
+	</select>
+	<select id="getCounterOfNewFeedback" resultType="int">
+		select count(*) from Application where ReadFeedback=false and FeedbackTime is not null;
+	</select>
+	<update id="updateSemester" parameterType="Semester">
+		update Semester set SName=#{sName},SDate=#{sDate},TWeeks=#{tWeeks} 
+			WHERE 1 ORDER BY ID DESC LIMIT 1;
+	</update>
+	<select id="getRoomByRoomID" parameterType="String" resultType="Classroom">
+		select * from Classroom where ID=#{roomID};
+	</select>
+	<update id="updateRoomAvailable" parameterType="Classroom">
+		update Classroom set Available=#{available} where ID=#{id};
+	</update>
+	
+	<!-- 统计 -->
+	<!-- 统计每个教室的借用次数 -->
+	<select id="getApplicationStatistic" resultType="java.util.Map">
+		select RoomID,count(RoomID) as countRoomID from Application,Classroom 
+			where Application.RoomID=Classroom.ID and Approval=true 
+			group by RoomID order by count(RoomID) desc limit 5;
+	</select>
+	<!-- 统计每个被借教室的反馈次数 -->
+	<select id="getFeedbackStatistic" resultType="java.util.Map">
+		select RoomID,count(RoomID) as countRoomID from Application,Classroom 
+			where Application.RoomID=Classroom.ID and FeedbackTime is not null
+			group by RoomID order by count(RoomID) desc limit 5;
+	</select>
+	<!-- 统计每个用户的借用次数 -->
+	<select id="getUserStatistic" resultType="java.util.Map">
+		select User.Name as UserName,count(User.ID) as countUserID from Application,User 
+			where Application.UserID=User.ID and Approval=true
+			group by User.ID order by countUserID desc limit 5;
+	</select>
+</mapper>
