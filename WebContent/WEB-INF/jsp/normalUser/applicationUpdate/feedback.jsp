@@ -18,6 +18,9 @@
 					</button>
 				</div>
 				<div class="modal-body">
+					<div class="mb-3">
+						<a href="../normalUser/downloadApplication?id=${application.id}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> 下载申请表</a>
+					</div>
 					<div class="row">
 						<div class="col-sm-3 mb-3">
 							<label>申请ID</label>
