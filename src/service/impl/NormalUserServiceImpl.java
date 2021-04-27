@@ -2,14 +2,11 @@ package service.impl;
 
 import java.util.List;
 
-import org.apache.logging.log4j.core.config.AppendersPlugin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.method.annotation.SessionStatusMethodArgumentResolver;
 
 import dao.NormalUserDao;
 import dao.UserDao;
-import dao.impl.UserDaoImpl;
 import entity.Application;
 import entity.Classroom;
 import entity.RoomSchedule;

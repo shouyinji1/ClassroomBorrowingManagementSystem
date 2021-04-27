@@ -1,5 +1,12 @@
 package controller;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,15 +19,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-import dao.NormalUserDao;
 import entity.Application;
 import entity.Classroom;
 import entity.Semester;
 import entity.User;
 import service.NormalUserService;
 import service.UserService;
+import util.PDF;
 
 @Controller
 @RequestMapping("normalUser")
@@ -40,9 +48,10 @@ public class NormalUser {
 		return mav;
 	}
 	
-	/** 跳转申请表修改页面 */
+	/** 跳转申请表修改页面 
+	 * */
 	@RequestMapping("applicationUpdate")
-	public ModelAndView applicationUpdate(@Param("id")int id,HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView applicationUpdate(@Param("id")int id,HttpServletRequest request, HttpServletResponse response){
 		Application application=normalUserService.getApplicationById(id);
 		ModelAndView mav = null;
 		switch (application.getStatus()) {
@@ -69,6 +78,39 @@ public class NormalUser {
 		}
 		mav.addObject("application",application);
 		return mav;
+	}
+	
+	/** 下载申请表PDF 
+	 * @throws IOException */
+	@RequestMapping("downloadApplication")
+	@ResponseStatus
+	public int downloadApplication(int id,HttpServletResponse response) throws IOException {
+		Application application=normalUserService.getApplicationById(id);
+		PDF.generate(application);
+		
+		//1、设置response 响应头
+		response.reset(); //设置页面不缓存,清空buffer
+		response.setCharacterEncoding("UTF-8"); //字符编码
+		response.setContentType("multipart/form-data"); //二进制传输数据
+		//设置响应头
+		response.setHeader("Content-Disposition",
+				"attachment;fileName="+URLEncoder.encode("application-"+application.getId()+".pdf", "UTF-8"));
+
+		// 读取文件--输入流
+		InputStream input=PDF.generate(application);
+		// 写出文件--输出流
+		OutputStream out = response.getOutputStream();
+
+		byte[] buff =new byte[1024];
+		int index=0;
+		//执行 写出操作
+		while((index= input.read(buff))!= -1){
+			out.write(buff, 0, index);
+			out.flush();
+		}
+		out.close();
+		input.close();
+		return 0;
 	}
 	
 	/** 更新申请表 */
