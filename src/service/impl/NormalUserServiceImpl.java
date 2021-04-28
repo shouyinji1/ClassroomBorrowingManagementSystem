@@ -133,6 +133,35 @@ public class NormalUserServiceImpl implements NormalUserService {
 	/** 查询符合条件的可用教室，不含节次 */
 	public List<Classroom> getRoomsByApplyNoJieCi(Application application){
 		List<Classroom> rooms=normalUserDao.getRoomsByApplyNoTime(application);
+		
+		// 教室筛选
+		String floor=application.getClassroom().getFloor();
+		String roomID=application.getRoomID();
+		String capacity=application.getClassroom().getCapacity();
+		if(floor !=null && !floor.equals("")) {	// 筛选楼层
+			floor=floor.trim();
+			for(int i=rooms.size()-1;i>=0;i--) {
+				if(!rooms.get(i).getFloor().equals(floor)) {
+					rooms.remove(i);
+				}
+			}
+		}
+		if(roomID !=null && !roomID.equals("")) {	// 筛选教室
+			roomID=roomID.trim();
+			for(int i=rooms.size()-1;i>=0;i--) {
+				if(!rooms.get(i).getId().trim().equals(roomID))
+					rooms.remove(i);
+			}
+		}
+		if(capacity!=null && !capacity.equals("")) {	// 筛选容量
+			int cap=Integer.parseInt(capacity);
+			for(int i=rooms.size()-1;i>=0;i--) {
+				if(Integer.parseInt(rooms.get(i).getCapacity())<cap)
+					rooms.remove(i);
+			}
+		}
+		
+		// 时间筛选
 		Semester semester=userDao.getSemesters().get(0);
 		int[][] arrange=new int[8][13];
 		for(int j=rooms.size()-1;j>=0;j--) {

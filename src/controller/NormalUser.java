@@ -186,9 +186,10 @@ public class NormalUser {
 	/** 查询可用教室 */
 	@RequestMapping(value="queryRooms",method=RequestMethod.POST)
 	public ModelAndView queryRooms(Classroom room,
-			int zhouCi,String xingQi,String sJieCi,String eJieCi) {
+			String roomID,int zhouCi,String xingQi,String sJieCi,String eJieCi) {
 		Application application=new Application();
 		application.setClassroom(room);
+		application.setRoomID(roomID);
 		application.setZhouCi(zhouCi);
 		application.setXingQi(xingQi !=null && !xingQi.equals("") ? Integer.parseInt(xingQi) : 0);
 		application.setsJieCi(sJieCi !=null && !sJieCi.equals("") ? Integer.parseInt(sJieCi) : 0);
