@@ -41,7 +41,7 @@
 								<td>${application.user.name}</td>
 								<td>${application.roomID}</td>
 								<td>${application.zhouCi}</td>
-								<td>${application.xingQi}</td>
+								<td>${application.formatXingQi}</td>
 								<td>${application.sJieCi}</td>
 								<td>${application.eJieCi}</td>
 							</tr>

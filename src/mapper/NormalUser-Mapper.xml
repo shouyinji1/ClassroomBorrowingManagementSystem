@@ -134,6 +134,11 @@
 		) and XiaoQu=#{classroom.xiaoQu} and JiaoXueQu=#{classroom.jiaoXueQu} 
 			and jiaoXueLou=#{classroom.jiaoXueLou} and Type=#{classroom.type} and Available=true;
 	</select>
+	<select id="getRoomsByApplyNoTime" resultType="Classroom" parameterType="Application">
+		select Floor,ID,Capacity,name from Classroom 
+			where XiaoQu=#{classroom.xiaoQu} and JiaoXueQu=#{classroom.jiaoXueQu} 
+			and jiaoXueLou=#{classroom.jiaoXueLou} and Type=#{classroom.type} and Available=true;
+	</select>
 	<select id="getClassroomById" resultType="Classroom" parameterType="String">
 		select * from Classroom where ID=#{id};
 	</select>

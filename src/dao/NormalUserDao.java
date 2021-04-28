@@ -59,6 +59,9 @@ public interface NormalUserDao {
 	/** 查询符合查询条件的空闲教室 */
 	public List<Classroom> getRoomsByApply(Application application);
 	
+	/** 查询符合条件的可用教室 */
+	public List<Classroom> getRoomsByApplyNoTime(Application application);
+	
 	/** 根据教室ID查询教室信息 */
 	public Classroom getClassroomById(String id);
 	

@@ -43,7 +43,7 @@
 								<td>${application.formatSubmitTime}</td>
 								<td>${application.roomID}</td>
 								<td>${application.zhouCi}</td>
-								<td>${application.xingQi}</td>
+								<td>${application.formatXingQi}</td>
 								<td id="application-${application.id}-sJieCi">${application.sJieCi}</td>
 								<td id="application-${application.id}-eJieCi">${application.eJieCi}</td>
 								<td id='application-${application.id}-status'>

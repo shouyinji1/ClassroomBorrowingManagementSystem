@@ -74,6 +74,7 @@
 					<div class="form-group col-sm-2">
 						<label for="xingQi">星期</label>
 						<select class="form-control" id="xingQi" name="xingQi">
+							<option selected="selected"></option>
 							<c:if test="${txingQi<=1}"><option value="1">一</option></c:if>
 							<c:if test="${txingQi<=2}"><option value="2">二</option></c:if>
 							<c:if test="${txingQi<=3}"><option value="3">三</option></c:if>
@@ -87,7 +88,8 @@
 						<label >节次</label>
 						<div class="form-row">
 							<select class="form-control col-5" id="sJieCi" name="sJieCi">
-								<option value="1" selected="selected">1</option>
+								<option selected="selected"></option>
+								<option value="1">1</option>
 								<option value="2">2</option>
 								<option value="3">3</option>
 								<option value="4">4</option>
@@ -101,8 +103,9 @@
 								<option value="12">12</option>
 							</select>
 							到
-							<select class="form-control col-5" id="eJieCi" name="eJieCi">
-								<option value="1" selected="selected">1</option>
+							<select class="form-control col-5" id="eJieCi" name="eJieCi" disabled="disabled">
+								<option selected="selected"></option>
+								<option value="1">1</option>
 								<option value="2">2</option>
 								<option value="3">3</option>
 								<option value="4">4</option>
@@ -201,7 +204,8 @@
 			var zhouCi=$("#zhouCi").val();
 			var xingQi=$("#xingQi").val();
 			if(zhouCi=='${zhouCi}'){
-				document.getElementById("xingQi").innerHTML="<c:if test='${txingQi<=1}'><option value='1'>一</option></c:if> \
+				document.getElementById("xingQi").innerHTML="<option selected='selected'></option> \
+					<c:if test='${txingQi<=1}'><option value='1'>一</option></c:if> \
 					<c:if test='${txingQi<=2}'><option value='2'>二</option></c:if> \
 					<c:if test='${txingQi<=3}'><option value='3'>三</option></c:if> \
 					<c:if test='${txingQi<=4}'><option value='4'>四</option></c:if> \
@@ -212,7 +216,8 @@
 					$("#xingQi").val(xingQi);
 				}
 			}else{
-				document.getElementById("xingQi").innerHTML="<option value='1'>一</option> \
+				document.getElementById("xingQi").innerHTML="<option selected='selected'></option> \
+					<option value='1'>一</option> \
 					<option value='2'>二</option> \
 					<option value='3'>三</option> \
 					<option value='4'>四</option> \
@@ -236,6 +241,12 @@
 				}
 			}
 			document.getElementById("eJieCi").innerHTML=newOptions;
+			if(sJieCi==""){
+				$("#eJieCi").val("");
+				$("#eJieCi").attr("disabled","disabled");
+			}else{
+				$("#eJieCi").attr("disabled",false);
+			}
 		});
 		
 		function queryRooms(){	//查询满足条件的教室

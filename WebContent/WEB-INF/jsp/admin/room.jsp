@@ -49,7 +49,7 @@
 																电话号码：${application.user.phone}</br>邮箱：${application.user.email}</br>
 																部门：${application.user.department}">${application.user.name}</td>
 															<td>${application.zhouCi}</td>
-															<td>${application.xingQi}</td>
+															<td>${application.formatXingQi}</td>
 															<td>${application.sJieCi}</td>
 															<td>${application.eJieCi}</td>
 														</tr>
@@ -127,7 +127,7 @@
 															电话号码：${roomSchedule.user.phone}</br>邮箱：${roomSchedule.user.email}</br>
 															部门：${roomSchedule.user.department}">${roomSchedule.user.name}</td>
 														<td>${roomSchedule.zhouCi}</td>
-														<td>${roomSchedule.xingQi}</td>
+														<td>${roomSchedule.formatXingQi}</td>
 														<td>${roomSchedule.sJieCi}</td>
 														<td>${roomSchedule.eJieCi}</td>
 														<td>${roomSchedule.type}</td>

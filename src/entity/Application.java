@@ -79,6 +79,21 @@ public class Application implements Serializable{
 	public int getXingQi() {
 		return xingQi;
 	}
+	/** 输出格式化的星期 */
+	public String getFormatXingQi() {
+		switch (this.xingQi) {
+			case 1: return "一";
+			case 2: return "二";
+			case 3: return "三";
+			case 4: return "四";
+			case 5: return "五";
+			case 6: return "六";
+			case 7: return "日";
+			case 0: return "";
+			default:
+				throw new IllegalArgumentException("Unexpected value: " + this.xingQi);
+		}
+	}
 	public void setXingQi(int xingQi) {
 		this.xingQi = xingQi;
 	}

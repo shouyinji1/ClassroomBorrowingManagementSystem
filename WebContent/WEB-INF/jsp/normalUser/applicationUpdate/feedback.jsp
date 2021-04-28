@@ -101,7 +101,7 @@
 							</div>
 							<div class="col-sm-3 mb-3">
 								<label>星期</label>
-								<input type="text" class="form-control" value="${application.xingQi}" readonly>
+								<input type="text" class="form-control" value="${application.formatXingQi}" readonly>
 							</div>
 							<div class="col-sm-3 mb-3">
 								<label>开始节次</label>

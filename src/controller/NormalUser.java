@@ -183,22 +183,37 @@ public class NormalUser {
 		}
 	}
 	
+	/** 查询可用教室 */
 	@RequestMapping(value="queryRooms",method=RequestMethod.POST)
-	//public ModelAndView queryRooms(String xiaoQu,String jiaoXueLou,String type,String floor,String roomID,
-	//		String capacity,String status,String zhouCi,String xingQi,String sJieCi,String eJieCi) {
-	public ModelAndView queryRooms(Classroom room,Application application) {
-		application.setType(null);
+	public ModelAndView queryRooms(Classroom room,
+			int zhouCi,String xingQi,String sJieCi,String eJieCi) {
+		Application application=new Application();
 		application.setClassroom(room);
+		application.setZhouCi(zhouCi);
+		application.setXingQi(xingQi !=null && !xingQi.equals("") ? Integer.parseInt(xingQi) : 0);
+		application.setsJieCi(sJieCi !=null && !sJieCi.equals("") ? Integer.parseInt(sJieCi) : 0);
+		application.seteJieCi(eJieCi !=null && !eJieCi.equals("") ? Integer.parseInt(eJieCi) : 0);
 		ModelAndView mav=new ModelAndView("normalUser/rooms");
-		mav.addObject("rooms",normalUserService.getRoomsByApply(application));
+		if(application.getsJieCi()<=0 || application.geteJieCi()<=0 || application.getXingQi()<=0) {
+			mav.addObject("rooms",normalUserService.getRoomsByApplyNoJieCi(application));
+		}else {
+			mav.addObject("rooms",normalUserService.getRoomsByApply(application));
+		}
 		return mav;
 	}
 	
 	/** 跳转教室申请填写页面 */
 	@RequestMapping("applyRoom")
-	public ModelAndView applyRoom(Application application,HttpSession session) {
+	public ModelAndView applyRoom(String roomID, int zhouCi,String xingQi,String sJieCi,String eJieCi) {
+		Application application=new Application();
+		application.setRoomID(roomID);
+		application.setZhouCi(zhouCi);
+		application.setXingQi(xingQi !=null && !xingQi.equals("") ? Integer.parseInt(xingQi) : 0);
+		application.setsJieCi(sJieCi !=null && !sJieCi.equals("") ? Integer.parseInt(sJieCi) : 0);
+		application.seteJieCi(eJieCi !=null && !eJieCi.equals("") ? Integer.parseInt(eJieCi) : 0);
 		application.setClassroom(normalUserService.getClassroomById(application.getRoomID()));
 		ModelAndView mav=new ModelAndView("normalUser/apply-Modal");
+		mav.addObject("application",application);
 		mav.addObject("feedbacks",normalUserService.getFeedbacksByRoomID(application.getRoomID()));
 		mav.addObject("arrange",normalUserService.getRoomArrangeByRoomIDAndZhouCi(application));
 		return mav;
