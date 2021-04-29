@@ -87,7 +87,6 @@ public class NormalUser {
 	@ResponseStatus
 	public int downloadApplication(int id,HttpServletResponse response) throws IOException {
 		Application application=normalUserService.getApplicationById(id);
-		PDF.generate(application);
 		
 		//1、设置response 响应头
 		response.reset(); //设置页面不缓存,清空buffer
@@ -98,7 +97,7 @@ public class NormalUser {
 				"attachment;fileName="+URLEncoder.encode("application-"+application.getId()+".pdf", "UTF-8"));
 
 		// 读取文件--输入流
-		InputStream input=PDF.generate(application);
+		InputStream input=PDF.generate(application,userService.getSemesters().get(0));
 		// 写出文件--输出流
 		OutputStream out = response.getOutputStream();
 

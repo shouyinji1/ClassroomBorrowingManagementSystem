@@ -20,10 +20,11 @@ import com.itextpdf.layout.property.TextAlignment;
 import com.itextpdf.layout.element.Image;
 
 import entity.Application;
+import entity.Semester;
 
 public class PDF {
 	/** 生成PDF申请表 */
-	public static ByteArrayInputStream generate(Application application) throws IOException {
+	public static ByteArrayInputStream generate(Application application,Semester semester) throws IOException {
 		String path="/home/shouyinji1/eclipse-workspace/ClassroomBorrowingManagementSystem/";
 		//String dest=path+"application-"+application.getId()+".pdf";
 		ByteArrayOutputStream bao = new ByteArrayOutputStream();//新建一个输出流
@@ -38,6 +39,9 @@ public class PDF {
         // 仿宋字体
         PdfFont sysFont=PdfFontFactory.createFont(path+"src/simfang.ttf",PdfEncodings.IDENTITY_H,true);
         // 添加标题
+        doc.add(new Paragraph(semester.getsName()).setTextAlignment(TextAlignment.CENTER)
+        		.setFontSize(25)
+        		.setFont(sysFont));
         doc.add(new Paragraph("教室借用申请信息表").setTextAlignment(TextAlignment.CENTER)
         		.setFontSize(25)
         		.setFont(sysFont));
