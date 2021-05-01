@@ -13,18 +13,9 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<h4 class="modal-title" id="exampleModalLabel">审批</h4>
-					<c:choose>
-						<c:when test="${(!empty application.feedbackTime) and application.readFeedback==false}">
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="updateReadFeedback()">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</c:when>
-						<c:otherwise>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</c:otherwise>
-					</c:choose>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
 				</div>
 				<div class="modal-body">
 					<div class="row">

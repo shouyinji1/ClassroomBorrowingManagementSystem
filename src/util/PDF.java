@@ -39,7 +39,7 @@ public class PDF {
         // 仿宋字体
         PdfFont sysFont=PdfFontFactory.createFont(path+"src/simfang.ttf",PdfEncodings.IDENTITY_H,true);
         // 添加标题
-        doc.add(new Paragraph(semester.getsName()).setTextAlignment(TextAlignment.CENTER)
+        doc.add(new Paragraph("淮阴工学院"+semester.getsName()).setTextAlignment(TextAlignment.CENTER)
         		.setFontSize(25)
         		.setFont(sysFont));
         doc.add(new Paragraph("教室借用申请信息表").setTextAlignment(TextAlignment.CENTER)
