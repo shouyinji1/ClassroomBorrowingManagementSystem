@@ -128,7 +128,7 @@
 				<div class="accordion" id="accordionOne">
 					<div class="card">
 						<div class="card-header py-3" id="headingOne" onclick="$('#collapseOne').collapse('toggle');">
-							<h6 class="m-0 font-weight-bold text-primary">查看选择使用时间</h6>
+							<h6 class="m-0 font-weight-bold text-primary">教室第${application.zhouCi}周的安排 & 选择使用时段</h6>
 						</div>
 						<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionOne">
 							<div class="card-body">
@@ -323,27 +323,27 @@
 			if($("#application-sJieCi").val()<=0) $("#submitApplication-button").attr("disabled",true);
 			if($("#application-eJieCi").val()<=0) $("#submitApplication-button").attr("disabled",true);
 			
-			var arrange1="",arrange2="";	// 选择区头尾控制变量
+			var head="",tail="";	// 选择区头尾控制变量
 		    $("#week-arrange-table>tbody>tr>td").on("click", function () {
 		    	var obj=this;
 				var flag=false;	// 时间冲突或收缩标志
 		    	if(obj.className !="jieCi" && obj.className !="table-gap"	// 非教室编排区
 		    			&& $(obj).attr("bgcolor") !="red" && $(obj).attr("bgcolor") !="pink"	// 已被占用区
 		    			&& $(obj).attr("bgcolor") !="#F0F0F0"){	// 过去、今天的时间不可选
-		    		if(arrange1==""){	// 第一次点击
-		    			arrange1=arrange2=obj.id;	// 初始化头尾变量
-						$("#"+arrange1).addClass("tableTd2");//设定当前行为选中行
-		    		}else if(arrange1[8]==obj.id[8]){	// 同列
-						if(parseInt(arrange2.split("-")[2])<parseInt(obj.id.split("-")[2])){
-							arrange2=obj.id;	// 向下扩展
-						}else if(parseInt(arrange1.split("-")[2])>parseInt(obj.id.split("-")[2])){
-							arrange1=obj.id;	// 向上扩展
+		    		if(head==""){	// 第一次点击
+		    			head=tail=obj.id;	// 初始化头尾变量
+						$("#"+head).addClass("tableTd2");//设定当前行为选中行
+		    		}else if(head[8]==obj.id[8]){	// 同列
+						if(parseInt(tail.split("-")[2])<parseInt(obj.id.split("-")[2])){
+							tail=obj.id;	// 向下扩展
+						}else if(parseInt(head.split("-")[2])>parseInt(obj.id.split("-")[2])){
+							head=obj.id;	// 向上扩展
 						}else{	// 收缩
 							flag=true;
 						}
 		    			// 检测冲突
-		    			for(var i=parseInt(arrange1.split("-")[2]);i<=parseInt(arrange2.split("-")[2]);i++){
-		    				var bgcolor=$("#arrange-"+arrange1[8]+"-"+i).attr("bgcolor");
+		    			for(var i=parseInt(head.split("-")[2]);i<=parseInt(tail.split("-")[2]);i++){
+		    				var bgcolor=$("#arrange-"+head[8]+"-"+i).attr("bgcolor");
 		    				if(bgcolor=="red" || bgcolor=="pink"){
 		    					flag=true;	// 冲突
 		    					break;
@@ -351,24 +351,24 @@
 		    			}
 		    			// 没冲突，则选中
 		    			if(flag==false){
-							for(var i=parseInt(arrange1.split("-")[2]);i<=parseInt(arrange2.split("-")[2]);i++){
-								$("#arrange-"+arrange1[8]+"-"+i).addClass("tableTd2");
+							for(var i=parseInt(head.split("-")[2]);i<=parseInt(tail.split("-")[2]);i++){
+								$("#arrange-"+head[8]+"-"+i).addClass("tableTd2");
 							}
 		    			}
 					}
 					// 冲突、收缩、不同列的情况
-					if(flag==true || arrange1[8] !=obj.id[8]){
+					if(flag==true || head[8] !=obj.id[8]){
 		    			for(var i=1;i<=7;i++){
 		    				for(var j=1;j<=12;j++){
 								$("#arrange-"+i+"-"+j).removeClass("tableTd2");
 		    				}
 		    			}
 						$("#"+obj.id).addClass("tableTd2");
-		    			arrange1=arrange2=obj.id;
+		    			head=tail=obj.id;
 					}
 					// 设置星期和开始、结束节次
-					$("#application-xingQi").val(arrange1[8]);
-					switch(arrange1[8]){
+					$("#application-xingQi").val(head[8]);
+					switch(head[8]){
 					case "1":$("#application-formatXingQi").val("一");break;
 					case "2":$("#application-formatXingQi").val("二");break;
 					case "3":$("#application-formatXingQi").val("三");break;
@@ -377,8 +377,8 @@
 					case "6":$("#application-formatXingQi").val("六");break;
 					case "7":$("#application-formatXingQi").val("日");break;
 					}
-					$("#application-sJieCi").val(arrange1.split("-")[2]);
-					$("#application-eJieCi").val(arrange2.split("-")[2]);
+					$("#application-sJieCi").val(head.split("-")[2]);
+					$("#application-eJieCi").val(tail.split("-")[2]);
 					$("#submitApplication-button").attr("disabled",false);
 		    	}
 		    });

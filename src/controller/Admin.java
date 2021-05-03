@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -226,7 +227,13 @@ public class Admin {
 	@RequestMapping("updateSemester")
 	@ResponseBody
 	public String updateSemester(Semester semester) {
-		return Integer.toString(adminService.updateSemester(semester));
+		Calendar calendar=Calendar.getInstance();
+		calendar.setTime(semester.getsDate());
+		if(calendar.get(Calendar.DAY_OF_WEEK)==2) {
+			return Integer.toString(adminService.updateSemester(semester));
+		}else {
+			return "-1";	// 日期必须是星期一
+		}
 	}
 	
 	

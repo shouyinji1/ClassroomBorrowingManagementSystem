@@ -306,7 +306,7 @@
 					<c:if test="${!empty semester.sDate}">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
 					</c:if>
-					<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="updateSemester()">更新</button>
+					<button type="button" class="btn btn-primary" onclick="updateSemester()">更新</button>
 				</div>
 			</div>
 		</div>
@@ -468,8 +468,10 @@
 				success: function (data) {
 					if(data=='1'){
 						location.reload();
+					}else if(data=="-1"){
+						alert("起始日期必须选择星期一");
 					}else{
-						alert("原密码不匹配");
+						alert("更新异常");
 					}
 				},
 				error : function() {

@@ -44,7 +44,7 @@
             <li class="nav-item active" id="nav-item1">
                 <a class="nav-link" href="#">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>借用记录</span></a>
+                    <span>申请记录</span></a>
             </li>
             <li class="nav-item" id="nav-item2">
                 <a class="nav-link" href="#">
