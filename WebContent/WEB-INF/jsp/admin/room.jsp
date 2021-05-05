@@ -149,7 +149,7 @@
 							</div>
 							<div id="collapseFour" class="collapse show" aria-labelledby="headingFour" data-parent="#accordionFour">
 								<div class="card-body">
-									教室节次占用频度：
+									教室节次周占用频度：
 									<div class="chart-area">
 										<div class="chartjs-size-monitor">
 											<div class="chartjs-size-monitor-expand">
@@ -161,7 +161,7 @@
 										</div>
                                         <canvas id="relativeFrequency" style="display: block; width: 617px; height: 320px;" width="617" height="320" class="chartjs-render-monitor"></canvas>
                                     </div></br>
-                                    教室使用频度：
+                                    教室使用周频度：
 									<div class="chart-area">
 										<div class="chartjs-size-monitor">
 											<div class="chartjs-size-monitor-expand">
