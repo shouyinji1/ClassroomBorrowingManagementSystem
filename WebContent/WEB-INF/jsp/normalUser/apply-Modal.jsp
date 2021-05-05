@@ -326,7 +326,7 @@
 			var head="",tail="";	// 选择区头尾控制变量
 		    $("#week-arrange-table>tbody>tr>td").on("click", function () {
 		    	var obj=this;
-				var flag=false;	// 时间冲突或收缩标志
+				var shrink=false;	// 时间冲突或收缩标志
 		    	if(obj.className !="jieCi" && obj.className !="table-gap"	// 非教室编排区
 		    			&& $(obj).attr("bgcolor") !="red" && $(obj).attr("bgcolor") !="pink"	// 已被占用区
 		    			&& $(obj).attr("bgcolor") !="#F0F0F0"){	// 过去、今天的时间不可选
@@ -339,25 +339,25 @@
 						}else if(parseInt(head.split("-")[2])>parseInt(obj.id.split("-")[2])){
 							head=obj.id;	// 向上扩展
 						}else{	// 收缩
-							flag=true;
+							shrink=true;
 						}
 		    			// 检测冲突
 		    			for(var i=parseInt(head.split("-")[2]);i<=parseInt(tail.split("-")[2]);i++){
 		    				var bgcolor=$("#arrange-"+head[8]+"-"+i).attr("bgcolor");
 		    				if(bgcolor=="red" || bgcolor=="pink"){
-		    					flag=true;	// 冲突
+		    					shrink=true;	// 冲突
 		    					break;
 		    				}
 		    			}
 		    			// 没冲突，则选中
-		    			if(flag==false){
+		    			if(shrink==false){
 							for(var i=parseInt(head.split("-")[2]);i<=parseInt(tail.split("-")[2]);i++){
 								$("#arrange-"+head[8]+"-"+i).addClass("tableTd2");
 							}
 		    			}
 					}
 					// 冲突、收缩、不同列的情况
-					if(flag==true || head[8] !=obj.id[8]){
+					if(shrink==true || head[8] !=obj.id[8]){
 		    			for(var i=1;i<=7;i++){
 		    				for(var j=1;j<=12;j++){
 								$("#arrange-"+i+"-"+j).removeClass("tableTd2");
