@@ -137,7 +137,7 @@ public class NormalUser {
 		int daysDiff=(int)util.DateTool.periodDay(semesters.get(0).getsDate());
 		int txingQi=daysDiff%7+1+1;	// 明日星期几
 		int zhouCi=daysDiff/7+1;	// 周本周次
-		if(txingQi==8) {	// 如果明天是星期日，前端展示的周次选项将从下周开始。
+		if(txingQi==8) {	// 如果今天是星期日，前端展示的周次选项将从下周开始。
 			zhouCi++;
 			txingQi=1;
 			if(zhouCi>semesters.get(0).gettWeeks()) {
