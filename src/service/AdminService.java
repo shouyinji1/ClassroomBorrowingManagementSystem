@@ -7,6 +7,7 @@ import entity.Application;
 import entity.Classroom;
 import entity.RoomSchedule;
 import entity.Semester;
+import entity.User;
 
 public interface AdminService {
 	/** 查询没有过期的申请 */
@@ -30,6 +31,9 @@ public interface AdminService {
 
 	/** 根据教室查询申请记录 */
 	public List<Application> getApplicationsByRoom(Classroom room,int approval);
+
+	/** 根据用户ID查询申请记录 */
+	public List<Application> getApplicationsByUserID(String userID);
 
 	/** 查询7天内的已审批记录 */
 	public List<Application> getReviewedApplicationsOf7Days();

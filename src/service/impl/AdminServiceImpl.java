@@ -14,6 +14,7 @@ import entity.Application;
 import entity.Classroom;
 import entity.RoomSchedule;
 import entity.Semester;
+import entity.User;
 import service.AdminService;
 
 @Service("adminService")
@@ -121,6 +122,16 @@ public class AdminServiceImpl implements AdminService {
 		return applications;
 	}
 
+	/** 根据用户ID查询申请记录 */
+	@Override
+	public List<Application> getApplicationsByUserID(String userID){
+		List<Application> applications= adminDao.getApplicationsByUserID(userID);
+		for(Application application:applications) {
+			application.setStatus(userDao.getSemesters().get(0));
+		}
+		return applications;
+	}
+	
 	@Override
 	public List<Application> getReviewedApplicationsOf7Days() {
 		// TODO Auto-generated method stub

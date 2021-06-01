@@ -9,6 +9,7 @@ import entity.Application;
 import entity.Classroom;
 import entity.RoomSchedule;
 import entity.Semester;
+import entity.User;
 
 public interface AdminDao {
 	/** 查询没有过期的申请 */
@@ -33,6 +34,9 @@ public interface AdminDao {
 	
 	/** 根据教室查询申请记录 */
 	public List<Application> getApplicationsByRoom(Classroom room);
+
+	/** 根据教室查询申请记录 */
+	public List<Application> getApplicationsByUserID(String userID);
 	
 	/** 查询7天内的已审批记录 */
 	public List<Application> getReviewedApplicationsOf7Days();

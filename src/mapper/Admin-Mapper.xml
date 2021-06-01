@@ -14,11 +14,15 @@
 	</select>
 	<select id="getApplicationById" resultMap="applicationResultMap" parameterType="int">
 		select Application.ID as ApplicationID, Application.Type as ApplicationType, Application.*, 
-			User.Name as UserName, Phone, Email, Department,
+			u.Name as UserName, u.Phone, u.Email, u.Department,
 			Classroom.Name as ClassroomName, Classroom.Type as RoomType, 
-			XiaoQu,JiaoXueQu, JiaoXueLou, Floor, Capacity 
-				from Application,User,Classroom 
-					where Application.ID=#{id} and Application.UserID=User.ID and Application.RoomID=Classroom.ID;
+			XiaoQu,JiaoXueQu, JiaoXueLou, Floor, Capacity ,
+			r.Name as ReviewerName,r.Phone as ReviewerPhone, r.Email as ReviewerEmail,
+				r.Department as ReviewerDepartment
+				from Application,User as u,Classroom,User as r
+					where Application.ID=#{id} and Application.UserID=u.ID
+						and (Application.ReviewerID=r.ID or Application.approval is null)
+						and Application.RoomID=Classroom.ID;
 	</select>
 	<resultMap id="applicationResultMap" type="application">
 		<id column="ApplicationID" property="id"></id>
@@ -56,10 +60,10 @@
 			<id column="Available" property="available"></id>
 		</association>
 		<association property="reviewer" javaType="user">
-			<id column="UserName" property="name"></id>
-			<id column="Phone" property="phone"></id>
-			<id column="Email" property="email"></id>
-			<id column="Department" property="department"></id>
+			<id column="ReviewerName" property="name"></id>
+			<id column="ReviewerPhone" property="phone"></id>
+			<id column="ReviewerEmail" property="email"></id>
+			<id column="ReviewerDepartment" property="department"></id>
 		</association>
 	</resultMap>
 	<resultMap id="roomScheduleResultMap" type="roomSchedule">
@@ -122,6 +126,12 @@
 			where a.RoomID=c.ID and a.UserID=u.ID and Approval is not null 
 				and XiaoQu=#{xiaoQu} and JiaoXueQu=#{jiaoXueQu} and JiaoXueLou=#{jiaoXueLou}
 				and c.Type=#{type};
+	</select>
+	<select id="getApplicationsByUserID" resultMap="applicationResultMap" parameterType="String">
+		select a.ID as ApplicationID,a.*, u.name as UserName,c.Floor,c.Available
+			from Application as a,Classroom as c,User as u
+			where a.RoomID=c.ID and a.UserID=u.ID and Approval is not null 
+				and a.UserID=#{userID};
 	</select>
 	<select id="getReviewedApplicationsOf7Days" resultMap="applicationResultMap">
 		select Application.ID as ApplicationID,Application.*,User.name as UserName,Classroom.Available

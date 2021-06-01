@@ -17,11 +17,15 @@
 		select Application.ID as ApplicationID, UserID, RoomID, SubmitTime, zhouCi, XingQi, 
 			SJieCi, EJieCi, Application.Type as ApplicationType, Purpose, 
 			ReviewerID, ReviewTime, Approval,ReviewContent,Feedback,FeedbackTime,ReadFeedback,
-			User.Name as UserName, Phone, Email, Department,
+			u.Name as UserName, u.Phone, u.Email, u.Department,
 			Classroom.Name as ClassroomName, Classroom.Type as RoomType, 
-			XiaoQu,JiaoXueQu, JiaoXueLou, Floor, Capacity, Available
-				from Application,User,Classroom 
-					where Application.ID=#{id} and Application.UserID=User.ID and Application.RoomID=Classroom.ID;
+			XiaoQu,JiaoXueQu, JiaoXueLou, Floor, Capacity, Available,
+			r.Name as ReviewerName,r.Phone as ReviewerPhone, r.Email as ReviewerEmail, 
+				r.Department as ReviewerDepartment
+				from Application,User as u,User as r,Classroom
+					where Application.ID=#{id} and Application.UserID=u.ID
+						and (Application.ReviewerID=r.ID or Application.approval is null)
+						and Application.RoomID=Classroom.ID;
 	</select>
 	<resultMap id="applicationResultMap" type="application">
 		<id column="ApplicationID" property="id"></id>
@@ -59,10 +63,10 @@
 			<id column="Available" property="available"></id>
 		</association>
 		<association property="reviewer" javaType="user">
-			<id column="UserName" property="name"></id>
-			<id column="Phone" property="phone"></id>
-			<id column="Email" property="email"></id>
-			<id column="Department" property="department"></id>
+			<id column="ReviewerName" property="name"></id>
+			<id column="ReviewerPhone" property="phone"></id>
+			<id column="ReviewerEmail" property="email"></id>
+			<id column="ReviewerDepartment" property="department"></id>
 		</association>
 	</resultMap>
 	<select id="getRoomSchedulesByApplication" resultType="roomSchedule" parameterType="Application">

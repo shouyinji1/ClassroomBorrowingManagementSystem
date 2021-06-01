@@ -10,6 +10,7 @@ import entity.Application;
 import entity.Classroom;
 import entity.RoomSchedule;
 import entity.Semester;
+import entity.User;
 
 @Repository
 public class AdminDaoImpl extends BaseDaoImpl<AdminDao> implements AdminDao {
@@ -78,6 +79,12 @@ public class AdminDaoImpl extends BaseDaoImpl<AdminDao> implements AdminDao {
 	public List<Application> getApplicationsByRoom(Classroom room) {
 		// TODO Auto-generated method stub
 		return this.getMapper().getApplicationsByRoom(room);
+	}
+
+	@Override
+	public List<Application> getApplicationsByUserID(String userID) {
+		// TODO Auto-generated method stub
+		return this.getMapper().getApplicationsByUserID(userID);
 	}
 
 	@Override

@@ -5,8 +5,18 @@
 <html>
 <body>
 	<div class="card shadow mb-4">
-		<div class="card-header py-3">
+		<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 			<h6 class="m-0 font-weight-bold text-primary">查找历史审批记录</h6>
+			<div class="dropdown no-arrow">
+				<a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+				</a>
+				<div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink" style="">
+					<div class="dropdown-header">选择</div>
+					<a class="dropdown-item" onclick="$('#page-content').load('../admin/historicalApplications')">根据教室查找</a>
+					<a class="dropdown-item" onclick="$('#page-content').load('../admin/historicalApplicationsByUser')">根据用户查找</a>
+				</div>
+			</div>
 		</div>
 		<div class="card-body">
 			<form id="queryHistoricalApplications">

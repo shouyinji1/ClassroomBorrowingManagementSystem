@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import entity.Application;
 import entity.Classroom;
 import entity.Semester;
+import entity.User;
 import service.AdminService;
 import service.UserService;
 
@@ -54,7 +55,7 @@ public class Admin {
 	
 	
 	/**************** 历史审批记录管理 *******************/
-	/** 历史申请界面跳转 */
+	/** 根据教室查找历史审批界面跳转 */
 	@RequestMapping("historicalApplications")
 	public ModelAndView historicalApplications() {
 		ModelAndView mav=new ModelAndView("admin/historicalApplications");
@@ -105,6 +106,21 @@ public class Admin {
 	public ModelAndView queryHistoricalApplications(Classroom room,int approval) {
 		ModelAndView mav=new ModelAndView("admin/queriedHistoricalApplications");
 		mav.addObject("applications",adminService.getApplicationsByRoom(room,approval));
+		mav.addObject("applicationsTableTitle","审批历史");
+		return mav;
+	}
+	
+	/** 根据用户查找历史审批界面跳转 */
+	@RequestMapping("historicalApplicationsByUser")
+	public ModelAndView historicalApplicationsByUser() {
+		ModelAndView mav=new ModelAndView("admin/historicalApplicationsByUser");
+		return mav;
+	}
+
+	@RequestMapping("queryHistoricalApplicationsByUserID")
+	public ModelAndView queryHistoricalApplicationsByUserID(String userID) {
+		ModelAndView mav=new ModelAndView("admin/queriedHistoricalApplications");
+		mav.addObject("applications",adminService.getApplicationsByUserID(userID));
 		mav.addObject("applicationsTableTitle","审批历史");
 		return mav;
 	}
