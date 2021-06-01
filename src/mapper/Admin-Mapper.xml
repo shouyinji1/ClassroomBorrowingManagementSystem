@@ -83,6 +83,9 @@
 			<id column="Department" property="department"></id>
 		</association>
 	</resultMap>
+	<delete id="deleteApplicationByID" parameterType="int">
+		delete from Application where ID=#{id};
+	</delete>
 	<update id="updateReviewOfApplication" parameterType="Application">
 		update Application 
 			set ReviewerID=#{reviewerID},ReviewTime=#{reviewTime},

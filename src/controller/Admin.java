@@ -129,9 +129,16 @@ public class Admin {
 	public ModelAndView viewApplication(int id) {
 		ModelAndView mav=new ModelAndView("admin/applicationModal");
 		mav.addObject("application",adminService.getApplicationById(id));
+		mav.addObject("semester",userService.getSemesters().get(0));
 		return mav;
 	}
 	
+	@RequestMapping("deleteApplicationByID")
+	@ResponseBody
+	public String deleteApplicationByID(int id) {
+		return Integer.toString(adminService.deleteApplicationByID(id));
+	}
+
 	@RequestMapping("updateReadFeedback")
 	@ResponseBody
 	public String updateReadFeedback(Application application) {

@@ -143,6 +143,12 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
+	public int deleteApplicationByID(int id) {
+		// TODO Auto-generated method stub
+		return adminDao.deleteApplicationByID(id);
+	}
+
+	@Override
 	public List<String> getAllXiaoQu() {
 		// TODO Auto-generated method stub
 		return adminDao.getAllXiaoQu();

@@ -155,9 +155,14 @@
 					<hr class="mb-4">
 					<h5 class="mb-3">审批情况</h5>
 						<div class="row">
-							<div class="col-sm-12 mb-3">
+							<div class="col-sm-12 mb-3"><span data-trigger="hover" data-html="true" data-toggle="popover" title="审批人信息" 
+								data-content="姓名：${application.reviewer.name}</br>
+									编号：${application.reviewerID}</br>
+									电话：${application.reviewer.phone}</br>
+									邮箱：${application.reviewer.email}</br>
+									部门：${application.reviewer.department}">
 								审批人：${application.reviewer.name}
-							</div>
+							</span></div>
 						</div>
 						<div class="row">
 							<div class="col-sm-12 mb-3">
@@ -181,5 +186,9 @@
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript">
+		// 激活popover插件
+		$(function () { $("[data-toggle='popover']").popover(); });
+	</script>
 </body>
 </html>

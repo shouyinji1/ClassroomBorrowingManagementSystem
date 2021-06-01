@@ -38,6 +38,9 @@ public interface AdminService {
 	/** 查询7天内的已审批记录 */
 	public List<Application> getReviewedApplicationsOf7Days();
 	
+	/** 根据申请ID删除申请记录 */
+	public int deleteApplicationByID(int id);
+
 	/** 更新反馈已读标志 */
 	public int updateReadFeedback(Application application);
 

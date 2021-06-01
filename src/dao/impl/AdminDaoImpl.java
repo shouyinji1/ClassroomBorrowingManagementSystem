@@ -154,6 +154,12 @@ public class AdminDaoImpl extends BaseDaoImpl<AdminDao> implements AdminDao {
 	}
 
 	@Override
+	public int deleteApplicationByID(int id) {
+		// TODO Auto-generated method stub
+		return this.getMapper().deleteApplicationByID(id);
+	}
+
+	@Override
 	public List<Application> getUnreadFeedbacks() {
 		// TODO Auto-generated method stub
 		return this.getMapper().getUnreadFeedbacks();

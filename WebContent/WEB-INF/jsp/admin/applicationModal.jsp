@@ -164,6 +164,10 @@
 					</c:if>
 				</div>
 				<div class="modal-footer">
+					<!-- 使用时段位于未来的申请可以被删除 -->
+					<c:if test="${application.zhouCi>semester.zhouCiNow or (application.zhouCi==semester.zhouCiNow and application.xingQi>=semester.xingQiNow)}">
+						<button type="button" class="btn btn-danger" data-dismiss="modal" onclick="deleteApplication(${application.id})">删除</button>
+					</c:if>
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
 					<c:if test="${(!empty application.feedbackTime) and application.readFeedback==false}">
 						<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="updateReadFeedback()">已读</button>
@@ -189,6 +193,28 @@
 			document.getElementById('application-${application.id}-status').innerHTML='通过';
 			updateNewFeedbackCounter(1);
 		}
+		
+		function deleteApplication(id){
+			$.ajax({
+				type: "post",//方法类型
+				url: "../admin/deleteApplicationByID",
+				async:true,
+				data: {'id':id},
+				success:function(data){
+					if(data=='1'){
+						$("#application-Modal").modal('hide');
+						document.getElementById('application-${application.id}').remove();
+					}else if(data=='0'){
+						alert("删除失败");
+					}else{
+						alert("删除异常");
+					}
+				},
+				error : function() {
+					alert("异常请求！"+data.msg);
+				}
+			});
+		}	
 	</script>
 </body>
 </html>

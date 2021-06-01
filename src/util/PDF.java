@@ -98,13 +98,23 @@ public class PDF {
 		table.addCell(new Cell().add(new Paragraph("申请用途：")).setBold());
 		table.addCell(new Cell(1,5).add(new Paragraph(application.getPurpose())));
 
-		table.addCell(new Cell(1,8).add(new Paragraph("审批意见")).setTextAlignment(TextAlignment.CENTER));
+		table.addCell(new Cell(1,8).add(new Paragraph("审批人信息")).setTextAlignment(TextAlignment.CENTER));
 		table.addCell(new Cell().add(new Paragraph("审批人：")).setBold());
 		table.addCell(application.getReviewer().getName());
+		table.addCell(new Cell().add(new Paragraph("审批人ID：")).setBold());
+		table.addCell(application.getReviewerID());
+		table.addCell(new Cell().add(new Paragraph("电话：")).setBold());
+		table.addCell(new Cell(1,3).add(new Paragraph(application.getReviewer().getPhone())));
+		table.addCell(new Cell().add(new Paragraph("邮箱：")).setBold());
+		table.addCell(new Cell(1,3).add(new Paragraph(application.getReviewer().getEmail())));
+		table.addCell(new Cell().add(new Paragraph("部门：")).setBold());
+		table.addCell(new Cell(1,3).add(new Paragraph(application.getReviewer().getDepartment())));
+
+		table.addCell(new Cell(1,8).add(new Paragraph("审批意见")).setTextAlignment(TextAlignment.CENTER));
 		table.addCell(new Cell().add(new Paragraph("审批时间：")).setBold());
 		table.addCell(new Cell(1,3).add(new Paragraph(application.getFormatReviewTime())));	
 		table.addCell(new Cell().add(new Paragraph("意见：")).setBold());
-		table.addCell("abc");
+		table.addCell(new Cell(1,3).add(new Paragraph(application.getApproval() ? "通过":"不通过")));
 		table.addCell(new Cell().add(new Paragraph("意见内容：")).setBold());
 		table.addCell(new Cell(1,7).add(new Paragraph(application.getReviewContent())));
 

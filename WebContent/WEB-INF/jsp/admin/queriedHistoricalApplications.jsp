@@ -41,7 +41,7 @@
 					</tfoot>
 					<tbody>
 						<c:forEach items="${applications}" var="application" varStatus="status">
-							<tr onclick="application(${application.id})">
+							<tr onclick="application(${application.id})" id="application-${application.id}">
 								<td>${application.formatSubmitTime}</td>
 								<td>${application.user.name}</td>
 								<td>${application.roomID}</td>
