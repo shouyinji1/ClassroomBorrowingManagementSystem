@@ -140,9 +140,9 @@ public class NormalUser {
 		if(txingQi==8) {	// 如果今天是星期日，前端展示的周次选项将从下周开始。
 			zhouCi++;
 			txingQi=1;
-			if(zhouCi>semesters.get(0).gettWeeks()) {
-				return new ModelAndView("本学期已结束");
-			}
+		}
+		if(zhouCi>semesters.get(0).gettWeeks()) {
+			return new ModelAndView("normalUser/endOfSemester");
 		}
 		mav.addObject("txingQi",txingQi);
 		mav.addObject("zhouCi",zhouCi);
