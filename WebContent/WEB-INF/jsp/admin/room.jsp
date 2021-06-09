@@ -479,9 +479,9 @@
 					if (data=="1") {
 						$('#room-Modal').modal('hide');
 						if(available==true){
-							document.getElementById('room-available').innerHTML='可申请';
+							document.getElementById('room-available-'+roomID).innerHTML='可申请';
 						}else{
-							document.getElementById('room-available').innerHTML='不可申请';
+							document.getElementById('room-available-'+roomID).innerHTML='不可申请';
 						}
 					}else{
 						alert("出错");

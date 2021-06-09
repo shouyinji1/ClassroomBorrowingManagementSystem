@@ -90,6 +90,7 @@ INSERT INTO Classroom VALUES('2#101','sdf','会议室','北京路校区','abc','
 INSERT INTO Classroom VALUES('11#101','sdf','多媒体教室','枚乘路校区','计算机学院','11',1,50,true);
 INSERT INTO Classroom VALUES('11#102','sdf','计算机教室','枚乘路校区','计算机学院','11',1,50,true);
 INSERT INTO Classroom VALUES('11#103','sdf','计算机教室','枚乘路校区','计算机学院','11',1,50,true);
+INSERT INTO Classroom VALUES('11#104','sdf','多媒体教室','枚乘路校区','计算机学院','11',1,50,true);
 INSERT INTO Classroom VALUES('12#101','sdf','普通教室','枚乘路校区','计算机学院','12',1,100,true);
 INSERT INTO Classroom VALUES('22#201','sdf','会议室','枚乘路校区','应用技术学院','22',2,60,true);
 INSERT INTO Classroom VALUES('111#301','sdf','多媒体教室','萧湖校区','abc','111',3,50,true);
@@ -105,12 +106,14 @@ INSERT INTO RoomSchedule(RoomID,UserID,ZhouCi,XingQi,SJieCi,EJieCi,Type) VALUES(
 INSERT INTO RoomSchedule(RoomID,UserID,ZhouCi,XingQi,SJieCi,EJieCi,Type) VALUES('11#101','U00001',10,1,3,4,'课表课程');
 INSERT INTO RoomSchedule(RoomID,UserID,ZhouCi,XingQi,SJieCi,EJieCi,Type) VALUES('11#101','U00002',10,5,3,4,'课表课程');
 INSERT INTO RoomSchedule(RoomID,UserID,ZhouCi,XingQi,SJieCi,EJieCi,Type) VALUES('11#101','U00003',10,3,7,9,'课表课程');
+INSERT INTO RoomSchedule(RoomID,UserID,ZhouCi,XingQi,SJieCi,EJieCi,Type) VALUES('11#101','U00003',15,3,7,9,'课表课程');
 INSERT INTO Application(UserID,RoomID,ZhouCi,XingQi,SJieCi,EJieCi,Type,Purpose) VALUES('U00001','C00001',10,1,1,2,'教学活动','给学生上课');
 INSERT INTO Application(UserID,RoomID,ZhouCi,XingQi,SJieCi,EJieCi,Type,Purpose) VALUES('U00001','C00001',10,1,5,7,'教学活动','给学生上课');
 INSERT INTO Application(UserID,RoomID,ZhouCi,XingQi,SJieCi,EJieCi,Type,Purpose) VALUES('U00001','123#301',10,2,1,2,'文娱活动','班级活动庆祝会');
 INSERT INTO Application(UserID,RoomID,ZhouCi,XingQi,SJieCi,EJieCi,Type,Purpose) VALUES('U00001','22#201',10,1,3,3,'会议','开班会');
 INSERT INTO Application(UserID,RoomID,ZhouCi,XingQi,SJieCi,EJieCi,Type,Purpose) VALUES('U00001','22#201',7,1,3,3,'会议','开班会');
 INSERT INTO Application(UserID,RoomID,ZhouCi,XingQi,SJieCi,EJieCi,Type,Purpose,ReviewerID,ReviewTime,Approval,ReviewContent) VALUES('U00001','11#102',7,1,1,2,'教学活动','给学生上课','A00001','2021-04-11 11:11:12',1,'通过，可以');
+INSERT INTO Application(UserID,RoomID,ZhouCi,XingQi,SJieCi,EJieCi,Type,Purpose,ReviewerID,ReviewTime,Approval,ReviewContent) VALUES('U00001','11#101',15,1,1,2,'教学活动','给学生上课','A00001','2021-04-11 11:11:12',1,'通过，可以');
 INSERT INTO Application(UserID,RoomID,ZhouCi,XingQi,SJieCi,EJieCi,Type,Purpose,ReviewerID,ReviewTime,Approval,ReviewContent,Feedback,FeedbackTime,ReadFeedback) 
 	VALUES('U00001','11#101',9,7,1,2,'教学活动','给学生上课','A00001','2021-04-11 11:11:11',1,'通过，可以','投影仪有问题','2021-05-03 09:09:09',0);
 
